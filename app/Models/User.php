@@ -1,48 +1,37 @@
 <?php
-
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    // Menghubungkan dengan tabel 'users' (Laravel secara default akan mencari tabel users)
+    protected $table = 'user';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    // Kolom yang bisa diisi secara mass-assignment
+    protected $fillable = ['role_id', 'username', 'password'];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // Relasi dengan tabel 'roles' (satu user memiliki satu role)
+    public function role()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsTo(Role::class);
+    }
+
+    // Relasi dengan tabel 'admin' (satu user bisa memiliki satu admin)
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
+
+    // Relasi dengan tabel 'pengguna' (satu user bisa memiliki satu pengguna)
+    public function pengguna()
+    {
+        return $this->hasOne(Pengguna::class);
+    }
+
+    // Relasi dengan tabel 'pendaftaran' (satu user bisa memiliki banyak pendaftaran)
+    public function pendaftarans()
+    {
+        return $this->hasMany(Pendaftaran::class);
     }
 }
