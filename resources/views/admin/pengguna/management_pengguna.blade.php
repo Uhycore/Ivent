@@ -56,6 +56,7 @@
                                 <th>Username</th>
                                 <th>No HP</th>
                                 <th>Alamat</th>
+                                <th>Role</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -69,13 +70,23 @@
                                     <td>{{ $penggunas->no_hp }}</td>
                                     <td>{{ $penggunas->alamat }}</td>
                                     <td>
+                                        @if ($penggunas->user->role_id == '1')
+                                            <span class="badge badge-primary">Admin</span>
+                                        @else
+                                            <span class="badge badge-secondary">Pengguna</span>
+                                        @endif
+                                    <td>
                                         <div class="flex gap-2">
-                                            <a href="edit-user.html?id=1" class="btn btn-sm btn-info">
+                                            <a href="{{ route('admin.pengguna.edit', $penggunas->user->id) }}" class="btn btn-sm btn-info">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <button class="btn btn-sm btn-error">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <form action="{{ route('admin.pengguna.delete', $penggunas->user->id) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-error" onclick="return confirm('Yakin ingin menghapus pengguna ini?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                             
                                         </div>
                                     </td>

@@ -10,7 +10,7 @@ class Admin extends Model
     protected $table = 'admin';
 
     // Kolom yang bisa diisi secara mass-assignment
-    protected $fillable = ['user_id', 'email', 'alamat'];
+    protected $fillable = ['user_id'];
 
     // Relasi dengan tabel 'user' (setiap admin memiliki satu user)
     public function user()

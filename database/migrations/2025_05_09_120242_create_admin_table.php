@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('admin', function (Blueprint $table) {
         $table->id();  // Auto-incrementing primary key
         $table->foreignId('user_id')->constrained('user')->onDelete('cascade');  // Foreign key user_id yang merujuk ke tabel users
-        $table->string('email');  // Email untuk admin
-        $table->text('alamat');  // Alamat admin
         $table->timestamps();  // Created_at dan updated_at
     });
     }
