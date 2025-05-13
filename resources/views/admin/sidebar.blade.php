@@ -21,7 +21,7 @@
                 </a>
             </li>
             <li>
-                <a href="users.html">
+                <a href="{{ route('admin.pengguna.index') }}">
                     <i class="fas fa-users"></i> Users
                 </a>
             </li>
