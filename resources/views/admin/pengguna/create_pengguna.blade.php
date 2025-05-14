@@ -19,6 +19,7 @@
             @include('admin.navbar')
 
             <!-- Page content -->
+             
             <div class="p-4 md:p-6">
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-2xl font-bold">Add New User</h1>
@@ -143,8 +144,10 @@
         </div>
 
         <!-- Sidebar -->
-        @include('admin.sidebar')
+         @include('admin.sidebar')
+        
     </div>
 
 </body>
 </html>
+
