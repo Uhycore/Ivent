@@ -1,139 +1,108 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - User Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manajemen User</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .transition-width {
+      transition: width 0.3s;
+    }
+  </style>
 </head>
+<body class="flex h-screen bg-gray-100">
+  @include('admin.sidebar')
 
-<body class="bg-base-200">
-    <div class="drawer lg:drawer-open">
-        <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+  <div class="flex-1 flex flex-col">
+    @include('admin.navbar')
 
-        <div class="drawer-content flex flex-col">
-            <!-- Navbar -->
+    <main class="flex-1 p-6">
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Manajemen User</h1>
+         <button onclick="window.location.href = '{{ route('admin.pengguna.create') }}';" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
+          + Create User
+        </button>
+      </div>
 
-            @include('admin.navbar')
+      <!-- Filter and Search -->
+      <div class="flex flex-wrap gap-4 mb-4">
+        <select class="border-gray-300 rounded px-4 py-2 shadow text-gray-700">
+          <option value="">Filter by...</option>
+          <option value="admin">Admin</option>
+          <option value="customer">Customer</option>
+        </select>
+        <input type="text" placeholder="Search by name..." class="flex-1 border border-gray-300 rounded px-4 py-2 shadow" />
+      </div>
 
-            <!-- Page content -->
-            <div class="p-4 md:p-6">
-                <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-2xl font-bold">User Management</h1>
-                    <a href="{{ route('admin.pengguna.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus mr-2"></i> Add New User
-                    </a>
+      <!-- Table -->
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-200 shadow rounded">
+          <thead class="bg-gray-100 text-gray-600 uppercase text-sm">
+            <tr>
+              <th class="text-left px-6 py-3 border-b">NO</th>
+              <th class="text-left px-6 py-3 border-b">Username</th>
+              <th class="text-left px-6 py-3 border-b">NO HP</th>
+              <th class="text-left px-6 py-3 border-b">Alamat</th>
+              <th class="text-center px-6 py-3 border-b">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($pengguna as $penggunas)
+            <tr class="hover:bg-gray-50 text-gray-700">
+              <td class="px-6 py-4 border-b">{{ $loop->iteration }}</td>
+              <td class="px-6 py-4 border-b">{{ $penggunas->user->username }}</td>
+              <td class="px-6 py-4 border-b">{{ $penggunas->no_hp }}</td>
+              <td class="px-6 py-4 border-b">{{ $penggunas->alamat }}</td>
+              <td class="px-6 py-4 border-b text-center">
+                <div class="flex justify-center space-x-2">
+                  <a href="{{ route('admin.pengguna.edit', $penggunas->user->id) }}" class="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded mr-2">
+                    Update
+                  </a>
+                  <form action="{{ route('admin.pengguna.delete', $penggunas->user->id) }}" method="POST" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded" onclick="return confirm('Yakin ingin menghapus user ini?')">
+                      Delete
+                    </button>
+                  </form>
                 </div>
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+  <script>
+    function toggleCreateForm() {
+      const form = document.getElementById('createUserForm');
+      form.classList.toggle('hidden');
+    }
+    
+    let collapsed = false;
 
-                <!-- Search and filter -->
-                <div class="flex flex-col md:flex-row gap-4 mb-6">
-                    <div class="form-control flex-1">
-                        <div class="input-group">
-                            <input type="text" placeholder="Search users..." class="input input-bordered w-full" />
-                            <button class="btn btn-square">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                    {{-- <select class="select select-bordered w-full md:w-auto">
-                        <option disabled selected>Filter by status</option>
-                        <option>Active</option>
-                        <option>Inactive</option>
-                        <option>Pending</option>
-                    </select> --}}
-                </div>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const logoText = document.getElementById('logoText');
+      const menuTexts = document.querySelectorAll('.menu-text');
 
-                <!-- Users table -->
-                <div class="overflow-x-auto bg-base-100 rounded-lg shadow">
-                    <table class="table w-full">
-                        <thead>
-                            <tr>
+      collapsed = !collapsed;
 
-                                <th>No</th>
-                                <th>Username</th>
-                                <th>No HP</th>
-                                <th>Alamat</th>
-                                <th>Role</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach ($pengguna as $penggunas)
-                                <tr>
-
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $penggunas->user->username }}</td>
-                                    <td>{{ $penggunas->no_hp }}</td>
-                                    <td>{{ $penggunas->alamat }}</td>
-                                    <td>
-                                        @if ($penggunas->user->role_id == '1')
-                                            <span class="badge badge-primary">Admin</span>
-                                        @else
-                                            <span class="badge badge-secondary">Pengguna</span>
-                                        @endif
-                                    <td>
-                                        <div class="flex gap-2">
-                                            <a href="{{ route('admin.pengguna.edit', $penggunas->user->id) }}" class="btn btn-sm btn-info">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form action="{{ route('admin.pengguna.delete', $penggunas->user->id) }}" method="POST" style="display: inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-error" onclick="return confirm('Yakin ingin menghapus pengguna ini?')">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                            
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Pagination -->
-                <div class="flex justify-between items-center mt-6">
-                    <div class="text-sm text-gray-500">
-                        Showing 1-5 of 25 users
-                    </div>
-                    <div class="join">
-                        <button class="join-item btn">«</button>
-                        <button class="join-item btn btn-active">1</button>
-                        <button class="join-item btn">2</button>
-                        <button class="join-item btn">3</button>
-                        <button class="join-item btn">4</button>
-                        <button class="join-item btn">»</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sidebar -->
-        @include('admin.sidebar')
-
-    </div>
-
-    <script>
-        // Simple toggle for mobile menu
-        document.addEventListener('DOMContentLoaded', function() {
-            const drawer = document.getElementById('my-drawer');
-
-            // Close drawer when clicking on menu items on mobile
-            if (window.innerWidth < 1024) {
-                const menuItems = document.querySelectorAll('.drawer-side .menu a');
-                menuItems.forEach(item => {
-                    item.addEventListener('click', () => {
-                        drawer.checked = false;
-                    });
-                });
-            }
-        });
-    </script>
+      if (collapsed) {
+        sidebar.classList.remove('w-64');
+        sidebar.classList.add('w-20');
+        logoText.classList.add('hidden');
+        menuTexts.forEach(text => text.classList.add('hidden'));
+      } else {
+        sidebar.classList.remove('w-20');
+        sidebar.classList.add('w-64');
+        logoText.classList.remove('hidden');
+        menuTexts.forEach(text => text.classList.remove('hidden'));
+      }
+    }
+  </script>
 </body>
-
 </html>

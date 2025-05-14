@@ -1,4 +1,4 @@
-<div class="w-full navbar bg-base-100 shadow-md">
+<!-- <div class="w-full navbar bg-base-100 shadow-md">
     <div class="flex-none lg:hidden">
         <label for="my-drawer" class="btn btn-square btn-ghost">
             <i class="fas fa-bars"></i>
@@ -19,4 +19,12 @@
             </ul>
         </div>
     </div>
-</div>
+</div> -->
+
+<header class="h-16 bg-white shadow-md flex items-center justify-between px-6">
+  <div class="text-xl font-semibold"></div>
+  <div class="flex items-center space-x-4">
+    <span class="text-gray-700 font-medium">Halo, Admin Hasan</span>
+    <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Logout</button>
+  </div>
+</header>
