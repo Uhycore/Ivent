@@ -13,6 +13,8 @@
 <body class="bg-base-200">
     <div class="drawer lg:drawer-open">
         <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+        <!-- Sidebar -->
+        @include('admin.sidebar')
 
         <div class="drawer-content flex flex-col">
             <!-- Navbar -->
@@ -29,7 +31,8 @@
 
                 <!-- Edit User Form -->
                 <div class="bg-base-100 p-6 rounded-lg shadow-md">
-                    <form method="POST" action="{{ route('admin.pengguna.update', $user->id) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('admin.pengguna.update', $user->id) }}"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -38,8 +41,8 @@
                                 <label class="label" for="username">
                                     <span class="label-text">Username</span>
                                 </label>
-                                <input type="text" id="username" name="username" placeholder="Enter username" 
-                                    class="input input-bordered @error('username') input-error @enderror" 
+                                <input type="text" id="username" name="username" placeholder="Enter username"
+                                    class="input input-bordered @error('username') input-error @enderror"
                                     value="{{ old('username', $user->username) }}" required />
                                 @error('username')
                                     <span class="text-error text-sm">{{ $message }}</span>
@@ -51,7 +54,7 @@
                                 <label class="label" for="password">
                                     <span class="label-text">Password (Kosongkan jika tidak diubah)</span>
                                 </label>
-                                <input type="password" id="password" name="password" placeholder="Enter password" 
+                                <input type="password" id="password" name="password" placeholder="Enter password"
                                     class="input input-bordered @error('password') input-error @enderror" />
                                 @error('password')
                                     <span class="text-error text-sm">{{ $message }}</span>
@@ -62,7 +65,7 @@
                                 <label class="label" for="password_confirmation">
                                     <span class="label-text">Confirm Password</span>
                                 </label>
-                                <input type="password" id="password_confirmation" name="password_confirmation" 
+                                <input type="password" id="password_confirmation" name="password_confirmation"
                                     placeholder="Confirm password" class="input input-bordered" />
                             </div>
 
@@ -70,8 +73,8 @@
                                 <label class="label" for="no_hp">
                                     <span class="label-text">No HP</span>
                                 </label>
-                                <input type="tel" id="no_hp" name="no_hp" placeholder="Enter phone number" 
-                                    class="input input-bordered @error('no_hp') input-error @enderror" 
+                                <input type="tel" id="no_hp" name="no_hp" placeholder="Enter phone number"
+                                    class="input input-bordered @error('no_hp') input-error @enderror"
                                     value="{{ old('no_hp', $user->pengguna->no_hp) }}" required />
                                 @error('no_hp')
                                     <span class="text-error text-sm">{{ $message }}</span>
@@ -82,27 +85,28 @@
                                 <label class="label" for="alamat">
                                     <span class="label-text">Alamat</span>
                                 </label>
-                                <textarea id="alamat" name="alamat" class="textarea textarea-bordered h-24 @error('alamat') textarea-error @enderror" 
-                                    placeholder="Enter address" required>{{ old('alamat', $user->pengguna->alamat) }}</textarea>
+                                <textarea id="alamat" name="alamat"
+                                    class="textarea textarea-bordered h-24 @error('alamat') textarea-error @enderror" placeholder="Enter address"
+                                    required>{{ old('alamat', $user->pengguna->alamat) }}</textarea>
                                 @error('alamat')
                                     <span class="text-error text-sm">{{ $message }}</span>
                                 @enderror
                             </div>
 
 
-                        <div class="form-control mt-8">
-                            <div class="flex justify-end gap-4">
-                                <a href="{{ route('admin.pengguna.index') }}" class="btn btn-ghost">Cancel</a>
-                                <button type="submit" class="btn btn-primary">Update User</button>
+                            <div class="form-control mt-8">
+                                <div class="flex justify-end gap-4">
+                                    <a href="{{ route('admin.pengguna.index') }}" class="btn btn-ghost">Cancel</a>
+                                    <button type="submit" class="btn btn-primary">Update User</button>
+                                </div>
                             </div>
-                        </div>
                     </form>
                 </div>
             </div>
         </div>
 
-        <!-- Sidebar -->
-        @include('admin.sidebar')
+
     </div>
 </body>
+
 </html>
