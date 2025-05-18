@@ -6,24 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
         Schema::create('event', function (Blueprint $table) {
-            $table->id();  // id sebagai primary key dengan auto increment
-            $table->string('nama_event', 100);  // kolom nama_event
-            $table->date('tanggal');  // kolom tanggal
-            $table->text('deskripsi');  // kolom deskripsi
-            $table->timestamps();  // kolom created_at dan updated_at
+            $table->id();
+            $table->string('nama_event', 100);
+            $table->date('tanggal');
+            $table->text('deskripsi');
+            $table->string('tipe_event', 20)->comment('perorangan, kelompok, semua');
+            $table->integer('kuota')->comment('Kuota peserta maksimal per event');
+            $table->integer('max_anggota_kelompok')->nullable()->comment('Maks anggota per kelompok jika tipe_event kelompok atau semua');
+            $table->timestamps();
         });
     }
 
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('event');

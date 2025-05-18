@@ -33,12 +33,19 @@ class EventController extends Controller
             'nama_event' => 'required|string|max:255',
             'tanggal' => 'required|date',
             'deskripsi' => 'required|string',
+            'tipe_event' => 'required|string|in:semua,perorangan,kelompok',
+            'kuota' => 'required|integer|min:1',
+            'max_anggota_kelompok' => 'required|integer|min:1',
         ]);
+
 
         Event::create([
             'nama_event' => $request->nama_event,
             'tanggal' => $request->tanggal,
             'deskripsi' => $request->deskripsi,
+            'tipe_event' => $request->tipe_event,
+            'kuota' => $request->kuota,
+            'max_anggota_kelompok' => $request->max_anggota_kelompok,
         ]);
 
         return redirect()->route('admin.event.index')->with('success', 'Event berhasil ditambahkan!');
@@ -65,12 +72,17 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
+
     public function update(Request $request, string $id)
     {
         $request->validate([
             'nama_event' => 'required|string|max:255',
             'tanggal' => 'required|date',
             'deskripsi' => 'required|string',
+            'tipe_event' => 'required|string|in:semua,perorangan,kelompok',
+            'kuota' => 'required|integer|min:1',
+            'max_anggota_kelompok' => 'required|integer|min:1',
         ]);
 
         $event = Event::findOrFail($id);
@@ -78,10 +90,14 @@ class EventController extends Controller
             'nama_event' => $request->nama_event,
             'tanggal' => $request->tanggal,
             'deskripsi' => $request->deskripsi,
+            'tipe_event' => $request->tipe_event,
+            'kuota' => $request->kuota,
+            'max_anggota_kelompok' => $request->max_anggota_kelompok,
         ]);
 
         return redirect()->route('admin.event.index')->with('success', 'Event berhasil diperbarui!');
     }
+
 
     /**
      * Remove the specified resource from storage.

@@ -1,35 +1,36 @@
 <?php
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Authenticatable
 {
-    // Menghubungkan dengan tabel 'users' (Laravel secara default akan mencari tabel users)
-    protected $table = 'user';
+    use HasFactory, Notifiable;
 
-    // Kolom yang bisa diisi secara mass-assignment
+    protected $table = 'user'; // Jika nama tabel kamu bukan 'users'
+
     protected $fillable = ['role_id', 'username', 'password'];
 
-    // Relasi dengan tabel 'roles' (satu user memiliki satu role)
+    protected $hidden = ['password'];
+
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
 
-    // Relasi dengan tabel 'admin' (satu user bisa memiliki satu admin)
     public function admin()
     {
         return $this->hasOne(Admin::class);
     }
 
-    // Relasi dengan tabel 'pengguna' (satu user bisa memiliki satu pengguna)
     public function pengguna()
     {
         return $this->hasOne(Pengguna::class);
     }
 
-    // Relasi dengan tabel 'pendaftaran' (satu user bisa memiliki banyak pendaftaran)
     public function pendaftarans()
     {
         return $this->hasMany(Pendaftaran::class);

@@ -40,19 +40,25 @@
                             <th class="text-left px-6 py-3 border-b">Nama Event</th>
                             <th class="text-left px-6 py-3 border-b">Tanggal</th>
                             <th class="text-left px-6 py-3 border-b">Deskripsi</th>
-
+                            <th class="text-left px-6 py-3 border-b">Tipe Event</th>
+                            <th class="text-center px-6 py-3 border-b">Kuota</th>
+                            <th class="text-center px-6 py-3 border-b">Max Anggota Kelompok</th>
                             <th class="text-center px-6 py-3 border-b">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Contoh data -->
                         @foreach ($event as $events)
                             <tr class="hover:bg-gray-50 text-gray-700">
                                 <td class="px-6 py-4 border-b">{{ $loop->iteration }}</td>
                                 <td class="px-6 py-4 border-b">{{ $events->nama_event }}</td>
-                                <td class="px-6 py-4 border-b">{{ $events->tanggal }}</td>
+                                <td class="px-6 py-4 border-b">
+                                    {{ \Carbon\Carbon::parse($events->tanggal)->format('d-m-Y') }}</td>
                                 <td class="px-6 py-4 border-b">{{ $events->deskripsi }}</td>
-
+                                <td class="px-6 py-4 border-b capitalize">{{ $events->tipe_event }}</td>
+                                <td class="px-6 py-4 border-b text-center">{{ $events->kuota }}</td>
+                                <td class="px-6 py-4 border-b text-center">
+                                    {{ $events->max_anggota_kelompok ?? '-' }}
+                                </td>
                                 <td class="px-6 py-4 border-b text-center">
                                     <div class="flex justify-center space-x-2">
                                         <a href="{{ route('admin.event.edit', $events->id) }}"
@@ -65,7 +71,7 @@
                                             @method('DELETE')
                                             <button type="submit"
                                                 class="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded"
-                                                onclick="return confirm('Yakin ingin menghapus user ini?')">
+                                                onclick="return confirm('Yakin ingin menghapus event ini?')">
                                                 Delete
                                             </button>
                                         </form>
@@ -73,8 +79,8 @@
                                 </td>
                             </tr>
                         @endforeach
-                        <!-- Tambahkan baris lain sesuai data -->
                     </tbody>
+
                 </table>
             </div>
         </main>

@@ -45,6 +45,49 @@
                             @enderror
                         </div>
 
+                        <!-- Tipe Event -->
+                        <div>
+                            <label for="tipe_event" class="block text-gray-700 font-medium mb-1">Tipe Event</label>
+                            <select id="tipe_event" name="tipe_event"
+                                class="w-full border border-gray-300 rounded px-4 py-2 @error('tipe_event') border-red-500 @enderror"
+                                required>
+                                <option value="" disabled selected>Pilih tipe event</option>
+                                <option value="perorangan" {{ old('tipe_event') == 'perorangan' ? 'selected' : '' }}>
+                                    Perorangan</option>
+                                <option value="kelompok" {{ old('tipe_event') == 'kelompok' ? 'selected' : '' }}>
+                                    Kelompok</option>
+                                <option value="semua" {{ old('tipe_event') == 'semua' ? 'selected' : '' }}>Semua
+                                </option>
+                            </select>
+                            @error('tipe_event')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Kuota -->
+                        <div>
+                            <label for="kuota" class="block text-gray-700 font-medium mb-1">Kuota Peserta</label>
+                            <input type="number" id="kuota" name="kuota" min="1"
+                                class="w-full border border-gray-300 rounded px-4 py-2 @error('kuota') border-red-500 @enderror"
+                                placeholder="Masukkan kuota peserta" value="{{ old('kuota') }}" required>
+                            @error('kuota')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Max Anggota Kelompok -->
+                        <div>
+                            <label for="max_anggota_kelompok" class="block text-gray-700 font-medium mb-1">Maks Anggota
+                                Kelompok</label>
+                            <input type="number" id="max_anggota_kelompok" name="max_anggota_kelompok" min="1"
+                                class="w-full border border-gray-300 rounded px-4 py-2 @error('max_anggota_kelompok') border-red-500 @enderror"
+                                placeholder="Isi jika tipe event kelompok/semua"
+                                value="{{ old('max_anggota_kelompok') }}">
+                            @error('max_anggota_kelompok')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                         <!-- Deskripsi -->
                         <div class="md:col-span-2">
                             <label for="deskripsi" class="block text-gray-700 font-medium mb-1">Deskripsi</label>
@@ -65,6 +108,7 @@
                         </button>
                     </div>
                 </form>
+
             </div>
         </main>
     </div>

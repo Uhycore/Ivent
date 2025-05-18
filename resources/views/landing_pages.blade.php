@@ -11,11 +11,6 @@
 </head>
 
 <body>
-    <?php
-    echo "<pre>";
-    print_r($event->toArray());
-    echo "</pre>";
-    ?>
     <!-- Navigation Bar -->
     <div class="navbar bg-base-100 shadow-md sticky top-0 z-50">
         <div class="navbar-start">
@@ -52,7 +47,7 @@
         </div>
         <div class="navbar-end">
             <a href="{{ route('login') }}" class="btn btn-ghost">Login</a>
-            <a href="register.html" class="btn btn-primary">Register</a>
+            <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
         </div>
     </div>
 
@@ -61,7 +56,7 @@
         <div class="hero-overlay bg-opacity-60"></div>
         <div class="hero-content text-center text-neutral-content">
             <div class="max-w-md">
-                <h1 class="mb-5 text-5xl font-bold">Posisi sudah login</h1>
+                <h1 class="mb-5 text-5xl font-bold">SportsFest 2023</h1>
                 <p class="mb-5">Join us for the ultimate sports experience. Compete, connect, and celebrate the spirit
                     of sportsmanship.</p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">

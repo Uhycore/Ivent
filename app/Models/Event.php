@@ -11,7 +11,15 @@ class Event extends Model
     protected $table = 'event';
     use HasFactory;
 
-    protected $fillable = ['nama_event', 'tanggal', 'deskripsi'];
+    protected $fillable = [
+        'nama_event',
+        'tanggal',
+        'deskripsi',
+        'tipe_event',
+        'kuota',
+        'max_anggota_kelompok',
+    ];
+
 
     public function pendaftarans()
     {
@@ -19,4 +27,3 @@ class Event extends Model
         return $this->hasMany(Pendaftaran::class);
     }
 }
-

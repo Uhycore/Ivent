@@ -5,6 +5,13 @@
     </div>
     <nav class="mt-0 flex-1 bg-blue-100">
         <ul>
+            {{-- <!-- User -->
+            <a href="{{ route('admin.admin.index') }}">
+                <li class="flex items-center px-6 py-3 hover:bg-gray-200 cursor-pointer">
+                    <span class="material-icons mr-3">👤</span>
+                    <span class="menu-text">Admin</span>
+                </li>
+            </a> --}}
             <!-- User -->
             <a href="{{ route('admin.pengguna.index') }}">
                 <li class="flex items-center px-6 py-3 hover:bg-gray-200 cursor-pointer">
@@ -20,7 +27,7 @@
                 </li>
             </a>
             <!-- Event -->
-            <li class="px-6 py-3 hover:bg-gray-200 cursor-pointer" onclick="toggleEventSubmenu()">
+            {{-- <li class="px-6 py-3 hover:bg-gray-200 cursor-pointer" onclick="toggleEventSubmenu()">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <span class="mr-3">📅</span>
@@ -36,7 +43,7 @@
                         Kelompok</a></li>
                 <li id="event-submenu"><a href="../../admin/Event/PeroranganList.php" class="hover:text-blue-600">Event
                         Perorangan</a></li>
-            </ul>
+            </ul> --}}
         </ul>
     </nav>
 </aside>
