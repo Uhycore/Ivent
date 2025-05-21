@@ -43,6 +43,7 @@
                             <th class="text-left px-6 py-3 border-b">Tipe Event</th>
                             <th class="text-center px-6 py-3 border-b">Kuota</th>
                             <th class="text-center px-6 py-3 border-b">Max Anggota Kelompok</th>
+                            <th class="text-left px-6 py-3 border-b">Gambar</th>
                             <th class="text-center px-6 py-3 border-b">Aksi</th>
                         </tr>
                     </thead>
@@ -59,6 +60,13 @@
                                 <td class="px-6 py-4 border-b text-center">
                                     {{ $events->max_anggota_kelompok ?? '-' }}
                                 </td>
+                                <td class="px-6 py-4 border-b">
+                                    @if ($events->gambar)
+                                        <img src="{{ asset('storage/' . $events->gambar) }}" alt="Gambar Event"
+                                            class="w-16 h-16 object-cover rounded">
+                                    @else
+                                        -
+                                    @endif
                                 <td class="px-6 py-4 border-b text-center">
                                     <div class="flex justify-center space-x-2">
                                         <a href="{{ route('admin.event.edit', $events->id) }}"

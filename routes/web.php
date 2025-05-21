@@ -7,32 +7,42 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PenggunaDashboardController;
+use App\Http\Controllers\GuestController;
 
-Route::get('/', function () {
-    return view('landing_pages');
-});
+// Route::get('/', function () {
+//     return view('landing_pages');
+// });
+
+Route::get('/', [GuestController::class, 'index'])->name('guest.landing_pages');
+
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout'); // Hanya sekali didefinisikan
 
 
-
+// Group Middleware
 Route::middleware(['auth', 'role:pengguna'])->group(function () {
-    Route::prefix('dashboard')->group(function () {
-        Route::get('/', [PenggunaDashboardController::class, 'index'])->name('user.dashboard');
+    Route::prefix('landing_pages')->group(function () {
+        Route::get('/', [PenggunaDashboardController::class, 'index'])->name('user.landing_pages');
     });
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
 
+
+// Route untuk setelah login
+// Route::middleware(['auth', 'role:pengguna'])->group(function () {
+//     Route::get('/landing_pages', [PenggunaDashboardController::class, 'index'])->name('landing_pages');
+// });
+//Route::get('/landing_pages', [PenggunaDashboardController::class, 'index'])->name('landing_pages');
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
-
 
     Route::prefix('admin/pengguna')->group(function () {
         Route::get('/', [PenggunaController::class, 'index'])->name('admin.pengguna.index');

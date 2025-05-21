@@ -79,7 +79,7 @@
                         <div>
                             <label for="max_anggota_kelompok" class="block text-gray-700 font-medium mb-1">Maks Anggota
                                 Kelompok</label>
-                            <input type="number" id="max_anggota_kelompok" name="max_anggota_kelompok" min="1"
+                            <input type="number" id="max_anggota_kelompok" name="max_anggota_kelompok" min="0"
                                 class="w-full border border-gray-300 rounded px-4 py-2 @error('max_anggota_kelompok') border-red-500 @enderror"
                                 placeholder="Isi jika tipe event kelompok/semua"
                                 value="{{ old('max_anggota_kelompok') }}">
@@ -99,6 +99,16 @@
                             @enderror
                         </div>
                     </div>
+
+                    <!-- Gambar -->
+                    <div class="mt-4">
+                        <label for="gambar" class="block text-gray-700 font-medium mb-1">Gambar Event</label>
+                        <input type="file" id="gambar" name="gambar"
+                            class="w-full border border-gray-300 rounded px-4 py-2 @error('gambar') border-red-500 @enderror"
+                            accept="image/*">
+                        @error('gambar')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
 
                     <!-- Tombol Simpan -->
                     <div class="mt-6">

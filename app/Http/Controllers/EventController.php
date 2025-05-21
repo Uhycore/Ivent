@@ -35,7 +35,8 @@ class EventController extends Controller
             'deskripsi' => 'required|string',
             'tipe_event' => 'required|string|in:semua,perorangan,kelompok',
             'kuota' => 'required|integer|min:1',
-            'max_anggota_kelompok' => 'required|integer|min:1',
+            'max_anggota_kelompok' => 'required_if:tipe_event,kelompok|required_if:tipe_event,semua|nullable|integer|min:1',
+            'gambar' => '',
         ]);
 
 
@@ -46,6 +47,7 @@ class EventController extends Controller
             'tipe_event' => $request->tipe_event,
             'kuota' => $request->kuota,
             'max_anggota_kelompok' => $request->max_anggota_kelompok,
+            'gambar' => $request->file('gambar') ? $request->file('gambar')->store('event_images', 'public') : null,
         ]);
 
         return redirect()->route('admin.event.index')->with('success', 'Event berhasil ditambahkan!');
@@ -82,7 +84,8 @@ class EventController extends Controller
             'deskripsi' => 'required|string',
             'tipe_event' => 'required|string|in:semua,perorangan,kelompok',
             'kuota' => 'required|integer|min:1',
-            'max_anggota_kelompok' => 'required|integer|min:1',
+            'max_anggota_kelompok' => 'required|integer|nullable',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $event = Event::findOrFail($id);
@@ -93,6 +96,7 @@ class EventController extends Controller
             'tipe_event' => $request->tipe_event,
             'kuota' => $request->kuota,
             'max_anggota_kelompok' => $request->max_anggota_kelompok,
+            'gambar' => $request->file('gambar') ? $request->file('gambar')->store('event_images', 'public') : $event->gambar,
         ]);
 
         return redirect()->route('admin.event.index')->with('success', 'Event berhasil diperbarui!');
@@ -106,6 +110,8 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $event->delete();
+
+
 
         return redirect()->route('admin.event.index')->with('success', 'Event berhasil dihapus!');
     }
