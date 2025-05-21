@@ -13,7 +13,7 @@ class AuthController extends Controller
     // Tampilkan form login
     public function showLoginForm()
     {
-        return view('user.auth.login');
+        return view('landing_pages');
     }
 
     // Proses login manual
@@ -33,7 +33,7 @@ class AuthController extends Controller
             } else {
 
                 
-                return redirect()->route('user.dashboard');
+                return redirect()->route('user.landing_pages');
             }
         }
 
@@ -43,7 +43,7 @@ class AuthController extends Controller
     // Tampilkan form register
     public function showRegisterForm()
     {
-        return view('user.auth.register');
+        return view('landing_pages');
     }
     // Proses register
     public function register(Request $request)
@@ -51,7 +51,7 @@ class AuthController extends Controller
         $request->validate([
             'username' => 'required|string|max:255',
             // 'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8',
             // 'full_name' => 'required|string|max:255',
             'no_hp' => 'required|string|max:20',
             'alamat' => 'required|string',
@@ -86,7 +86,9 @@ class AuthController extends Controller
             // 'profile_picture' => $profilePicturePath,
         ]);
 
-        return redirect()->route('login.form')->with('success', 'Registrasi berhasil! Silakan login.');
+        
+
+        return redirect()->route('guest.landing_pages')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 
     // Logout user
@@ -97,6 +99,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login.form');
+        return redirect('/')->with('success', 'Anda telah logout.');
     }
 }

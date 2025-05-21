@@ -18,6 +18,7 @@ class Event extends Model
         'tipe_event',
         'kuota',
         'max_anggota_kelompok',
+        'gambar',
     ];
 
 
