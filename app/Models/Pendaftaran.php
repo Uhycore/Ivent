@@ -9,26 +9,25 @@ class Pendaftaran extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'event_id', 'tipe_pendaftaran', 'status', 'tanggal_daftar'];
+    protected $table = 'pendaftaran';
 
+    protected $fillable = [
+        'user_id',
+        'event_id',
+        'tipe_pendaftaran',
+        'status',
+        'tanggal_daftar',
+    ];
+
+    // Relasi ke User
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    // Relasi ke Event
     public function event()
     {
         return $this->belongsTo(Event::class);
     }
-
-    public function perorangan()
-    {
-        return $this->hasOne(Perorangan::class);
-    }
-
-    public function kelompok()
-    {
-        return $this->hasOne(Kelompok::class);
-    }
 }
-

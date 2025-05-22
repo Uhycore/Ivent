@@ -5,9 +5,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\PenggunaController;
-use App\Http\Controllers\PenggunaDashboardController;
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\PenggunaDashboardController;
 
 // Route::get('/', function () {
 //     return view('landing_pages');
@@ -28,6 +29,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout'); // Ha
 Route::middleware(['auth', 'role:pengguna'])->group(function () {
     Route::prefix('landing_pages')->group(function () {
         Route::get('/', [PenggunaDashboardController::class, 'index'])->name('user.landing_pages');
+    });
+
+    Route::prefix('pendaftaran')->group(function () {
+        Route::get('/', [PendaftaranController::class, 'index'])->name('pendaftaran.index');
+        Route::get('/create/{eventId}', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
+        Route::post('/store', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
+        Route::get('/success', [PendaftaranController::class, 'success'])->name('pendaftaran.success');
     });
 });
 

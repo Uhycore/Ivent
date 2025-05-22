@@ -1,7 +1,7 @@
 <aside id="sidebar" class="bg-white shadow-md transition-width duration-300 w-64 flex flex-col">
     <div class="h-16 flex items-center justify-between px-4 border-b">
         <span id="logoText" class="text-xl font-bold">Dashboard</span>
-        <button onclick="toggleSidebar()" class="text-gray-600 hover:text-gray-900">↔️</button>
+        <button onclick="toggleEventSubmenu()" class="text-gray-600 hover:text-gray-900">↔️</button>
     </div>
     <nav class="mt-0 flex-1 bg-blue-100">
         <ul>
