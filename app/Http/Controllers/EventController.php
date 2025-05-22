@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -109,6 +110,13 @@ class EventController extends Controller
     public function destroy(string $id)
     {
         $event = Event::findOrFail($id);
+// dd($event->gambar);
+
+          // Hapus file gambar jika ada
+    if ($event->gambar) {
+        // Path gambar di storage/app/public/event_images/filename.jpg
+         Storage::disk('public')->delete($event->gambar);
+    }
         $event->delete();
 
 

@@ -9,11 +9,17 @@
     <title>Ivent</title>
 </head>
  <?php
+ 
+ 
     // echo "<pre>";
     // print_r($events->toArray());
     // echo "</pre>";
     ?>
+    
+    
 <body>
+    
+    
     <!-- Popup Login -->
     <div class="popup" id="loginPopup">
     <div class="popup-content">
