@@ -117,7 +117,7 @@ class EventController extends Controller
         // Path gambar di storage/app/public/event_images/filename.jpg
          Storage::disk('public')->delete($event->gambar);
     }
-        $event->delete();
+        $event->delete() ;
 
 
 
