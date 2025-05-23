@@ -30,14 +30,15 @@ Route::middleware(['auth', 'role:pengguna'])->group(function () {
     Route::prefix('landing_pages')->group(function () {
         Route::get('/', [PenggunaDashboardController::class, 'index'])->name('user.landing_pages');
     });
-
-    Route::prefix('pendaftaran')->group(function () {
-        Route::get('/', [PendaftaranController::class, 'index'])->name('pendaftaran.index');
-        Route::get('/create/{eventId}', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
-        Route::post('/store', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
-        Route::get('/success', [PendaftaranController::class, 'success'])->name('pendaftaran.success');
-    });
 });
+
+Route::prefix('pendaftaran')->group(function () {
+    Route::get('/', [PendaftaranController::class, 'index'])->name('pendaftaran.index');
+    Route::get('/create/{eventId}', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
+    Route::post('/store', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
+    Route::get('/success', [PendaftaranController::class, 'success'])->name('pendaftaran.success');
+});
+
 
 
 
@@ -51,6 +52,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    Route::prefix('admin/pendaftar')->group(function () {
+        Route::get('/', [AdminController::class, 'showPendaftar'])->name('admin.pendaftar');
+        // Route::get('/detail/{id}', [AdminController::class, 'showDetailPendaftar'])->name('admin.pendaftar.detail');
+        // Route::delete('/delete/{id}', [AdminController::class, 'destroy'])->name('admin.pendaftar.delete');
+    });
 
     Route::prefix('admin/pengguna')->group(function () {
         Route::get('/', [PenggunaController::class, 'index'])->name('admin.pengguna.index');

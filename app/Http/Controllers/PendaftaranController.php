@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Pendaftaran;
-use App\Models\Event;
 use Carbon\Carbon;
+use App\Models\Event;
+use App\Models\Kelompok;
+use App\Models\Perorangan;
+use App\Models\Pendaftaran;
+use Illuminate\Http\Request;
+use App\Models\AnggotaKelompok;
 use Illuminate\Support\Facades\Auth;
 
 class PendaftaranController extends Controller
@@ -24,26 +27,38 @@ class PendaftaranController extends Controller
     }
 
     // Simpan data pendaftaran
+
+
+
     public function store(Request $request)
     {
         $request->validate([
             'event_id' => 'required|exists:event,id',
             'tipe_pendaftaran' => 'required|in:perorangan,kelompok',
+            'nama_lengkap' => 'required_if:tipe_pendaftaran,perorangan',
+            'no_hp' => 'required_if:tipe_pendaftaran,perorangan',
+            'alamat' => 'required_if:tipe_pendaftaran,perorangan',
+            'nama_kelompok' => 'required_if:tipe_pendaftaran,kelompok',
+            'no_hp_ketua' => 'required_if:tipe_pendaftaran,kelompok',
+            'alamat_ketua' => 'required_if:tipe_pendaftaran,kelompok',
+            'anggota.*.nama_anggota' => 'required_if:tipe_pendaftaran,kelompok',
+            'anggota.*.no_hp' => 'required_if:tipe_pendaftaran,kelompok',
         ]);
 
         $event = Event::findOrFail($request->event_id);
 
-        // Validasi tipe_pendaftaran sesuai tipe_event
-        if ($event->tipe_event === 'perorangan' && $request->tipe_pendaftaran !== 'perorangan') {
-            return back()->withErrors(['tipe_pendaftaran' => 'Event ini hanya menerima pendaftaran perorangan']);
+
+
+        if (
+            ($event->tipe_event === 'perorangan' && $request->tipe_pendaftaran !== 'perorangan') ||
+            ($event->tipe_event === 'kelompok' && $request->tipe_pendaftaran !== 'kelompok')
+        ) {
+            return back()->withErrors(['tipe_pendaftaran' => 'Tipe pendaftaran tidak sesuai dengan tipe event']);
         }
 
-        if ($event->tipe_event === 'kelompok' && $request->tipe_pendaftaran !== 'kelompok') {
-            return back()->withErrors(['tipe_pendaftaran' => 'Event ini hanya menerima pendaftaran kelompok']);
-        }
 
         // Simpan pendaftaran
-        Pendaftaran::create([
+        $pendaftaran = Pendaftaran::create([
             'user_id' => Auth::id(),
             'event_id' => $request->event_id,
             'tipe_pendaftaran' => $request->tipe_pendaftaran,
@@ -51,12 +66,56 @@ class PendaftaranController extends Controller
             'tanggal_daftar' => Carbon::now(),
         ]);
 
-        return redirect()->route('pendaftaran.success')->with('success', 'Pendaftaran berhasil dikirim!');
+        if ($request->tipe_pendaftaran === 'perorangan') {
+            Perorangan::create([
+                'pendaftaran_id' => $pendaftaran->id,
+                'nama_lengkap' => $request->nama_lengkap,
+                'no_hp' => $request->no_hp,
+                'alamat' => $request->alamat,
+            ]);
+        }
+
+        if ($request->tipe_pendaftaran === 'kelompok') {
+            $kelompok = Kelompok::create([
+                'pendaftaran_id' => $pendaftaran->id,
+                'nama_kelompok' => $request->nama_kelompok,
+                'no_hp_ketua' => $request->no_hp_ketua,
+                'alamat_ketua' => $request->alamat_ketua,
+            ]);
+
+            $namaAnggota = $request->nama_anggota;
+            $noHpAnggota = $request->no_hp_anggota;
+
+            foreach ($namaAnggota as $index => $nama) {
+                $noHp = $noHpAnggota[$index];
+
+
+
+                AnggotaKelompok::create([
+                    'kelompok_id' => $kelompok->id,
+                    'nama_anggota' => $nama,
+                    'no_hp' => $noHp,
+                ]);
+            }
+        }
+
+        echo "<pre>";
+        print_r($pendaftaran);
+        echo "</pre>";
+        echo "<pre>";
+        print_r($kelompok);
+        echo "</pre>";
+
+        echo "<pre>";
+        print_r($request);
+        echo "</pre>";
+        // Redirect ke halaman sukses
+
     }
 
-    // Halaman sukses pendaftaran (opsional)
+
     public function success()
     {
-        return view('pendaftaran.success');
+        return view('success_pendaftaran');
     }
 }

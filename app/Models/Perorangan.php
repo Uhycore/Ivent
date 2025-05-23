@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Perorangan extends Model
 {
     use HasFactory;
+    protected $table = 'perorangan';
 
     protected $fillable = ['pendaftaran_id', 'nama_lengkap', 'no_hp', 'alamat'];
 

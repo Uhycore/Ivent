@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -62,5 +63,10 @@ class AdminController extends Controller
     public function destroy(Admin $admin)
     {
         //
+    }
+    public function showPendaftar()
+    {
+        $pendaftarans = Pendaftaran::with(['event', 'user', 'perorangan', 'kelompok.anggota_kelompok'])->get();
+        return view('admin.pendaftar', compact('pendaftarans'));
     }
 }

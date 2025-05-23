@@ -9,6 +9,8 @@ class Kelompok extends Model
 {
     use HasFactory;
 
+    protected $table = 'kelompok';
+
     protected $fillable = ['pendaftaran_id', 'nama_kelompok', 'no_hp_ketua', 'alamat_ketua'];
 
     public function pendaftaran()
@@ -16,7 +18,7 @@ class Kelompok extends Model
         return $this->belongsTo(Pendaftaran::class);
     }
 
-    public function anggotaKelompoks()
+    public function anggota_kelompok()
     {
         return $this->hasMany(AnggotaKelompok::class);
     }

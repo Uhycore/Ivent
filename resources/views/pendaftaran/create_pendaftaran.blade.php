@@ -10,7 +10,7 @@
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
 
-    <div class="bg-white shadow-md rounded-lg max-w-lg w-full p-6">
+    <div class="bg-white shadow-md rounded-lg max-w-xl w-full p-6">
         <h2 class="text-3xl font-semibold mb-6 text-center">Daftar Event: <span
                 class="text-blue-600">{{ $event->nama_event }}</span></h2>
 
@@ -31,7 +31,8 @@
             <div>
                 <label for="tipe_pendaftaran" class="block mb-2 font-medium text-gray-700">Tipe Pendaftaran</label>
                 <select id="tipe_pendaftaran" name="tipe_pendaftaran" required
-                    class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                    class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm"
+                    onchange="toggleForm()">
                     @if ($event->tipe_event == 'perorangan' || $event->tipe_event == 'semua')
                         <option value="perorangan">Perorangan</option>
                     @endif
@@ -41,20 +42,90 @@
                 </select>
             </div>
 
+            {{-- Form perorangan --}}
+            <div id="form_perorangan" class="space-y-4">
+                <div>
+                    <label class="block font-medium">Nama Lengkap</label>
+                    <input type="text" name="nama_lengkap" class="form-input w-full" />
+                </div>
+                <div>
+                    <label class="block font-medium">No HP</label>
+                    <input type="text" name="no_hp" class="form-input w-full" />
+                </div>
+                <div>
+                    <label class="block font-medium">Alamat</label>
+                    <textarea name="alamat" rows="2" class="form-textarea w-full"></textarea>
+                </div>
+            </div>
+
+            <!-- Form Kelompok -->
+            <div id="form_kelompok" class="space-y-4 hidden">
+                <div>
+                    <label class="block mb-1 font-medium">Nama Kelompok</label>
+                    <input type="text" name="nama_kelompok" required class="w-full border rounded p-2" />
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">No HP Ketua</label>
+                    <input type="text" name="no_hp_ketua" required class="w-full border rounded p-2" />
+                </div>
+                <div>
+                    <label class="block mb-1 font-medium">Alamat Ketua</label>
+                    <input type="text" name="alamat_ketua" required class="w-full border rounded p-2" />
+                </div>
+
+                <div id="anggota_fields" class="space-y-2">
+                    <label class="block mb-1 font-semibold text-gray-700">Anggota Kelompok</label>
+                    @for ($i = 1; $i <= $event->max_anggota_kelompok; $i++)
+                        <div class="flex space-x-2">
+                            <input type="text" name="nama_anggota[]" placeholder="Nama Anggota {{ $i }}"
+                                class="w-full border rounded p-2" required>
+                            <input type="text" name="no_hp_anggota[]" placeholder="No HP Anggota {{ $i }}"
+                                class="w-full border rounded p-2" required>
+                        </div>
+                    @endfor
+                </div>
+            </div>
+
+
             <button type="submit"
                 class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md transition-colors duration-300">
                 Daftar
             </button>
         </form>
     </div>
-    <?php
-    echo "<pre>";
-    print_r($event->toArray());
-    echo "</pre>";
-    echo "<pre>";
-    print_r($user->toArray());
-    echo "</pre>";
-    ?>
+
+    <script>
+        function toggleForm() {
+            const tipe = document.getElementById('tipe_pendaftaran').value;
+
+            const formPerorangan = document.getElementById('form_perorangan');
+            const formKelompok = document.getElementById('form_kelompok');
+
+            // Tampilkan atau sembunyikan form
+            formPerorangan.classList.toggle('hidden', tipe !== 'perorangan');
+            formKelompok.classList.toggle('hidden', tipe !== 'kelompok');
+
+            // Set required hanya di input yang terlihat
+            setFormRequired(formPerorangan, tipe === 'perorangan');
+            setFormRequired(formKelompok, tipe === 'kelompok');
+        }
+
+        function setFormRequired(container, isRequired) {
+            const inputs = container.querySelectorAll('input');
+            inputs.forEach(input => {
+                if (isRequired) {
+                    input.setAttribute('required', 'required');
+                } else {
+                    input.removeAttribute('required');
+                }
+            });
+        }
+
+        document.getElementById('tipe_pendaftaran').addEventListener('change', toggleForm);
+        document.addEventListener('DOMContentLoaded', toggleForm);
+    </script>
+
+
 
 </body>
 

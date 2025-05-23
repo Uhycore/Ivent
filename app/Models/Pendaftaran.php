@@ -30,4 +30,16 @@ class Pendaftaran extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+    // Relasi ke Perorangan
+    public function perorangan()
+    {
+        return $this->hasOne(Perorangan::class);
+    }
+
+    // Relasi ke Kelompok
+    public function kelompok()
+    {
+        return $this->hasOne(Kelompok::class);
+    }
 }

@@ -5,13 +5,13 @@
     </div>
     <nav class="mt-0 flex-1 bg-blue-100">
         <ul>
-            {{-- <!-- User -->
-            <a href="{{ route('admin.admin.index') }}">
+            <!-- User -->
+            <a href="{{ route('admin.pendaftar') }}">
                 <li class="flex items-center px-6 py-3 hover:bg-gray-200 cursor-pointer">
                     <span class="material-icons mr-3">👤</span>
-                    <span class="menu-text">Admin</span>
+                    <span class="menu-text">pendaftar</span>
                 </li>
-            </a> --}}
+            </a>
             <!-- User -->
             <a href="{{ route('admin.pengguna.index') }}">
                 <li class="flex items-center px-6 py-3 hover:bg-gray-200 cursor-pointer">
