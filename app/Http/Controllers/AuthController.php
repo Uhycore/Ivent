@@ -32,7 +32,7 @@ class AuthController extends Controller
                 return redirect()->route('admin.dashboard');
             } else {
 
-                
+
                 return redirect()->route('user.landing_pages');
             }
         }
@@ -50,17 +50,17 @@ class AuthController extends Controller
     {
         $request->validate([
             'username' => 'required|string|max:255',
-            // 'email' => 'required|string|email|max:255|unique:users',
+            // 'email' => 'required|string|email|max:255|unique:users'
             'password' => 'required|string|min:8',
             // 'full_name' => 'required|string|max:255',
             'no_hp' => 'required|string|max:20',
             'alamat' => 'required|string',
-            
+
             // 'status' => 'required|string|in:active,inactive,pending',
             // 'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]); 
+        ]);
 
-        
+
 
         // Create user first
         $user = User::create([
@@ -86,7 +86,7 @@ class AuthController extends Controller
             // 'profile_picture' => $profilePicturePath,
         ]);
 
-        
+
 
         return redirect()->route('guest.landing_pages')->with('success', 'Registrasi berhasil! Silakan login.');
     }
