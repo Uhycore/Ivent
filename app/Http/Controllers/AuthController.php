@@ -13,7 +13,7 @@ class AuthController extends Controller
     // Tampilkan form login
     public function showLoginForm()
     {
-        return view('landing_pages');
+        echo "piye carane login";
     }
 
     // Proses login manual
@@ -43,7 +43,7 @@ class AuthController extends Controller
     // Tampilkan form register
     public function showRegisterForm()
     {
-        return view('landing_pages');
+        echo "piye carane register";
     }
     // Proses register
     public function register(Request $request)

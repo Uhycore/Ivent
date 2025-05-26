@@ -6,6 +6,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\Pendaftaran;
+
+
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -30,6 +33,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(Pengguna::class);
     }
+
 
     public function pendaftarans()
     {

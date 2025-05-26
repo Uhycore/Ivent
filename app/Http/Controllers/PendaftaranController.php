@@ -47,8 +47,6 @@ class PendaftaranController extends Controller
 
         $event = Event::findOrFail($request->event_id);
 
-
-
         if (
             ($event->tipe_event === 'perorangan' && $request->tipe_pendaftaran !== 'perorangan') ||
             ($event->tipe_event === 'kelompok' && $request->tipe_pendaftaran !== 'kelompok')
@@ -57,7 +55,6 @@ class PendaftaranController extends Controller
         }
 
 
-        // Simpan pendaftaran
         $pendaftaran = Pendaftaran::create([
             'user_id' => Auth::id(),
             'event_id' => $request->event_id,
@@ -99,18 +96,8 @@ class PendaftaranController extends Controller
             }
         }
 
-        echo "<pre>";
-        print_r($pendaftaran);
-        echo "</pre>";
-        echo "<pre>";
-        print_r($kelompok);
-        echo "</pre>";
-
-        echo "<pre>";
-        print_r($request);
-        echo "</pre>";
-        // Redirect ke halaman sukses
-
+        return redirect()->route('user.landing_pages')
+            ->with('success', 'Pendaftaran berhasil dilakukan.');
     }
 
 

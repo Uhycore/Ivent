@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\PenggunaDashboardController;
@@ -22,14 +23,14 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout'); // Hanya sekali didefinisikan
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
-// Group Middleware
 Route::middleware(['auth', 'role:pengguna'])->group(function () {
     Route::prefix('landing_pages')->group(function () {
         Route::get('/', [PenggunaDashboardController::class, 'index'])->name('user.landing_pages');
     });
+    Route::get('/history', [HistoryController::class, 'index'])->name('user.history');
 });
 
 Route::prefix('pendaftaran')->group(function () {
@@ -41,12 +42,6 @@ Route::prefix('pendaftaran')->group(function () {
 
 
 
-
-// Route untuk setelah login
-// Route::middleware(['auth', 'role:pengguna'])->group(function () {
-//     Route::get('/landing_pages', [PenggunaDashboardController::class, 'index'])->name('landing_pages');
-// });
-//Route::get('/landing_pages', [PenggunaDashboardController::class, 'index'])->name('landing_pages');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', function () {
