@@ -21,25 +21,35 @@
             @foreach ($pendaftarans as $pendaftaran)
                 <div class="card bg-base-100 shadow-xl mb-6">
                     <div class="card-body">
+
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                             <div>
                                 <div class="flex items-center">
                                     <h2 class="card-title text-xl">{{ $pendaftaran->event->nama_event }}</h2>
-                                    <span
-                                        class="ml-4 px-3 py-1 text-sm rounded-full
-                    {{ $pendaftaran->status === 'diterima' ? 'bg-green-200 text-green-800' : ($pendaftaran->status === 'ditolak' ? 'bg-red-200 text-red-800' : 'bg-yellow-200 text-yellow-800') }}">
+
+                                    <a href="{{ route('pendaftaran.approve', $pendaftaran->id) }}"
+                                        onclick="return confirm('Yakin ingin menyetujui?')"
+                                        class="inline-flex items-center ml-4 px-3 py-1 text-sm rounded-full cursor-pointer
+       {{ $pendaftaran->status === 'diterima' ? 'bg-green-200 text-green-800 pointer-events-none' : 'bg-red-200 text-red-800' }}">
+                                        <i class="fa fa-check-circle mr-1"></i>
                                         {{ ucfirst($pendaftaran->status) }}
-                                    </span>
+                                    </a>
+
+
                                 </div>
                                 <div
                                     class="badge {{ $pendaftaran->tipe_pendaftaran === 'perorangan' ? 'badge-primary' : 'badge-secondary' }} mt-1">
                                     {{ ucfirst($pendaftaran->tipe_pendaftaran) }}
                                 </div>
                             </div>
-                            <div class="mt-2 md:mt-0">
+
+                            <div class="mt-2 md:mt-0 text-right">
                                 <span class="text-sm text-gray-500">Didaftarkan oleh: </span>
-                                <span class="font-medium">{{ $pendaftaran->user->username }}</span>
+                                <span class="font-medium">{{ $pendaftaran->user->username }}</span><br>
+                                <span class="text-lg font-bold text-blue-700">ID: {{ $pendaftaran->id }}</span>
                             </div>
+
+
                         </div>
 
 

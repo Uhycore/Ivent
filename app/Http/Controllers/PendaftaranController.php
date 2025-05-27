@@ -105,4 +105,14 @@ class PendaftaranController extends Controller
     {
         return view('success_pendaftaran');
     }
+
+    public function approve($id)
+    {
+        $pendaftaran = Pendaftaran::findOrFail($id);
+
+        $pendaftaran->status = 'diterima';
+        $pendaftaran->save();
+
+        return redirect()->route('admin.pendaftar')->with('success', 'Pendaftaran berhasil disetujui.');
+    }
 }
