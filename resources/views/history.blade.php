@@ -1,63 +1,127 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Daftar Pendaftaran</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="bg-gray-100 p-6">
-    <h1 class="text-3xl font-bold mb-6 text-center">Daftar Pendaftaran</h1>
+<body class="min-h-screen bg-base-200 p-6">
+    <div class="container mx-auto max-w-4xl">
+        <h1 class="text-3xl font-bold mb-8 text-center">Daftar Pendaftaran</h1>
 
-    <div class="max-w-4xl mx-auto space-y-6">
         <?php foreach ($pendaftaranList as $pendaftaran): ?>
-        <div class="bg-white shadow rounded-lg p-6 border border-gray-200">
-            <h2 class="text-xl font-semibold mb-2">Pendaftaran ID: <?= htmlspecialchars($pendaftaran['id']) ?></h2>
-            <p><span class="font-medium">User ID:</span> <?= htmlspecialchars($pendaftaran['user_id']) ?></p>
-            <p><span class="font-medium">Event:</span> <?= htmlspecialchars($pendaftaran['event']['nama_event']) ?>
-                (<?= htmlspecialchars($pendaftaran['event']['tipe_event']) ?>)</p>
-            <p><span class="font-medium">Tanggal Daftar:</span> <?= htmlspecialchars($pendaftaran['tanggal_daftar']) ?>
-            </p>
-            <p><span class="font-medium">Status:</span>
-                <span
-                    class="<?= $pendaftaran['status'] === 'Diterima' ? 'text-green-600' : ($pendaftaran['status'] === 'Menunggu' ? 'text-yellow-600' : 'text-red-600') ?>">
-                    <?= htmlspecialchars($pendaftaran['status']) ?>
-                </span>
-            </p>
+        <div class="card bg-base-100 shadow-xl mb-8">
+            <div class="card-body">
+                <div class="flex justify-between items-start flex-wrap gap-2">
+                    <div>
+                        <h2 class="card-title text-xl">Pendaftaran ID: <?= htmlspecialchars($pendaftaran['id']) ?></h2>
+                        <p class="text-sm opacity-70">User ID: <?= htmlspecialchars($pendaftaran['user_id']) ?></p>
+                    </div>
+                    <div class="badge badge-lg"
+                        style="background-color: 
+            <?= $pendaftaran['status'] === 'Diterima' ? '#4CAF50' : ($pendaftaran['status'] === 'Menunggu' ? '#FFC107' : '#F44336') ?>;
+            color: #000;">
+                        <?= htmlspecialchars($pendaftaran['status']) ?>
+                    </div>
+                </div>
 
-            <?php if ($pendaftaran['tipe_pendaftaran'] === 'perorangan'): ?>
-            <div class="mt-4 p-4 bg-gray-50 rounded">
-                <h3 class="font-semibold mb-2">Peserta Perorangan</h3>
-                <p><span class="font-medium">Nama Lengkap:</span>
-                    <?= htmlspecialchars($pendaftaran['perorangan']['nama_lengkap']) ?></p>
-                <p><span class="font-medium">No HP:</span> <?= htmlspecialchars($pendaftaran['perorangan']['no_hp']) ?>
-                </p>
-                <p><span class="font-medium">Alamat:</span>
-                    <?= htmlspecialchars($pendaftaran['perorangan']['alamat']) ?></p>
-            </div>
-            <?php elseif ($pendaftaran['tipe_pendaftaran'] === 'kelompok'): ?>
-            <div class="mt-4 p-4 bg-gray-50 rounded">
-                <h3 class="font-semibold mb-2">Kelompok</h3>
-                <p><span class="font-medium">Nama Kelompok:</span>
-                    <?= htmlspecialchars($pendaftaran['kelompok']['nama_kelompok']) ?></p>
-                <p><span class="font-medium">No HP Ketua:</span>
-                    <?= htmlspecialchars($pendaftaran['kelompok']['no_hp_ketua']) ?></p>
-                <p><span class="font-medium">Alamat Ketua:</span>
-                    <?= htmlspecialchars($pendaftaran['kelompok']['alamat_ketua']) ?></p>
+                <div class="divider">Informasi Event</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-semibold">Event:</p>
+                        <p><?= htmlspecialchars($pendaftaran['event']['nama_event']) ?>
+                            (<?= htmlspecialchars($pendaftaran['event']['tipe_event']) ?>)</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold">Tanggal Daftar:</p>
+                        <p><?= htmlspecialchars($pendaftaran['tanggal_daftar']) ?></p>
+                    </div>
+                </div>
 
-                <h4 class="mt-3 font-semibold">Anggota Kelompok:</h4>
-                <ul class="list-disc list-inside">
-                    <?php foreach ($pendaftaran['kelompok']['anggota_kelompok'] as $anggota): ?>
-                    <li><?= htmlspecialchars($anggota['nama_anggota']) ?> (No HP:
-                        <?= htmlspecialchars($anggota['no_hp']) ?>)</li>
-                    <?php endforeach; ?>
-                </ul>
+                <?php if ($pendaftaran['tipe_pendaftaran'] === 'perorangan'): ?>
+                <div class="divider">Informasi Peserta</div>
+                <div class="bg-base-200 p-4 rounded-lg">
+                    <div class="flex items-center mb-3">
+                        <div class="badge badge-primary mr-2">Perorangan</div>
+                        <h3 class="font-bold text-lg">
+                            <?= htmlspecialchars($pendaftaran['perorangan']['nama_lengkap']) ?></h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="font-semibold">No HP:</p>
+                            <p><?= htmlspecialchars($pendaftaran['perorangan']['no_hp']) ?></p>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Alamat:</p>
+                            <p><?= htmlspecialchars($pendaftaran['perorangan']['alamat']) ?></p>
+                        </div>
+                    </div>
+                </div>
+                <?php elseif ($pendaftaran['tipe_pendaftaran'] === 'kelompok'): ?>
+                <div class="divider">Informasi Kelompok</div>
+                <div class="bg-base-200 p-4 rounded-lg">
+                    <div class="flex items-center mb-3">
+                        <div class="badge badge-secondary mr-2">Kelompok</div>
+                        <h3 class="font-bold text-lg"><?= htmlspecialchars($pendaftaran['kelompok']['nama_kelompok']) ?>
+                        </h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="font-semibold">No HP Ketua:</p>
+                            <p><?= htmlspecialchars($pendaftaran['kelompok']['no_hp_ketua']) ?></p>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Alamat Ketua:</p>
+                            <p><?= htmlspecialchars($pendaftaran['kelompok']['alamat_ketua']) ?></p>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="font-semibold mb-2">Anggota Kelompok:</p>
+                        <div class="overflow-x-auto">
+                            <table class="table table-zebra">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+
+                                        <th>No HP</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($pendaftaran['kelompok']['anggota_kelompok'] as $i => $anggota): ?>
+                                    <tr>
+                                        <td><?= $i + 1 ?></td>
+
+                                        <td><?= htmlspecialchars($anggota['no_hp']) ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+
+                <div class="card-actions justify-end mt-4">
+                    <button class="btn btn-outline btn-sm"><i class="fas fa-print mr-1"></i> Print</button>
+
+                </div>
             </div>
-            <?php endif; ?>
         </div>
         <?php endforeach; ?>
+
+        <div class="flex justify-between mt-6">
+            <a href="index.php" class="btn btn-outline"><i class="fas fa-arrow-left mr-1"></i> Kembali ke Daftar</a>
+            <div>
+                <button class="btn btn-outline mr-2"><i class="fas fa-chevron-left"></i></button>
+                <button class="btn btn-outline"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
     </div>
 </body>
 

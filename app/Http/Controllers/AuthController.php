@@ -13,7 +13,7 @@ class AuthController extends Controller
     // Tampilkan form login
     public function showLoginForm()
     {
-        echo "piye carane login";
+        return redirect()->route('guest.landing_pages')->with('error', 'Silakan login terlebih dahulu.');
     }
 
     // Proses login manual

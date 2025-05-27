@@ -76,7 +76,9 @@
             <li><a href="Home"></a>Home</li>
             <li><a href="About"></a>About</li>
             <li><a href="List"></a>Event</li>
-            <li><a href="List"></a>My ticket</li>
+            <a href="{{ route('history') }}">
+                <li> My ticket</li>
+            </a>
         </ul>
         <div class="logout" data-aos="fade-left" data-aos-duration="2000">
             <div class="auth-buttons">

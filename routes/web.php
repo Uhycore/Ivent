@@ -30,7 +30,7 @@ Route::middleware(['auth', 'role:pengguna'])->group(function () {
     Route::prefix('landing_pages')->group(function () {
         Route::get('/', [PenggunaDashboardController::class, 'index'])->name('user.landing_pages');
     });
-    Route::get('/history', [HistoryController::class, 'index'])->name('user.history');
+    Route::get('/history', [HistoryController::class, 'index'])->name('history');
 });
 
 Route::prefix('pendaftaran')->group(function () {

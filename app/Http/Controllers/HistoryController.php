@@ -10,6 +10,9 @@ class HistoryController extends Controller
 {
     public function index()
     {
+        if (!Auth::check()) {
+            return redirect('/'); 
+        }
 
         $history = Auth::user();
 
