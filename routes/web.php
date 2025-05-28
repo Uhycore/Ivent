@@ -8,6 +8,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\PenggunaDashboardController;
 
@@ -31,6 +32,8 @@ Route::middleware(['auth', 'role:pengguna'])->group(function () {
         Route::get('/', [PenggunaDashboardController::class, 'index'])->name('user.landing_pages');
     });
     Route::get('/history', [HistoryController::class, 'index'])->name('history');
+    Route::post('/checkout', [TransaksiController::class, 'checkout'])->name('checkout');
+    
 });
 
 Route::prefix('pendaftaran')->group(function () {

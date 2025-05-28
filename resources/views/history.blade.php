@@ -110,6 +110,15 @@
 
                 <div class="card-actions justify-end mt-4">
                     <button class="btn btn-outline btn-sm"><i class="fas fa-print mr-1"></i> Print</button>
+                    <form action="{{ route('checkout') }}" method="POST" class="inline">
+                        @csrf
+                        <input type="hidden" name="pendaftaran_id" value="<?= htmlspecialchars($pendaftaran['id']) ?>">
+                        <button type="submit" class="btn btn-outline btn-sm">
+                            <i class="fas fa-money-bill-wave mr-1"></i> Bayar
+                        </button>
+                    </form>
+
+
 
                 </div>
             </div>

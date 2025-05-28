@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Pengguna extends Model
@@ -16,5 +17,12 @@ class Pengguna extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function searchPenggunaByUserId($userId)
+    {
+        $pengguna = DB::select('SELECT * FROM pengguna WHERE user_id = ?', [$userId]);
+
+        return $pengguna;
     }
 }
