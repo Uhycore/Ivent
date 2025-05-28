@@ -38,6 +38,7 @@ class EventController extends Controller
             'kuota' => 'required|integer|min:1',
             'max_anggota_kelompok' => 'required_if:tipe_event,kelompok|required_if:tipe_event,semua|nullable|integer|min:1',
             'gambar' => '',
+            'harga_pendaftaran' => 'required|numeric|min:0',
         ]);
 
 
@@ -49,6 +50,7 @@ class EventController extends Controller
             'kuota' => $request->kuota,
             'max_anggota_kelompok' => $request->max_anggota_kelompok,
             'gambar' => $request->file('gambar') ? $request->file('gambar')->store('event_images', 'public') : null,
+            'harga_pendaftaran' => $request->harga_pendaftaran,
         ]);
 
         return redirect()->route('admin.event.index')->with('success', 'Event berhasil ditambahkan!');
@@ -87,6 +89,7 @@ class EventController extends Controller
             'kuota' => 'required|integer|min:1',
             'max_anggota_kelompok' => 'required|integer|nullable',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'harga_pendaftaran' => 'required|numeric|min:0',
         ]);
 
         $event = Event::findOrFail($id);
@@ -98,6 +101,7 @@ class EventController extends Controller
             'kuota' => $request->kuota,
             'max_anggota_kelompok' => $request->max_anggota_kelompok,
             'gambar' => $request->file('gambar') ? $request->file('gambar')->store('event_images', 'public') : $event->gambar,
+            'harga_pendaftaran' => $request->harga_pendaftaran,
         ]);
 
         return redirect()->route('admin.event.index')->with('success', 'Event berhasil diperbarui!');
