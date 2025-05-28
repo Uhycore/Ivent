@@ -23,12 +23,13 @@
                         <h2 class="card-title text-xl">Pendaftaran ID: <?= htmlspecialchars($pendaftaran['id']) ?></h2>
                         <p class="text-sm opacity-70">User ID: <?= htmlspecialchars($pendaftaran['user_id']) ?></p>
                     </div>
-                    <div class="badge badge-lg"
-                        style="background-color: 
-            <?= $pendaftaran['status'] === 'Diterima' ? '#4CAF50' : ($pendaftaran['status'] === 'Menunggu' ? '#FFC107' : '#F44336') ?>;
-            color: #000;">
-                        <?= htmlspecialchars($pendaftaran['status']) ?>
-                    </div>
+                    <span
+                        class="ml-4 px-3 py-1 text-sm rounded-full
+    {{ $pendaftaran->status === 'diterima' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
+                        {{ ucfirst($pendaftaran->status) }}
+                    </span>
+
+
                 </div>
 
                 <div class="divider">Informasi Event</div>
