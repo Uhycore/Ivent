@@ -238,7 +238,7 @@
         @foreach ($events as $event)
             <div class="event-card">
                 <img src="{{ asset('storage/' . $event->gambar) }}" alt="{{ $event->nama_event }}"
-                    class="event-image" />
+                    class="event-image" /> 
                 <div class="event-info">
                     <h3 class="event-title">{{ $event->nama_event }}</h3>
                     <h3 class="location">{{ $event->lokasi }}, <span

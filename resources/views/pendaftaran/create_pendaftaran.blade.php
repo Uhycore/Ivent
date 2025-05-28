@@ -28,10 +28,10 @@
             @csrf
             <input type="hidden" name="event_id" value="{{ $event->id }}" />
 
-            <div>
-                <label for="tipe_pendaftaran" class="block mb-2 font-medium text-gray-700">Tipe Pendaftaran</label>
+            <div class="mb-6">
+                <label for="tipe_pendaftaran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipe Pendaftaran</label>
                 <select id="tipe_pendaftaran" name="tipe_pendaftaran" required
-                    class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     onchange="toggleForm()">
                     @if ($event->tipe_event == 'perorangan' || $event->tipe_event == 'semua')
                         <option value="perorangan">Perorangan</option>
@@ -42,56 +42,62 @@
                 </select>
             </div>
 
-            {{-- Form perorangan --}}
-            <div id="form_perorangan" class="space-y-4">
-                <div>
-                    <label class="block font-medium">Nama Lengkap</label>
-                    <input type="text" name="nama_lengkap" class="form-input w-full" />
+            {{-- Form Perorangan --}}
+            <div id="form_perorangan" class="space-y-6">
+                <div class="mb-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Lengkap</label>
+                    <input type="text" name="nama_lengkap"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                 </div>
-                <div>
-                    <label class="block font-medium">No HP</label>
-                    <input type="text" name="no_hp" class="form-input w-full" />
+                <div class="mb-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No HP</label>
+                    <input type="text" name="no_hp"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                 </div>
-                <div>
-                    <label class="block font-medium">Alamat</label>
-                    <textarea name="alamat" rows="2" class="form-textarea w-full"></textarea>
+                <div class="mb-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
+                    <textarea name="alamat" rows="2"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
                 </div>
             </div>
+            {{-- Form Kelompok --}}
+            <div id="form_kelompok" class="space-y-6 hidden">
+                <div class="mb-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Kelompok</label>
+                    <input type="text" name="nama_kelompok" required
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No HP Ketua</label>
+                    <input type="text" name="no_hp_ketua" required
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <div class="mb-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat Ketua</label>
+                    <input type="text" name="alamat_ketua" required
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
 
-            <!-- Form Kelompok -->
-            <div id="form_kelompok" class="space-y-4 hidden">
-                <div>
-                    <label class="block mb-1 font-medium">Nama Kelompok</label>
-                    <input type="text" name="nama_kelompok" required class="w-full border rounded p-2" />
-                </div>
-                <div>
-                    <label class="block mb-1 font-medium">No HP Ketua</label>
-                    <input type="text" name="no_hp_ketua" required class="w-full border rounded p-2" />
-                </div>
-                <div>
-                    <label class="block mb-1 font-medium">Alamat Ketua</label>
-                    <input type="text" name="alamat_ketua" required class="w-full border rounded p-2" />
-                </div>
-
-                <div id="anggota_fields" class="space-y-2">
-                    <label class="block mb-1 font-semibold text-gray-700">Anggota Kelompok</label>
+                <div id="anggota_fields" class="space-y-4">
+                    <label class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Anggota Kelompok</label>
                     @for ($i = 1; $i <= $event->max_anggota_kelompok; $i++)
                         <div class="flex space-x-2">
-                            <input type="text" name="nama_anggota[]" placeholder="Nama Anggota {{ $i }}"
-                                class="w-full border rounded p-2" required>
-                            <input type="text" name="no_hp_anggota[]" placeholder="No HP Anggota {{ $i }}"
-                                class="w-full border rounded p-2" required>
+                            <input type="text" name="nama_anggota[]" placeholder="Nama Anggota {{ $i }}" required
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                            <input type="text" name="no_hp_anggota[]" placeholder="No HP Anggota {{ $i }}" required
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                         </div>
                     @endfor
                 </div>
             </div>
 
-
             <button type="submit"
-                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md transition-colors duration-300">
+                class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Daftar
             </button>
+
         </form>
+
     </div>
 
     <script>
