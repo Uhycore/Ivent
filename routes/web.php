@@ -35,7 +35,6 @@ Route::middleware(['auth', 'role:pengguna'])->group(function () {
     Route::get('/history', [HistoryController::class, 'index'])->name('history');
     Route::post('/checkout', [TransaksiController::class, 'checkout'])->name('checkout');
     Route::get('/invoice/{id}', [TransaksiController::class, 'invoice'])->name('invoice');
-    
 });
 
 Route::prefix('pendaftaran')->group(function () {
@@ -43,7 +42,6 @@ Route::prefix('pendaftaran')->group(function () {
     Route::get('/create/{eventId}', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
     Route::post('/store', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
     Route::get('/success', [PendaftaranController::class, 'success'])->name('pendaftaran.success');
-    
 });
 
 
@@ -51,7 +49,7 @@ Route::prefix('pendaftaran')->group(function () {
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-    
+
     Route::prefix('admin/pendaftar')->group(function () {
         Route::get('/', [AdminController::class, 'showPendaftar'])->name('admin.pendaftar');
         Route::get('/approve/{id}', [PendaftaranController::class, 'approve'])->name('pendaftaran.approve');
@@ -75,5 +73,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/edit/{id}', [EventController::class, 'edit'])->name('admin.event.edit');
         Route::put('/event/{id}', [EventController::class, 'update'])->name('admin.event.update');
         Route::delete('/delete/{id}', [EventController::class, 'destroy'])->name('admin.event.delete');
+    });
+
+    Route::prefix('admin/transaksi')->group(function () {
+        Route::get('/', [TransaksiController::class, 'showListTransaksi'])->name('admin.transaksi.index');
+        Route::delete('/delete/{id}', [TransaksiController::class, 'destroy'])->name('admin.transaksi.delete');
+        Route::delete('/bulk-delete', [TransaksiController::class, 'bulkDelete'])->name('admin.transaksi.bulkDelete');
     });
 });

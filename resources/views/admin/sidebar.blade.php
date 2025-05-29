@@ -26,6 +26,12 @@
                     <span class="menu-text">Manajemen Event</span>
                 </li>
             </a>
+            <a href="{{ route('admin.transaksi.index') }}">
+                <li class="flex items-center px-6 py-3 hover:bg-gray-200 cursor-pointer">
+                    <span class="mr-3">🛠️</span>
+                    <span class="menu-text">List Transaksi</span>
+                </li>
+            </a>
             <!-- Event -->
             {{-- <li class="px-6 py-3 hover:bg-gray-200 cursor-pointer" onclick="toggleEventSubmenu()">
                 <div class="flex items-center justify-between">

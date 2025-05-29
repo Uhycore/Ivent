@@ -109,4 +109,29 @@ class TransaksiController extends Controller
 
         return view('invoice', compact('invoice', 'user', 'event'));
     }
+
+    public function showListTransaksi()
+    {
+        $transaksiList = Transaksi::with(['user', 'event'])->get();
+        return view('admin.transaksi.list_transaksi', compact('transaksiList'));
+    }
+
+    public function destroy($id)
+    {
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->delete();
+
+        return redirect()->route('admin.transaksi.index')->with('success', 'Transaksi berhasil dihapus!');
+    }
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('selected', []);
+
+        if (count($ids) > 0) {
+            Transaksi::whereIn('id', $ids)->delete();
+            return back()->with('success', 'Transaksi terpilih berhasil dihapus.');
+        }
+
+        return back()->with('error', 'Tidak ada transaksi yang dipilih.');
+    }
 }
