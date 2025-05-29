@@ -44,7 +44,9 @@
                             <th class="text-center px-6 py-3 border-b">Kuota</th>
                             <th class="text-center px-6 py-3 border-b">Max Anggota Kelompok</th>
                             <th class="text-left px-6 py-3 border-b">Gambar</th>
+                            <th class="text-left px-6 py-3 border-b">Harga pendaftaran</th>
                             <th class="text-center px-6 py-3 border-b">Aksi</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -67,6 +69,8 @@
                                     @else
                                         -
                                     @endif
+                                </td>
+                                <td class="px-6 py-4 border-b text-center">Rp. {{ $events->harga_pendaftaran }}</td>
                                 <td class="px-6 py-4 border-b text-center">
                                     <div class="flex justify-center space-x-2">
                                         <a href="{{ route('admin.event.edit', $events->id) }}"

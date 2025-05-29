@@ -238,11 +238,18 @@
         @foreach ($events as $event)
             <div class="event-card">
                 <img src="{{ asset('storage/' . $event->gambar) }}" alt="{{ $event->nama_event }}"
-                    class="event-image" /> 
+                    class="event-image" />
                 <div class="event-info">
                     <h3 class="event-title">{{ $event->nama_event }}</h3>
-                    <h3 class="location">{{ $event->lokasi }}, <span
-                            class="date">{{ \Carbon\Carbon::parse($event->tanggal)->format('d-m-Y') }}</span></h3>
+
+                    {{-- Harga dan Tanggal --}}
+                    <p class="event-meta">
+                        <span class="price">Rp{{ number_format($event->harga_pendaftaran, 0, ',', '.') }}</span>
+                        &nbsp;|&nbsp;
+                        <span
+                            class="date">{{ \Carbon\Carbon::parse($event->tanggal)->translatedFormat('d F Y') }}</span>
+                    </p>
+
                     @auth
                         <button class="btn-daftar">
                             <a href="{{ route('pendaftaran.create', $event->id) }}"
@@ -257,6 +264,7 @@
                     <span class="info-icon" onclick="showInfo('popup{{ $event->id }}')">i</span>
                 </div>
             </div>
+
 
             <div class="event-popup" id="popup{{ $event->id }}">
                 <div class="popup-content">

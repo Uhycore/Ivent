@@ -109,6 +109,18 @@
                         @error('gambar')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
+                    </div>
+                    <!-- Harga Pendaftaran -->
+                    <div class="mt-4">
+                        <label for="harga_pendaftaran"
+                            class="block text-gray-700 font-medium mb-1">Harga Pendaftaran</label>
+                        <input type="number" id="harga_pendaftaran" name="harga_pendaftaran" min="0"
+                            class="w-full border border-gray-300 rounded px-4 py-2 @error('harga_pendaftaran') border-red-500 @enderror"
+                            placeholder="Masukkan harga pendaftaran" value="{{ old('harga_pendaftaran') }}" required>
+                        @error('harga_pendaftaran')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                 
 
                     <!-- Tombol Simpan -->
                     <div class="mt-6">

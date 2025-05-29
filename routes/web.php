@@ -10,6 +10,7 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\PenggunaDashboardController;
 
 // Route::get('/', function () {
@@ -33,6 +34,7 @@ Route::middleware(['auth', 'role:pengguna'])->group(function () {
     });
     Route::get('/history', [HistoryController::class, 'index'])->name('history');
     Route::post('/checkout', [TransaksiController::class, 'checkout'])->name('checkout');
+    Route::get('/invoice/{id}', [TransaksiController::class, 'invoice'])->name('invoice');
     
 });
 
@@ -48,9 +50,7 @@ Route::prefix('pendaftaran')->group(function () {
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     
     Route::prefix('admin/pendaftar')->group(function () {
         Route::get('/', [AdminController::class, 'showPendaftar'])->name('admin.pendaftar');

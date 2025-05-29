@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Event;
+use App\Models\Pengguna;
 use App\Models\Transaksi;
 use App\Models\Pendaftaran;
-use App\Models\Pengguna;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,5 +93,20 @@ class TransaksiController extends Controller
                 ], 404);
             }
         }
+    }
+
+    public function Invoice($id)
+    {
+        $invoice = Transaksi::where('kode_transaksi', $id)->first();
+
+        $user = User::findOrFail($invoice->user_id);
+
+        $event = Event::findOrFail($invoice->event_id);
+
+        if (!$invoice) {
+            return redirect()->back()->with('error', 'Transaksi tidak ditemukan.');
+        }
+
+        return view('invoice', compact('invoice', 'user', 'event'));
     }
 }
