@@ -12,12 +12,19 @@ use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\PenggunaDashboardController;
-
+use App\Http\Controllers\ChatController;
 // Route::get('/', function () {
 //     return view('landing_pages');
 // });
 
 Route::get('/', [GuestController::class, 'index'])->name('guest.landing_pages');
+// Route::get('/chat', [ChatController::class, 'sendMessage'])->name('chat');
+// Route::view('/chat', 'chat');
+// Route::view('/chatbot', 'chat'); // menampilkan halaman Blade-nya
+Route::post('/chat', [ChatController::class, 'sendMessage'])->name('chat'); // API chat POST
+Route::get('/chat', function () {
+    return view('chat'); 
+});
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
@@ -27,7 +34,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
+// Route::view('/chat', 'chat');
 Route::middleware(['auth', 'role:pengguna'])->group(function () {
     Route::prefix('landing_pages')->group(function () {
         Route::get('/', [PenggunaDashboardController::class, 'index'])->name('user.landing_pages');
