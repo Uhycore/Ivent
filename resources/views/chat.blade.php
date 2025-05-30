@@ -16,18 +16,18 @@
 	<div id="live2d-widget" class="fixed right-0 bottom-0 w-80 h-96 z-50"></div>
 
 	<div class="fixed top-4 left-4 z-40">
-        <a href="../index.php" class="btn btn-secondary">
+        <a href="../index.php" class="btn btn-secondary ">
             <i class="fas fa-arrow-left mr-2"></i> Kembali
         </a>
     </div>
 	
     <div class="chat-container">
         <div class="chat-header">
-            <span>AI Customer Service</span>
+            <span>AI-Chan</span>
         </div>
         <div class="chat-messages" id="chatMessages">
             <div class="message bot-message">
-                Hello! I'm your AI assistant. How can I help you today?
+                Halo saya AI-Chan, ada yang bisa saya bantu?
                 <div class="timestamp">Just now</div>
             </div>
         </div>
@@ -44,6 +44,8 @@
 		
 
     <script>
+    
+
 		// Inisialisasi Live2D Character
     window.addEventListener("load", function () {
         if (typeof L2Dwidget !== "undefined") {
