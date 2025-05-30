@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <title>Ivent</title>
 </head>
@@ -18,6 +20,19 @@
 
 
 <body>
+
+<!-- <a id="chatButton" href="{{ route('chat') }}" class="fixed bottom-6 right-6 bg-blue-900 text-white w-16 h-16 text-2xl flex items-center justify-center rounded-full shadow-lg hover:bg-gray-700 z-50">
+  <i class="fa-solid fa-headset"></i>
+</a> -->
+<button id="chatButton" class="fixed bottom-6 right-6 bg-blue-900 text-white w-16 h-16 text-2xl flex items-center justify-center rounded-full shadow-lg hover:bg-gray-700 z-50">
+  <i class="fa-solid fa-headset"></i>
+</button>
+<script>
+  document.getElementById("chatButton").addEventListener("click", function () {
+	window.location.href = "/chat"; 
+});
+
+</script>
 
 
     <!-- Popup Login -->
@@ -73,9 +88,9 @@
             <p>Ivent</p>
         </div>
         <ul data-aos="fade-down" data-aos-duration="2000">
-            <li><a href="Home"></a>Home</li>
-            <li><a href="About"></a>About</li>
-            <li><a href="List"></a>Event</li>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#event">Event</a></li>
             <a href="{{ route('history') }}">
                 <li> My ticket</li>
             </a>
@@ -102,7 +117,7 @@
             </div>
         </div>
     </section>
-    <section class="hero">
+    <section class="hero" id="home">
         <div class="hero-left" data-aos="fade-right" data-aos-duration="2000">
             <h1 class="judul">Temukan dan Daftar Event Terbaik dengan Mudah</h1><br>
             <h4 class="subjudul">Cari event favoritmu, daftar online, dan <br>ikuti acaranya tanpa ribet</h4>
@@ -150,7 +165,7 @@
             </div>
         </section>
     </section>
-    <section class="about">
+    <section class="about" id="about">
         <div class="about-left" data-aos="fade-up-right" data-aos-duration="1000">
             <img src="{{ asset('images/hero2.png') }}" alt="">
         </div>

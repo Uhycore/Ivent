@@ -126,7 +126,7 @@
         <?php endforeach; ?>
 
         <div class="flex justify-between mt-6">
-            <a href="index.php" class="btn btn-outline"><i class="fas fa-arrow-left mr-1"></i> Kembali ke Daftar</a>
+            <a href="../index.php" class="btn btn-outline"><i class="fas fa-arrow-left mr-1"></i> Kembali ke Daftar</a>
             <div>
                 <button class="btn btn-outline mr-2"><i class="fas fa-chevron-left"></i></button>
                 <button class="btn btn-outline"><i class="fas fa-chevron-right"></i></button>
