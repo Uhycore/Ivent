@@ -27,8 +27,10 @@
                 </div>
             </div>
 
-            <!-- Print Button -->
-            <div class="flex justify-end mb-6">
+            <div class="flex justify-between items-center mb-6">
+                <a href="{{ route('user.landing_pages') }}" class="btn btn-outline btn-secondary">
+                    <i class="fas fa-arrow-left mr-2"></i>Kembali
+                </a>
                 <button class="btn btn-primary" onclick="window.print()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">

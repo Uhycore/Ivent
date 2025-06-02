@@ -17,6 +17,9 @@ class CreateTransaksiTable extends Migration
             // Relasi ke event yang dibayar
             $table->unsignedBigInteger('event_id');
 
+            // Relasi ke pendaftaran
+            $table->unsignedBigInteger('pendaftaran_id');
+
             $table->string('kode_transaksi')->unique();
             $table->bigInteger('jumlah_bayar');
             $table->enum('status', ['unpaid', 'paid'])->default('unpaid');

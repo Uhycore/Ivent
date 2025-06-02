@@ -34,6 +34,8 @@
                     <div class="grid grid-cols-2 gap-2 text-sm">
                         <div class="text-base-content/70">Kode Transaksi:</div>
                         <div class="font-medium">{{ $kodeTransaksi }}</div>
+                        <div class="text-base-content/70">Pendaftaran Id:</div>
+                        <div class="font-medium">{{ $pendaftaranId }}</div>
 
                         <div class="text-base-content/70">Jumlah Bayar:</div>
                         <div class="font-medium text-primary">Rp {{ number_format($jumlahBayar, 0, ',', '.') }}</div>

@@ -21,18 +21,18 @@
 
 <body>
 
-<!-- <a id="chatButton" href="{{ route('chat') }}" class="fixed bottom-6 right-6 bg-blue-900 text-white w-16 h-16 text-2xl flex items-center justify-center rounded-full shadow-lg hover:bg-gray-700 z-50">
+    <!-- <a id="chatButton" href="{{ route('chat') }}" class="fixed bottom-6 right-6 bg-blue-900 text-white w-16 h-16 text-2xl flex items-center justify-center rounded-full shadow-lg hover:bg-gray-700 z-50">
   <i class="fa-solid fa-headset"></i>
 </a> -->
-<button id="chatButton" class="fixed bottom-6 right-6 bg-blue-900 text-white w-16 h-16 text-2xl flex items-center justify-center rounded-full shadow-lg hover:bg-gray-700 z-50">
-  <i class="fa-solid fa-headset"></i>
-</button>
-<script>
-  document.getElementById("chatButton").addEventListener("click", function () {
-	window.location.href = "/chat"; 
-});
-
-</script>
+    <button id="chatButton"
+        class="fixed bottom-6 right-6 bg-blue-900 text-white w-16 h-16 text-2xl flex items-center justify-center rounded-full shadow-lg hover:bg-gray-700 z-50">
+        <i class="fa-solid fa-headset"></i>
+    </button>
+    <script>
+        document.getElementById("chatButton").addEventListener("click", function() {
+            window.location.href = "/chat";
+        });
+    </script>
 
 
     <!-- Popup Login -->
@@ -376,17 +376,16 @@
         </footer>
 
         <script>
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
 
-             window.addEventListener('scroll', function () {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-            } else {
-            navbar.classList.remove('scrolled');
-            }
-             });
 
-             
             function showInfo(id) {
                 document.getElementById(id).style.display = "flex";
             }

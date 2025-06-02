@@ -66,7 +66,9 @@ class AdminController extends Controller
     }
     public function showPendaftar()
     {
-        $pendaftarans = Pendaftaran::with(['event', 'user', 'perorangan', 'kelompok.anggota_kelompok'])->get();
+        $pendaftarans = Pendaftaran::with(['event', 'user', 'perorangan', 'kelompok.anggota_kelompok'])
+            ->get()
+            ->groupBy('event_id');
         return view('admin.pendaftar', compact('pendaftarans'));
     }
 }

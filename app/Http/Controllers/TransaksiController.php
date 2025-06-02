@@ -24,6 +24,8 @@ class TransaksiController extends Controller
             'pendaftaran_id' => 'required|exists:pendaftaran,id',
         ]);
 
+        $pendaftaranId = $request->pendaftaran_id;
+
         $pendaftaran = Pendaftaran::with('event')->findOrFail($request->pendaftaran_id);
 
         $userId = Auth::id();
@@ -45,6 +47,7 @@ class TransaksiController extends Controller
         Transaksi::create([
             'user_id' => $userId,
             'event_id' => $eventId,
+            'pendaftaran_id' => $pendaftaranId,
             'kode_transaksi' => $kodeTransaksi,
             'jumlah_bayar' => $jumlahBayar,
             'status' => 'unpaid',
@@ -74,7 +77,7 @@ class TransaksiController extends Controller
         );
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
-        return view('checkout', compact('snapToken', 'kodeTransaksi', 'jumlahBayar', 'user', 'noHp'));
+        return view('checkout', compact('snapToken', 'kodeTransaksi', 'jumlahBayar', 'user', 'noHp', 'pendaftaranId'));
     }
 
     public function midtransCallback(Request $request)
@@ -112,7 +115,7 @@ class TransaksiController extends Controller
 
     public function showListTransaksi()
     {
-        $transaksiList = Transaksi::with(['user', 'event'])->get();
+        $transaksiList = Transaksi::with(['user', 'event', 'pendaftaran'])->get();
         return view('admin.transaksi.list_transaksi', compact('transaksiList'));
     }
 

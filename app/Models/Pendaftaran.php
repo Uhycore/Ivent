@@ -42,4 +42,10 @@ class Pendaftaran extends Model
     {
         return $this->hasOne(Kelompok::class);
     }
+
+    // Relasi ke Transaksi
+    public function transaksi()
+    {
+        return $this->hasOne(Transaksi::class);
+    }
 }
