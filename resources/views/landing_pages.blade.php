@@ -376,6 +376,17 @@
         </footer>
 
         <script>
+
+             window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+            } else {
+            navbar.classList.remove('scrolled');
+            }
+             });
+
+             
             function showInfo(id) {
                 document.getElementById(id).style.display = "flex";
             }
