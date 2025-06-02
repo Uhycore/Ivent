@@ -7,30 +7,63 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
 </head>
 
-<body class="flex h-screen bg-gray-100">
+<body class="bg-gray-100 min-h-screen flex mt-16">
     @include('admin.sidebar')
     <div class="flex-1 flex flex-col">
         @include('admin.navbar')
-        <main class="flex-1 p-6">
+        <!-- Content -->
+        <main class="flex-1 p-6 ml-64">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-gray-800">Manajemen Event Kelompok</h1>
-                <button onclick="window.location.href='{{ route('admin.event.create') }}'"
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">+ Create
-                    Event</button>
+                <button onclick="window.location.href='{{ route('admin.event.create') }}'" 
+                    class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 z-10">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+                        Create Event
+                    </span>
+                </button>
             </div>
 
-            <div class="flex flex-wrap gap-4 mb-4">
-                <select class="border-gray-300 rounded px-4 py-2 shadow text-gray-700">
-                    <option value="">Filter by...</option>
-                    <option value="upcoming">Upcoming</option>
-                    <option value="past">Past</option>
-                </select>
-                <input type="text" placeholder="Search by name..."
-                    class="flex-1 border border-gray-300 rounded px-4 py-2 shadow" />
+            <!-- Filter and Search -->
+            <div class="flex flex-wrap gap-4 mb-4 items-center">
+                <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button">
+                    Filter by  
+                </button>   
+                <!-- Dropdown menu -->
+                <div id="dropdownHover"
+                    class="z-10 hidden bg-white divide-y divide-white-100 rounded-sm shadow-sm w-44">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-900 bg-white" aria-labelledby="dropdownHoverButton">
+                        <li>
+                            <a href="#" class="block px-4 py-2 dark:hover:text-black">Upcoming</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block px-4 py-2 dark:hover:text-black">Past</a>
+                        </li>
+                    </ul>
+                </div>
+                <form class="flex-1">   
+                    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white bg-white">Search</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
+                        </div>
+                        <input type="search" id="default-search"
+                            class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 bg-white borderdark:border-gray-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            placeholder="Ketik Disini . . . " required />
+                        <button type="submit"
+                            class="text-white absolute end-2 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                    </div>
+                </form>
             </div>
+
             <!-- Table -->
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-white border border-gray-200 shadow rounded">
@@ -42,11 +75,10 @@
                             <th class="text-left px-6 py-3 border-b">Deskripsi</th>
                             <th class="text-left px-6 py-3 border-b">Tipe Event</th>
                             <th class="text-center px-6 py-3 border-b">Kuota</th>
-                            <th class="text-center px-6 py-3 border-b">Max Anggota Kelompok</th>
-                            <th class="text-left px-6 py-3 border-b">Gambar</th>
-                            <th class="text-left px-6 py-3 border-b">Harga pendaftaran</th>
+                            <th class="text-center px-6 py-3 border-b">Max Anggota</th>
+                            <th class="text-left px-6 py-3 border-b">Poster</th>
+                            <th class="text-left px-6 py-3 border-b">Harga</th>
                             <th class="text-center px-6 py-3 border-b">Aksi</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -74,17 +106,17 @@
                                 <td class="px-6 py-4 border-b text-center">
                                     <div class="flex justify-center space-x-2">
                                         <a href="{{ route('admin.event.edit', $events->id) }}"
-                                            class="bg-green-500 hover:bg-green-600 text-white text-sm px-3 py-1 rounded mr-2">
-                                            Update
+                                            class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-2 py-1.5 text-center">
+                                            <span class="material-symbols-rounded text-sm">edit_square</span>
                                         </a>
                                         <form action="{{ route('admin.event.delete', $events->id) }}" method="POST"
                                             class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded"
+                                                class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-2 py-1.5 text-center"
                                                 onclick="return confirm('Yakin ingin menghapus event ini?')">
-                                                Delete
+                                                <span class="material-symbols-rounded text-sm">delete</span>
                                             </button>
                                         </form>
                                     </div>
@@ -92,14 +124,38 @@
                             </tr>
                         @endforeach
                     </tbody>
-
                 </table>
             </div>
         </main>
-
     </div>
 
+    <script>
+        function toggleCreateForm() {
+            const form = document.getElementById('createEventForm');
+            form.classList.toggle('hidden');
+        }
+        
+        let collapsed = false;
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const logoText = document.getElementById('logoText');
+            const menuTexts = document.querySelectorAll('.menu-text');
+
+            collapsed = !collapsed;
+
+            if (collapsed) {
+                sidebar.classList.remove('w-64');
+                sidebar.classList.add('w-20');
+                logoText.classList.add('hidden');
+                menuTexts.forEach(text => text.classList.add('hidden'));
+            } else {
+                sidebar.classList.remove('w-20');
+                sidebar.classList.add('w-64');
+                logoText.classList.remove('hidden');
+                menuTexts.forEach(text => text.classList.remove('hidden'));
+            }
+        }
+    </script>
 </body>
-
-
 </html>

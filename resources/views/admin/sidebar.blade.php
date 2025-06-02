@@ -1,54 +1,59 @@
-<aside id="sidebar" class="bg-white shadow-md transition-width duration-300 w-64 flex flex-col">
-    <div class="h-16 flex items-center justify-between px-4 border-b">
-        <span id="logoText" class="text-xl font-bold">Dashboard</span>
-        <button onclick="toggleEventSubmenu()" class="text-gray-600 hover:text-gray-900">↔️</button>
-    </div>
-    <nav class="mt-0 flex-1 bg-blue-100">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
+<aside id="sidebar" style="background-color: rgb(33, 37, 41);" class="shadow-md transition-width duration-300 w-56 flex flex-col overflow-y-auto h-screen fixed">
+    
+    <nav class="mt-0 flex-1 z-10" style="background-color: rgb(33, 37, 41);">
         <ul>
-            <!-- User -->
+
+        <a href="{{ route('admin.dashboard') }}">
+                <li class="flex items-center px-6 py-3 cursor-pointer hover:bg-gray-700">
+                    <span class="material-symbols-rounded mr-2" style="color: rgb(89, 92, 95);">person</span>
+                    <span class="menu-text text-gray-400 hover:text-white">Dasboard</span>
+                </li>
+            </a>
+            <!-- Pendaftar -->
             <a href="{{ route('admin.pendaftar') }}">
-                <li class="flex items-center px-6 py-3 hover:bg-gray-200 cursor-pointer">
-                    <span class="material-icons mr-3">👤</span>
-                    <span class="menu-text">pendaftar</span>
+                <li class="flex items-center px-6 py-3 cursor-pointer hover:bg-gray-700">
+                    <span class="material-symbols-rounded mr-2" style="color: rgb(89, 92, 95);">person</span>
+                    <span class="menu-text text-gray-400 hover:text-white">Pendaftar</span>
                 </li>
             </a>
-            <!-- User -->
+            <!-- Pengguna -->
             <a href="{{ route('admin.pengguna.index') }}">
-                <li class="flex items-center px-6 py-3 hover:bg-gray-200 cursor-pointer">
-                    <span class="material-icons mr-3">👤</span>
-                    <span class="menu-text">Manajemen Pengguna</span>
-                </li>
-            </a>
-            <!-- Admin -->
-            <a href="{{ route('admin.event.index') }}">
-                <li class="flex items-center px-6 py-3 hover:bg-gray-200 cursor-pointer">
-                    <span class="mr-3">🛠️</span>
-                    <span class="menu-text">Manajemen Event</span>
-                </li>
-            </a>
-            <a href="{{ route('admin.transaksi.index') }}">
-                <li class="flex items-center px-6 py-3 hover:bg-gray-200 cursor-pointer">
-                    <span class="mr-3">🛠️</span>
-                    <span class="menu-text">List Transaksi</span>
+                <li class="flex items-center px-6 py-3 cursor-pointer hover:bg-gray-700">
+                    <span class="material-symbols-rounded mr-2" style="color: rgb(89, 92, 95);">group</span>
+                    <span class="menu-text text-gray-400 hover:text-white">Manajemen Pengguna</span>
                 </li>
             </a>
             <!-- Event -->
-            {{-- <li class="px-6 py-3 hover:bg-gray-200 cursor-pointer" onclick="toggleEventSubmenu()">
+            <a href="{{ route('admin.event.index') }}">
+                <li class="flex items-center px-6 py-3 cursor-pointer hover:bg-gray-700">
+                    <span class="material-symbols-rounded mr-2" style="color: rgb(89, 92, 95);">calendar_today</span>
+                    <span class="menu-text text-gray-400 hover:text-white">Manajemen Event</span>
+                </li>
+            </a>
+            <!-- Transaksi -->
+            <a href="{{ route('admin.transaksi.index') }}">
+                <li class="flex items-center px-6 py-3 cursor-pointer hover:bg-gray-700">
+                    <span class="material-symbols-rounded mr-2" style="color: rgb(89, 92, 95);">receipt</span>
+                    <span class="menu-text text-gray-400 hover:text-white">List Transaksi</span>
+                </li>
+            </a>
+            
+            <!-- If you want to keep the expandable submenu version -->
+            {{-- <li class="px-6 py-3 mt-3 cursor-pointer hover:bg-gray-700" onclick="toggleEventSubmenu()">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <span class="mr-3">📅</span>
-                        <span class="menu-text">Manajemen Event</span>
+                        <span class="material-symbols-rounded mr-2" style="color: rgb(89, 92, 95);">calendar_today</span>
+                        <span class="menu-text text-gray-400 hover:text-white">Manajemen Event</span>
                     </div>
-                    <span id="arrow" class="menu-text">v</span>
+                    <span id="arrow" class="menu-text text-gray-400 hover:text-white">v</span>
                 </div>
             </li>
-            <ul id="event-submenu" class="pl-10 hidden flex-col space-y-2 text-sm text-gray-700">
-                <li id="event-submenu"><a href="../../admin/Event/EventList.php" class="hover:text-blue-600">Event</a>
-                </li>
-                <li id="event-submenu"><a href="../../admin/Event/KelompokList.php" class="hover:text-blue-600">Event
-                        Kelompok</a></li>
-                <li id="event-submenu"><a href="../../admin/Event/PeroranganList.php" class="hover:text-blue-600">Event
-                        Perorangan</a></li>
+            <ul id="event-submenu" class="pl-10 mt-3 hidden flex-col space-y-2 text-sm">
+                <li class="hover:bg-gray-700 py-2"><a href="{{ route('admin.event.index') }}" class="text-gray-400 hover:text-white">Event</a></li>
+                <li class="hover:bg-gray-700 py-2"><a href="#" class="text-gray-400 hover:text-white">Event Kelompok</a></li>
+                <li class="hover:bg-gray-700 py-2"><a href="#" class="text-gray-400 hover:text-white">Event Perorangan</a></li>
             </ul> --}}
         </ul>
     </nav>
@@ -58,7 +63,9 @@
         const submenu = document.getElementById("event-submenu");
         const arrow = document.getElementById("arrow");
 
-        submenu.classList.toggle("hidden");
-        arrow.textContent = submenu.classList.contains("hidden") ? "v" : "^";
+        if (submenu && arrow) {
+            submenu.classList.toggle("hidden");
+            arrow.textContent = submenu.classList.contains("hidden") ? "v" : "^";
+        }
     }
 </script>
