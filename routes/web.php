@@ -23,7 +23,7 @@ Route::get('/', [GuestController::class, 'index'])->name('guest.landing_pages');
 // Route::view('/chatbot', 'chat'); // menampilkan halaman Blade-nya
 Route::post('/chat', [ChatController::class, 'sendMessage'])->name('chat'); // API chat POST
 Route::get('/chat', function () {
-    return view('chat'); 
+    return view('chat');
 });
 
 
@@ -40,6 +40,8 @@ Route::middleware(['auth', 'role:pengguna'])->group(function () {
         Route::get('/', [PenggunaDashboardController::class, 'index'])->name('user.landing_pages');
     });
     Route::get('/history', [HistoryController::class, 'index'])->name('history');
+ 
+
     Route::post('/checkout', [TransaksiController::class, 'checkout'])->name('checkout');
     Route::get('/invoice/{id}', [TransaksiController::class, 'invoice'])->name('invoice');
 });

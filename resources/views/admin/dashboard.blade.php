@@ -136,8 +136,7 @@
                                             {{ ucfirst($event['tipe_event']) }}
                                         </td>
                                         <td>
-                                            {{-- Jumlah pendaftar (registrations) tidak ada di data, bisa isi 0 dulu atau ambil dari relasi --}}
-                                            totalkuota-sisakuota
+                                            {{ $event['kuota']-$event['sisa_kuota'] }}
                                         </td>
 
                                     </tr>

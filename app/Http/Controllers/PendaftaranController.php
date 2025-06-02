@@ -46,6 +46,13 @@ class PendaftaranController extends Controller
         ]);
 
         $event = Event::findOrFail($request->event_id);
+        if ($event->sisa_kuota <= 0) {
+            return back()->withErrors(['event_id' => 'Kuota untuk event ini sudah penuh.']);
+        }
+
+
+        $event->sisa_kuota -= 1;
+        $event->save();
 
         if (
             ($event->tipe_event === 'perorangan' && $request->tipe_pendaftaran !== 'perorangan') ||

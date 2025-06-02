@@ -18,9 +18,10 @@
         <main class="flex-1 p-6 ml-64">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold text-gray-800">Manajemen Event Kelompok</h1>
-                <button onclick="window.location.href='{{ route('admin.event.create') }}'" 
+                <button onclick="window.location.href='{{ route('admin.event.create') }}'"
                     class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 z-10">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
+                    <span
+                        class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-transparent group-hover:dark:bg-transparent">
                         Create Event
                     </span>
                 </button>
@@ -31,12 +32,13 @@
                 <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     type="button">
-                    Filter by  
-                </button>   
+                    Filter by
+                </button>
                 <!-- Dropdown menu -->
                 <div id="dropdownHover"
                     class="z-10 hidden bg-white divide-y divide-white-100 rounded-sm shadow-sm w-44">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-900 bg-white" aria-labelledby="dropdownHoverButton">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-900 bg-white"
+                        aria-labelledby="dropdownHoverButton">
                         <li>
                             <a href="#" class="block px-4 py-2 dark:hover:text-black">Upcoming</a>
                         </li>
@@ -45,14 +47,15 @@
                         </li>
                     </ul>
                 </div>
-                <form class="flex-1">   
-                    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white bg-white">Search</label>
+                <form class="flex-1">
+                    <label for="default-search"
+                        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white bg-white">Search</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
                         <input type="search" id="default-search"
@@ -75,6 +78,7 @@
                             <th class="text-left px-6 py-3 border-b">Deskripsi</th>
                             <th class="text-left px-6 py-3 border-b">Tipe Event</th>
                             <th class="text-center px-6 py-3 border-b">Kuota</th>
+                            <th class="text-center px-6 py-3 border-b">Sisa Kuota</th>
                             <th class="text-center px-6 py-3 border-b">Max Anggota</th>
                             <th class="text-left px-6 py-3 border-b">Poster</th>
                             <th class="text-left px-6 py-3 border-b">Harga</th>
@@ -91,6 +95,8 @@
                                 <td class="px-6 py-4 border-b">{{ $events->deskripsi }}</td>
                                 <td class="px-6 py-4 border-b capitalize">{{ $events->tipe_event }}</td>
                                 <td class="px-6 py-4 border-b text-center">{{ $events->kuota }}</td>
+                                <td class="px-6 py-4 border-b text-center">
+                                    {{ $events->sisa_kuota ?? '-' }}
                                 <td class="px-6 py-4 border-b text-center">
                                     {{ $events->max_anggota_kelompok ?? '-' }}
                                 </td>
@@ -134,7 +140,7 @@
             const form = document.getElementById('createEventForm');
             form.classList.toggle('hidden');
         }
-        
+
         let collapsed = false;
 
         function toggleSidebar() {
@@ -158,4 +164,5 @@
         }
     </script>
 </body>
+
 </html>

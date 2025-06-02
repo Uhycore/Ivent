@@ -21,7 +21,7 @@
             @include('admin.navbar')
 
             <!-- Page content -->
-            <div class="p-4 md:p-6">
+            <div class="p-4 md:p-6 ml-64">
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-2xl font-bold">Edit User</h1>
                     <a href="{{ route('admin.pengguna.index') }}" class="btn btn-ghost">

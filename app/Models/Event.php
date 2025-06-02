@@ -17,6 +17,7 @@ class Event extends Model
         'deskripsi',
         'tipe_event',
         'kuota',
+        'sisa_kuota',
         'max_anggota_kelompok',
         'gambar',
         'harga_pendaftaran',

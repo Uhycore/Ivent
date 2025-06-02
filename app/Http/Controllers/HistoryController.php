@@ -11,7 +11,7 @@ class HistoryController extends Controller
     public function index()
     {
         if (!Auth::check()) {
-            return redirect('/'); 
+            return redirect('/');
         }
 
         $history = Auth::user();
@@ -27,4 +27,7 @@ class HistoryController extends Controller
 
         return view('history', compact('pendaftaranList'));
     }
+
+    // app/Http/Controllers/HistoryController.php
+
 }

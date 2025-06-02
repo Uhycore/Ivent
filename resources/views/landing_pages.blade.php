@@ -374,6 +374,10 @@
                 <p>&copy; 2025 EventZone. All rights reserved.</p>
             </div>
         </footer>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
 
         <script>
             window.addEventListener('scroll', function() {
@@ -456,10 +460,7 @@
 
             AOS.init();
         </script>
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script>
-            AOS.init();
-        </script>
+        
 </body>
 
 </html>

@@ -9,13 +9,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 </head>
 
-<body class="flex h-screen bg-gray-100">
-    @include('admin.sidebar')
-
+<div class="flex h-screen">
+    <aside class="w-64 h-full overflow-y-auto bg-white">
+        @include('admin.sidebar')
+    </aside>
     <div class="flex-1 flex flex-col">
         @include('admin.navbar')
+        <main class="flex-1 p-6 overflow-y-auto mt-16">
 
-        <main class="flex-1 p-6">
             <div class="bg-white shadow-md rounded-lg p-6 mb-6">
                 <h2 class="text-xl font-semibold mb-4 text-gray-800">Edit Event</h2>
 
@@ -79,6 +80,18 @@
                                 placeholder="Masukkan kuota peserta" value="{{ old('kuota', $event->kuota ?? '') }}"
                                 required>
                             @error('kuota')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        {{-- Sisa Kuota --}}
+                        <div>
+                            <label for="sisa_kuota" class="block text-gray-700 font-medium mb-1">Sisa Kuota</label>
+                            <input type="number" id="sisa_kuota" name="sisa_kuota" min="0"
+                                class="w-full border border-gray-300 rounded px-4 py-2 @error('sisa_kuota') border-red-500 @enderror"
+                                placeholder="Masukkan sisa kuota"
+                                value="{{ old('sisa_kuota', $event->sisa_kuota ?? '') }}" required>
+                            @error('sisa_kuota')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
@@ -149,6 +162,6 @@
             </div>
         </main>
     </div>
-</body>
+    </body>
 
 </html>
