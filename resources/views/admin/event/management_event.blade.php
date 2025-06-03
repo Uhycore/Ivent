@@ -10,14 +10,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
 </head>
 
-<body class="bg-gray-100 min-h-screen flex mt-16">
+<body class="bg-gray-100 min-h-screen flex mt-16 z-0">
     @include('admin.sidebar')
     <div class="flex-1 flex flex-col">
         @include('admin.navbar')
         <!-- Content -->
         <main class="flex-1 p-6 ml-64">
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold text-gray-800">Manajemen Event Kelompok</h1>
+                <h1 class="text-2xl font-bold text-gray-800">Manajemen Event</h1>
                 <button onclick="window.location.href='{{ route('admin.event.create') }}'"
                     class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 z-10">
                     <span
@@ -48,90 +48,83 @@
                     </ul>
                 </div>
                 <form class="flex-1">
-                    <label for="default-search"
-                        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white bg-white">Search</label>
+                    <label for="search" class="sr-only">Search</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <input type="search" id="default-search"
-                            class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 bg-white borderdark:border-gray-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Ketik Disini . . . " required />
+                        <input type="search" id="search" placeholder="Ketik sini..."
+                            class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" />
                         <button type="submit"
-                            class="text-white absolute end-2 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                            class="text-white absolute end-2 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
                     </div>
                 </form>
             </div>
 
             <!-- Table -->
             <div class="overflow-x-auto">
-                <table class="min-w-full bg-white border border-gray-200 shadow rounded">
-                    <thead class="bg-gray-100 text-gray-600 uppercase text-sm">
-                        <tr>
-                            <th class="text-left px-6 py-3 border-b">ID</th>
-                            <th class="text-left px-6 py-3 border-b">Nama Event</th>
-                            <th class="text-left px-6 py-3 border-b">Tanggal</th>
-                            <th class="text-left px-6 py-3 border-b">Deskripsi</th>
-                            <th class="text-left px-6 py-3 border-b">Tipe Event</th>
-                            <th class="text-center px-6 py-3 border-b">Kuota</th>
-                            <th class="text-center px-6 py-3 border-b">Sisa Kuota</th>
-                            <th class="text-center px-6 py-3 border-b">Max Anggota</th>
-                            <th class="text-left px-6 py-3 border-b">Poster</th>
-                            <th class="text-left px-6 py-3 border-b">Harga</th>
-                            <th class="text-center px-6 py-3 border-b">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($event as $events)
-                            <tr class="hover:bg-gray-50 text-gray-700">
-                                <td class="px-6 py-4 border-b">{{ $loop->iteration }}</td>
-                                <td class="px-6 py-4 border-b">{{ $events->nama_event }}</td>
-                                <td class="px-6 py-4 border-b">
-                                    {{ \Carbon\Carbon::parse($events->tanggal)->format('d-m-Y') }}</td>
-                                <td class="px-6 py-4 border-b">{{ $events->deskripsi }}</td>
-                                <td class="px-6 py-4 border-b capitalize">{{ $events->tipe_event }}</td>
-                                <td class="px-6 py-4 border-b text-center">{{ $events->kuota }}</td>
-                                <td class="px-6 py-4 border-b text-center">
-                                    {{ $events->sisa_kuota ?? '-' }}
-                                <td class="px-6 py-4 border-b text-center">
-                                    {{ $events->max_anggota_kelompok ?? '-' }}
-                                </td>
-                                <td class="px-6 py-4 border-b">
-                                    @if ($events->gambar)
-                                        <img src="{{ asset('storage/' . $events->gambar) }}" alt="Gambar Event"
-                                            class="w-16 h-16 object-cover rounded">
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4 border-b text-center">Rp. {{ $events->harga_pendaftaran }}</td>
-                                <td class="px-6 py-4 border-b text-center">
-                                    <div class="flex justify-center space-x-2">
-                                        <a href="{{ route('admin.event.edit', $events->id) }}"
-                                            class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-2 py-1.5 text-center">
-                                            <span class="material-symbols-rounded text-sm">edit_square</span>
-                                        </a>
-                                        <form action="{{ route('admin.event.delete', $events->id) }}" method="POST"
-                                            class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-2 py-1.5 text-center"
-                                                onclick="return confirm('Yakin ingin menghapus event ini?')">
-                                                <span class="material-symbols-rounded text-sm">delete</span>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+    <table class="table-auto w-full bg-white border border-gray-200 shadow-sm rounded text-xs">
+        <thead class="bg-gray-100 text-gray-600 uppercase">
+            <tr>
+                <th class="px-2 py-2 whitespace-nowrap">#</th>
+                <th class="px-2 py-2 whitespace-nowrap">Nama</th>
+                <th class="px-2 py-2 whitespace-nowrap">Tanggal</th>
+                <th class="px-2 py-2 whitespace-nowrap">Deskripsi</th>
+                <th class="px-2 py-2 whitespace-nowrap">Tipe</th>
+                <th class="px-2 py-2 whitespace-nowrap text-center">Kuota</th>
+                <th class="px-2 py-2 whitespace-nowrap text-center">Sisa</th>
+                <th class="px-2 py-2 whitespace-nowrap text-center">Max</th>
+                <th class="px-2 py-2 whitespace-nowrap">Poster</th>
+                <th class="px-2 py-2 whitespace-nowrap">Harga</th>
+                <th class="px-2 py-2 whitespace-nowrap text-center">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($event as $events)
+                <tr class="hover:bg-gray-50 text-gray-700">
+                    <td class="px-2 py-2">{{ $loop->iteration }}</td>
+                    <td class="px-2 py-2">{{ $events->nama_event }}</td>
+                    <td class="px-2 py-2">{{ \Carbon\Carbon::parse($events->tanggal)->format('d-m-Y') }}</td>
+                    <td class="px-2 py-2">{{ Str::limit($events->deskripsi, 20) }}</td>
+                    <td class="px-2 py-2 capitalize">{{ $events->tipe_event }}</td>
+                    <td class="px-2 py-2 text-center">{{ $events->kuota }}</td>
+                    <td class="px-2 py-2 text-center">{{ $events->sisa_kuota ?? '-' }}</td>
+                    <td class="px-2 py-2 text-center">{{ $events->max_anggota_kelompok ?? '-' }}</td>
+                    <td class="px-2 py-2">
+                        @if ($events->gambar)
+                            <img src="{{ asset('storage/' . $events->gambar) }}" alt="Gambar Event" class="w-10 h-10 object-cover rounded">
+                        @else
+                            -
+                        @endif
+                    </td>
+                    <td class="px-2 py-2 text-center">Rp{{ number_format($events->harga_pendaftaran, 0, ',', '.') }}</td>
+                    <td class="px-2 py-2 text-center">
+                        <div class="flex justify-center space-x-1">
+                            <a href="{{ route('admin.event.edit', $events->id) }}"
+                                class="text-blue-500 hover:text-blue-700">
+                                <span class="material-symbols-rounded text-sm">edit_square</span>
+                            </a>
+
+                            <form action="{{ route('admin.event.delete', $events->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus event ini?')">
+                                @csrf
+                                <button type="submit"
+                                    class="text-red-500 hover:text-red-700"
+                                    onclick="return confirm('Yakin ingin menghapus event ini?')">
+                                    <span class="material-symbols-rounded text-sm">delete</span>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
         </main>
     </div>
 

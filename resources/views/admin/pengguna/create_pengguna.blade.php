@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
-<body class="bg-base-200">
+<body class="bg-base-100 mt-16" >
     <div class="drawer lg:drawer-open">
         <input id="my-drawer" type="checkbox" class="drawer-toggle" />
         <!-- Sidebar -->
@@ -75,8 +75,8 @@
                                     class="input input-bordered @error('full_name') input-error @enderror"
                                     value="{{ old('full_name') }}" required />
                                 @error('full_name')
-    <span class="text-error text-sm">{{ $message }}</span>
-@enderror
+                                <span class="text-error text-sm">{{ $message }}</span>
+                            @enderror
                             </div> -->
 
                             <div class="form-control">
@@ -131,18 +131,18 @@
                                 <input type="file" id="profile_picture" name="profile_picture"
                                     class="file-input file-input-bordered w-full @error('profile_picture') file-input-error @enderror" />
                                 @error('profile_picture')
-    <span class="text-error text-sm">{{ $message }}</span>
-@enderror
+                                    <span class="text-error text-sm">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div> -->
 
-                            <div class="form-control mt-8">
-                                <div class="flex justify-end gap-4">
-                                    <a href="{{ route('admin.pengguna.index') }}" class="btn btn-ghost">Cancel</a>
-                                    <button type="submit" class="btn btn-primary">Add User</button>
-                                </div>
-                            </div>
                     </form>
+                </div>
+                <div class="form-control mt-8 ">
+                    <div class="flex justify-end gap-4 ">
+                        <a href="{{ route('admin.pengguna.index') }}" class="btn btn-ghost">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Add User</button>
+                    </div>
                 </div>
             </div>
         </div>
