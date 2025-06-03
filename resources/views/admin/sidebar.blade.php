@@ -2,9 +2,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
 <aside id="sidebar" style="background-color: rgb(33, 37, 41);" class="shadow-md transition-width duration-300 w-56 flex flex-col overflow-y-auto h-screen fixed">
     
-    <nav class="mt-0 flex-1 z-10" style="background-color: rgb(33, 37, 41);">
+    <nav class="mt-0 flex-1 z-[1000]" style="background-color: rgb(33, 37, 41);">
         <ul>
-
         <a href="{{ route('admin.dashboard') }}">
                 <li class="flex items-center px-6 py-3 cursor-pointer hover:bg-gray-700">
                     <span class="material-symbols-rounded mr-2" style="color: rgb(89, 92, 95);">person</span>

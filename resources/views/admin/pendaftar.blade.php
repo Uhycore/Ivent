@@ -29,12 +29,11 @@
                         $eventName = $groupedPendaftarans->first()->event->nama_event;
                     @endphp
 
-                    <h2 class="text-xl font-bold text-gray-800 mb-4">{{ $eventName }}</h2>
 
                     @foreach ($groupedPendaftarans as $pendaftaran)
-                        <div class="card bg-white shadow-lg mb-6">
-                            <div class="card-body p-6">
-
+                    <div class="card bg-white shadow-lg mb-6">
+                        <div class="card-body p-6">
+                                <h2 class="text-xl font-bold text-gray-800 mb-4">{{ $eventName }}</h2>  
                                 <!-- Header Section -->
                                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                                     <div>

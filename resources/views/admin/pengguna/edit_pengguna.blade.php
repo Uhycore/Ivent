@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
-<body class="bg-base-200">
+<body class="bg-base-100 mt-16">
     <div class="drawer lg:drawer-open">
         <input id="my-drawer" type="checkbox" class="drawer-toggle" />
         <!-- Sidebar -->
@@ -94,14 +94,14 @@
                             </div>
 
 
-                            <div class="form-control mt-8">
-                                <div class="flex justify-end gap-4">
-                                    <a href="{{ route('admin.pengguna.index') }}" class="btn btn-ghost">Cancel</a>
-                                    <button type="submit" class="btn btn-primary">Update User</button>
-                                </div>
-                            </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                    <div class="form-control mt-8">
+                        <div class="flex justify-end gap-4">
+                            <a href="{{ route('admin.pengguna.index') }}" class="btn btn-ghost">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Update User</button>
+                        </div>
+                    </div>
             </div>
         </div>
 

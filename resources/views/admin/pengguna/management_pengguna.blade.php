@@ -95,10 +95,11 @@
                                             method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" onclick="return confirm('Yakin ingin menghapus user ini?')"
-                                                class="text-red-600 hover:text-red-900">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            <button type="submit"
+                                    class="text-red-500 hover:text-red-700"
+                                    onclick="return confirm('Yakin ingin menghapus event ini?')">
+                                    <span class="material-symbols-rounded text-sm">delete</span>
+                                </button>
                                         </form>
                                     </div>
                                 </td>

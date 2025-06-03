@@ -27,7 +27,6 @@ class CreateTransaksiTable extends Migration
         });
     }
 
-
     public function down()
     {
         Schema::dropIfExists('transaksi');
