@@ -11,5 +11,6 @@ class GuestController extends Controller
     {
         $events = Event::get();
         return view('landing_pages', compact('events'));
+        
     }
 }

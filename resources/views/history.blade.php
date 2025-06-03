@@ -7,132 +7,142 @@
     <title>Daftar Pendaftaran</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #d2dcff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 80px;
+        }
+    </style>
 </head>
 
-<body class="min-h-screen bg-base-200 p-6">
-    <div class="container mx-auto max-w-4xl">
-        <h1 class="text-3xl font-bold mb-8 text-center">Daftar Pendaftaran</h1>
+<body>
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-30 text-white shadow-md px-6 py-4 flex items-center justify-between" style="background-color: #5d7ef3;">
+        <!-- Tombol Back -->
+        <button onclick="window.location.href='../index.php'" class="flex items-center hover:text-gray-300 transition">
+            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Back
+        </button>
+        <!-- Judul -->
+        <h1 class="text-lg font-semibold">Daftar Pendaftaran</h1>
+        <!-- Spacer -->
+        <div class="w-12"></div>
+    </nav>
 
+    <div class="container mx-auto px-4 pb-20">
         <?php foreach ($pendaftaranList as $pendaftaran): ?>
-        <div class="card bg-base-100 shadow-xl mb-8">
-            <div class="card-body">
-                <div class="flex justify-between items-start flex-wrap gap-2">
-                    <div>
-                        <h2 class="card-title text-xl">Pendaftaran ID: <?= htmlspecialchars($pendaftaran['id']) ?></h2>
-                        <p class="text-sm opacity-70">User ID: <?= htmlspecialchars($pendaftaran['user_id']) ?></p>
+        <!-- Card Tiket -->
+        <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-5 my-6 space-y-4">
+            <div class="flex justify-between items-center text-sm font-semibold text-gray-700">
+                <span class="text-sm text-gray-500 mt-1">
+                    <i class="fa fa-calendar mr-1"></i><?= htmlspecialchars($pendaftaran['tanggal_daftar']) ?>
+                </span>
+                <span class="<?= $pendaftaran['tipe_pendaftaran'] === 'perorangan' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800' ?> text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                    <?= ucfirst($pendaftaran['tipe_pendaftaran']) ?>
+                </span>
+            </div>
+            
+            <div class="flex gap-4">
+                <!-- You can replace this with actual event image if available -->
+                <img src="https://via.placeholder.com/100" alt="Poster Event" class="w-24 h-24 object-cover rounded-md" />
+                <div class="flex-1">
+                    <div class="text-base font-medium text-gray-800">
+                        <?= htmlspecialchars($pendaftaran['event']['nama_event']) ?>
                     </div>
-                    <span
-                        class="ml-4 px-3 py-1 text-sm rounded-full
-    {{ $pendaftaran->status === 'diterima' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800' }}">
-                        {{ ucfirst($pendaftaran->status) }}
+                    <div class="text-sm text-gray-500">
+                        Kategori: <?= htmlspecialchars($pendaftaran['event']['tipe_event']) ?>
+                    </div>
+                    <span class="<?= $pendaftaran['status'] === 'diterima' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?> text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                        <?= ucfirst($pendaftaran['status']) ?>
                     </span>
-
-
+                </div>
+            </div>
+            
+            <?php if ($pendaftaran['tipe_pendaftaran'] === 'perorangan'): ?>
+                <div class="text-base font-semibold text-gray-800">
+                    Harga Tiket: <?= htmlspecialchars($pendaftaran['event']['harga_pendaftaran']) ?>
+                </div>
+                <div class="text-base font-semibold text-gray-800">
+                    Peserta: <?= htmlspecialchars($pendaftaran['perorangan']['nama_lengkap']) ?>
                 </div>
 
-                <div class="divider">Informasi Event</div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <p class="font-semibold">Event:</p>
-                        <p><?= htmlspecialchars($pendaftaran['event']['nama_event']) ?>
-                            (<?= htmlspecialchars($pendaftaran['event']['tipe_event']) ?>)</p>
-                    </div>
-                    <div>
-                        <p class="font-semibold">Tanggal Daftar:</p>
-                        <p><?= htmlspecialchars($pendaftaran['tanggal_daftar']) ?></p>
-                    </div>
+                
+            <?php elseif ($pendaftaran['tipe_pendaftaran'] === 'kelompok'): ?>
+                <div class="text-base font-semibold text-gray-800">
+                    Harga Tiket: <?= htmlspecialchars($pendaftaran['event']['harga_pendaftaran']) ?>
                 </div>
-
-                <?php if ($pendaftaran['tipe_pendaftaran'] === 'perorangan'): ?>
-                <div class="divider">Informasi Peserta</div>
-                <div class="bg-base-200 p-4 rounded-lg">
-                    <div class="flex items-center mb-3">
-                        <div class="badge badge-primary mr-2">Perorangan</div>
-                        <h3 class="font-bold text-lg">
-                            <?= htmlspecialchars($pendaftaran['perorangan']['nama_lengkap']) ?></h3>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <p class="font-semibold">No HP:</p>
-                            <p><?= htmlspecialchars($pendaftaran['perorangan']['no_hp']) ?></p>
-                        </div>
-                        <div>
-                            <p class="font-semibold">Alamat:</p>
-                            <p><?= htmlspecialchars($pendaftaran['perorangan']['alamat']) ?></p>
-                        </div>
-                    </div>
+                <div class="text-base font-semibold text-gray-800">
+                    Kelompok: <?= htmlspecialchars($pendaftaran['kelompok']['nama_kelompok']) ?>
                 </div>
-                <?php elseif ($pendaftaran['tipe_pendaftaran'] === 'kelompok'): ?>
-                <div class="divider">Informasi Kelompok</div>
-                <div class="bg-base-200 p-4 rounded-lg">
-                    <div class="flex items-center mb-3">
-                        <div class="badge badge-secondary mr-2">Kelompok</div>
-                        <h3 class="font-bold text-lg"><?= htmlspecialchars($pendaftaran['kelompok']['nama_kelompok']) ?>
-                        </h3>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                            <p class="font-semibold">No HP Ketua:</p>
-                            <p><?= htmlspecialchars($pendaftaran['kelompok']['no_hp_ketua']) ?></p>
-                        </div>
-                        <div>
-                            <p class="font-semibold">Alamat Ketua:</p>
-                            <p><?= htmlspecialchars($pendaftaran['kelompok']['alamat_ketua']) ?></p>
-                        </div>
-                    </div>
-                    <div>
-                        <p class="font-semibold mb-2">Anggota Kelompok:</p>
-                        <div class="overflow-x-auto">
-                            <table class="table table-zebra">
-                                <thead>
-                                    <tr>
-                                        <th>No.</th>
+                
+                
+                <button onclick="toggleAnggota('anggota-<?= $pendaftaran['id'] ?>')" class="text-sm text-blue-600 hover:underline mt-2">
+                    Lihat anggota kelompok
+                </button>
 
-                                        <th>No HP</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($pendaftaran['kelompok']['anggota_kelompok'] as $i => $anggota): ?>
-                                    <tr>
-                                        <td><?= $i + 1 ?></td>
-
-                                        <td><?= htmlspecialchars($anggota['no_hp']) ?></td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
+                <!-- Detail anggota -->
+                <div id="anggota-<?= $pendaftaran['id'] ?>" class="mt-3 space-y-2 hidden">
+                    <?php foreach ($pendaftaran['kelompok']['anggota_kelompok'] as $i => $anggota): ?>
+                    <div class="text-sm text-gray-700">
+                        <strong><?= $i + 1 ?>.</strong> 
+                        <?= htmlspecialchars($anggota['nama_anggota']) ?> 
+                        (<?= htmlspecialchars($anggota['no_hp']) ?>)
                     </div>
+                    <?php endforeach; ?>
                 </div>
+            <?php endif; ?>
+
+            <div class="flex justify-end mt-3 gap-4">
+                <button class="px-4 py-2 border border-gray-300 text-sm rounded-md hover:bg-gray-100 transition" onclick="window.print()">
+                    <i class="fas fa-print mr-1"></i> Print
+                </button>
+                <?php if ($pendaftaran['status'] !== 'diterima'): ?>
+                <form action="{{ route('checkout') }}" method="POST" class="inline">
+                    @csrf
+                    <input type="hidden" name="pendaftaran_id" value="<?= htmlspecialchars($pendaftaran['id']) ?>">
+                    <button type="submit" style="background-color: #251f77;" class="px-4 py-2 text-white text-sm rounded-md hover:opacity-90 transition">
+                        <i class="fas fa-money-bill-wave mr-1"></i> Bayar
+                    </button>
+                </form>
                 <?php endif; ?>
-
-                <div class="card-actions justify-end mt-4">
-                    <button class="btn btn-outline btn-sm"><i class="fas fa-print mr-1"></i> Print</button>
-                    <form action="{{ route('checkout') }}" method="POST" class="inline">
-                        @csrf
-                        <input type="hidden" name="pendaftaran_id" value="<?= htmlspecialchars($pendaftaran['id']) ?>">
-                        <button type="submit" class="btn btn-outline btn-sm">
-                            <i class="fas fa-money-bill-wave mr-1"></i> Bayar
-                        </button>
-                    </form>
-
-
-
-                </div>
             </div>
         </div>
         <?php endforeach; ?>
 
-        <div class="flex justify-between mt-6">
-            <a href="../index.php" class="btn btn-outline"><i class="fas fa-arrow-left mr-1"></i> Kembali ke Daftar</a>
-            <div>
-                <button class="btn btn-outline mr-2"><i class="fas fa-chevron-left"></i></button>
-                <button class="btn btn-outline"><i class="fas fa-chevron-right"></i></button>
+        <!-- Pagination -->
+        <div class="flex justify-center mt-6">
+            <div class="flex space-x-2">
+                <button class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </div>
+
+    <footer class="mt-10 bg-[#5d7ef3] text-white text-center py-4">
+        <div class="text-sm">
+            &copy; 2025 Event Registration. All rights reserved.
+        </div>
+        <div class="mt-1 text-xs">
+            Developed with 💙 by YourTeamName
+        </div>
+    </footer>
+
+    <script>
+        function toggleAnggota(id) {
+            const list = document.getElementById(id);
+            list.classList.toggle("hidden");
+        }
+    </script>
 </body>
 
 </html>
