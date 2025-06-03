@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Event;
 use App\Models\Pengguna;
+use App\Models\Kelompok;
+use App\Models\Perorangan;
 use App\Models\Transaksi;
 use App\Models\Pendaftaran;
 use Illuminate\Support\Str;
@@ -26,6 +28,10 @@ class TransaksiController extends Controller
 
         $pendaftaranId = $request->pendaftaran_id;
 
+        $eventName = Pendaftaran::findOrFail($pendaftaranId)->event->nama_event;
+
+        
+
         $pendaftaran = Pendaftaran::with('event')->findOrFail($request->pendaftaran_id);
 
         $userId = Auth::id();
@@ -35,7 +41,21 @@ class TransaksiController extends Controller
 
         $pengguna = $pengguna->searchPenggunaByUserId($userId);
 
-        $noHp = $pengguna[0]->no_hp;
+        // $noHp = $pengguna[0]->no_hp;
+
+        // $alamat = $pengguna[0]->alamat;
+
+        $pendaftaran = Pendaftaran::with(['event', 'user', 'perorangan', 'kelompok'])->findOrFail($request->pendaftaran_id);
+
+    // Ambil data kontak langsung dari relasi yang tersedia
+    if ($pendaftaran->perorangan) {
+        $noHp = $pendaftaran->perorangan->no_hp;
+        $alamat = $pendaftaran->perorangan->alamat;
+    } else {
+        $noHp = $pendaftaran->kelompok->no_hp_ketua ?? $pendaftaran->kelompok->no_hp_kelompok;
+        $alamat = $pendaftaran->kelompok->alamat_ketua ?? $pendaftaran->kelompok->alamat_kelompok;
+    }
+
 
 
 
@@ -47,6 +67,7 @@ class TransaksiController extends Controller
         Transaksi::create([
             'user_id' => $userId,
             'event_id' => $eventId,
+            'event_name' => $eventName,
             'pendaftaran_id' => $pendaftaranId,
             'kode_transaksi' => $kodeTransaksi,
             'jumlah_bayar' => $jumlahBayar,
@@ -71,13 +92,13 @@ class TransaksiController extends Controller
             ),
             'customer_details' => array(
                 'first_name' => $user->username,
-
+                'alamat' => $alamat,
                 'phone' => $noHp,
             ),
         );
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
-        return view('checkout', compact('snapToken', 'kodeTransaksi', 'jumlahBayar', 'user', 'noHp', 'pendaftaranId'));
+        return view('checkout', compact('snapToken', 'kodeTransaksi', 'jumlahBayar', 'user', 'noHp', 'pendaftaranId','eventName','alamat'));
     }
 
     public function midtransCallback(Request $request)
