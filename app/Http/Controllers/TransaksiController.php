@@ -30,7 +30,7 @@ class TransaksiController extends Controller
 
         $eventName = Pendaftaran::findOrFail($pendaftaranId)->event->nama_event;
 
-        
+
 
         $pendaftaran = Pendaftaran::with('event')->findOrFail($request->pendaftaran_id);
 
@@ -47,14 +47,14 @@ class TransaksiController extends Controller
 
         $pendaftaran = Pendaftaran::with(['event', 'user', 'perorangan', 'kelompok'])->findOrFail($request->pendaftaran_id);
 
-    // Ambil data kontak langsung dari relasi yang tersedia
-    if ($pendaftaran->perorangan) {
-        $noHp = $pendaftaran->perorangan->no_hp;
-        $alamat = $pendaftaran->perorangan->alamat;
-    } else {
-        $noHp = $pendaftaran->kelompok->no_hp_ketua ?? $pendaftaran->kelompok->no_hp_kelompok;
-        $alamat = $pendaftaran->kelompok->alamat_ketua ?? $pendaftaran->kelompok->alamat_kelompok;
-    }
+        // Ambil data kontak langsung dari relasi yang tersedia
+        if ($pendaftaran->perorangan) {
+            $noHp = $pendaftaran->perorangan->no_hp;
+            $alamat = $pendaftaran->perorangan->alamat;
+        } else {
+            $noHp = $pendaftaran->kelompok->no_hp_ketua ?? $pendaftaran->kelompok->no_hp_kelompok;
+            $alamat = $pendaftaran->kelompok->alamat_ketua ?? $pendaftaran->kelompok->alamat_kelompok;
+        }
 
         $eventId = $pendaftaran->event_id;
         $jumlahBayar = $pendaftaran->event->harga_pendaftaran;
@@ -95,7 +95,7 @@ class TransaksiController extends Controller
         );
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
-        return view('checkout', compact('snapToken', 'kodeTransaksi', 'jumlahBayar', 'user', 'noHp', 'pendaftaranId','eventName','alamat'));
+        return view('checkout', compact('snapToken', 'kodeTransaksi', 'jumlahBayar', 'user', 'noHp', 'pendaftaranId', 'eventName', 'alamat'));
     }
 
     public function midtransCallback(Request $request)
@@ -107,6 +107,22 @@ class TransaksiController extends Controller
             $transaksi = Transaksi::where('kode_transaksi', $request->order_id)->first();
             if ($transaksi && $transaksi->status === 'unpaid') {
                 $transaksi->update(['status' => 'paid']);
+
+                $eventId = $transaksi->event_id;
+
+
+                $event = Event::findOrFail($eventId);
+                if ($event->sisa_kuota <= 0) {
+                    return back()->withErrors(['event_id' => 'Kuota untuk event ini sudah penuh.']);
+                }
+
+
+                $event->sisa_kuota -= 1;
+                $event->save();
+
+
+                $pendaftaranController = new PendaftaranController();
+                return $pendaftaranController->approve($transaksi->pendaftaran_id);
             } else {
                 return response()->json([
                     'status' => 'error',
