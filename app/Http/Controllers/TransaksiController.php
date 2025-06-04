@@ -56,9 +56,6 @@ class TransaksiController extends Controller
         $alamat = $pendaftaran->kelompok->alamat_ketua ?? $pendaftaran->kelompok->alamat_kelompok;
     }
 
-
-
-
         $eventId = $pendaftaran->event_id;
         $jumlahBayar = $pendaftaran->event->harga_pendaftaran;
 

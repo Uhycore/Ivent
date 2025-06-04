@@ -32,65 +32,64 @@
 
                 <div class="mb-4">
                     <button type="submit"
-                        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200">
+                        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200 text-sm">
                         Hapus Terpilih
                     </button>
                 </div>
 
+                <!-- Table Wrapper for Responsive -->
                 <div class="overflow-x-auto shadow rounded border border-gray-200">
-                    <table class="min-w-full bg-white border border-gray-200">
-                        <thead class="bg-gray-100 text-gray-600 uppercase text-sm">
+                    <table class="min-w-full table-fixed bg-white border border-gray-200 text-sm">
+                        <thead class="bg-gray-100 text-gray-600 uppercase">
                             <tr>
-                                <th class="text-left px-6 py-3 border-b">
+                                <th class="px-3 py-3 border-b w-10">
                                     <input type="checkbox" id="select-all"
                                         class="form-checkbox h-4 w-4 text-blue-600 rounded focus:ring-blue-500">
                                 </th>
-                                <th class="text-left px-6 py-3 border-b">No</th>
-                                <th class="text-left px-6 py-3 border-b">Id pendaftar</th>
-                                <th class="text-left px-6 py-3 border-b">Kode Transaksi</th>
-                                <th class="text-left px-6 py-3 border-b">Username</th>
-                                <th class="text-left px-6 py-3 border-b">Nama Event</th>
-                                <th class="text-left px-6 py-3 border-b">Jumlah Bayar</th>
-                                <th class="text-left px-6 py-3 border-b">Status</th>
-                                <th class="text-left px-6 py-3 border-b">Tanggal</th>
-                                <th class="text-center px-6 py-3 border-b">Aksi</th>
+                                <th class="px-3 py-3 border-b w-10">No</th>
+                                <th class="px-3 py-3 border-b w-24">ID Pendaftar</th>
+                                <th class="px-3 py-3 border-b w-28">Kode Transaksi</th>
+                                <th class="px-3 py-3 border-b w-28">Username</th>
+                                <th class="px-3 py-3 border-b w-40">Nama Event</th>
+                                <th class="px-3 py-3 border-b w-32">Jumlah Bayar</th>
+                                <th class="px-3 py-3 border-b w-20">Status</th>
+                                <th class="px-3 py-3 border-b w-28">Tanggal</th>
+                                <th class="px-3 py-3 border-b w-20 text-center">Aksi</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             @foreach ($transaksiList as $trx)
                                 <tr class="hover:bg-gray-50 text-gray-700">
-                                    <td class="px-6 py-4 border-b">
+                                    <td class="px-3 py-2 border-b">
                                         <input type="checkbox" name="selected[]" value="{{ $trx['id'] }}"
                                             class="form-checkbox h-4 w-4 text-blue-600 rounded focus:ring-blue-500">
                                     </td>
-                                    <td class="px-6 py-4 border-b">{{ $loop->iteration }}</td>
-                                    <td class="px-6 py-4 border-b">{{ $trx['pendaftaran_id'] }}</td>
-                                    <td class="px-6 py-4 border-b">{{ $trx['kode_transaksi'] }}</td>
-                                    <td class="px-6 py-4 border-b">{{ $trx['user']['username'] }}</td>
-                                    <td class="px-6 py-4 border-b">{{ $trx['event']['nama_event'] }}</td>
-                                    <td class="px-6 py-4 border-b">
+                                    <td class="px-3 py-2 border-b">{{ $loop->iteration }}</td>
+                                    <td class="px-3 py-2 border-b truncate">{{ $trx['pendaftaran_id'] }}</td>
+                                    <td class="px-3 py-2 border-b truncate">{{ $trx['kode_transaksi'] }}</td>
+                                    <td class="px-3 py-2 border-b truncate">{{ $trx['user']['username'] }}</td>
+                                    <td class="px-3 py-2 border-b truncate">{{ $trx['event']['nama_event'] }}</td>
+                                    <td class="px-3 py-2 border-b truncate">
                                         Rp{{ number_format($trx['jumlah_bayar'], 0, ',', '.') }}
                                     </td>
-                                    <td class="px-6 py-4 border-b">
-                                        <span
-                                            class="px-2 py-1 rounded text-white text-sm
-                      @if ($trx['status'] === 'paid') bg-green-500
-                      @elseif($trx['status'] === 'unpaid') bg-red-500
-                      @else bg-gray-400 @endif">
+                                    <td class="px-3 py-2 border-b">
+                                        <span class="px-2 py-1 rounded text-white text-xs
+                                            @if ($trx['status'] === 'paid') bg-green-500
+                                            @elseif($trx['status'] === 'unpaid') bg-red-500
+                                            @else bg-gray-400 @endif">
                                             {{ ucfirst($trx['status']) }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 border-b">{{ date('d-m-Y', strtotime($trx['created_at'])) }}
-                                    </td>
-                                    <td class="px-6 py-4 border-b text-center">
+                                    <td class="px-3 py-2 border-b">{{ date('d-m-Y', strtotime($trx['created_at'])) }}</td>
+                                    <td class="px-3 py-2 border-b text-center">
                                         <form action="{{ route('admin.transaksi.delete', $trx['id']) }}" method="POST"
                                             onsubmit="return confirm('Yakin ingin menghapus transaksi ini?')"
                                             class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded transition duration-200">
+                                                class="bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1 rounded transition duration-200">
                                                 Hapus
                                             </button>
                                         </form>
@@ -102,12 +101,11 @@
                 </div>
             </form>
         </main>
-        
     </div>
 
     <!-- Checkbox Select All Script -->
     <script>
-        document.getElementById('select-all').addEventListener('change', function() {
+        document.getElementById('select-all').addEventListener('change', function () {
             const checkboxes = document.querySelectorAll('input[name="selected[]"]');
             for (const checkbox of checkboxes) {
                 checkbox.checked = this.checked;
