@@ -165,7 +165,7 @@
             </div>
         </section>
     </section>
-    <section class="about" id="about">
+    <section class="about" id="about" style="!margin-top: 2rem">
         <div class="about-left" data-aos="fade-up-right" data-aos-duration="1000">
             <img src="{{ asset('images/hero2.png') }}" alt="">
         </div>
@@ -306,7 +306,6 @@
         <h2 class="testimoni-heading">Testimoni dari Pengguna</h2>
         <!-- Card 1 -->
         <div class="card-testi">
-
             <div class="testimoni-card" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom"
                 data-aos-delay="100" data-aos-duration="1000">
                 <p class="testimoni-text">“Website ini sangat membantu saya menemukan event menarik di kota saya!”</p>
@@ -339,41 +338,75 @@
             </div>
         </div>
         </section>
-        <footer class="footer">
-            <div class="footer-container">
-                <!-- Logo dan Deskripsi -->
-                <div class="footer-section">
-                    <h2 class="footer-logo">Ivent</h2>
-                    <p class="footer-desc">
-                        Temukan berbagai event menarik di sekitarmu dengan mudah dan cepat. Ivent menghubungkan kamu
-                        dengan pengalaman tak terlupakan.
-                    </p>
+        <div style="height: 70px;"></div>
+        <footer style="background-color: #f9fafb; font-family: sans-serif; margin-top: 10rem;">
+            <!-- Upper Content -->
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; padding: 3rem 2rem;">
+                <!-- Deskripsi & Logo -->
+                <div style="flex: 1 1 200px; margin-bottom: 2rem;">
+                <div style="margin-bottom: 1rem;">
+                    <div style="width: 30px; height: 30px; background-color: #d2dcff; border-radius: 50%;"></div>
+                </div>
+                <h3 style="font-weight: 600; max-width: 250px;">
+                    Penyedia website event terbaik di indonesia.
+                </h3>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">Luqmanul, 2023.</p>
                 </div>
 
-                <!-- Navigasi -->
-                <div class="footer-section">
-                    <h3>Menu</h3>
-                    <ul class="footer-links">
-                        <li><a href="#beranda">Beranda</a></li>
-                        <li><a href="#event">About</a></li>
-                        <li><a href="#testimoni">Testimoni</a></li>
-                        <li><a href="#kontak">Kontak</a></li>
-                    </ul>
+                <!-- Platform -->
+                <div style="flex: 1 1 150px; margin-bottom: 1rem;">
+                <h4 style="margin-bottom: 1rem;">Platform</h4>
+                <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                    <li><a href="#" style="color: #333; text-decoration: none;">Plans & Pricing</a></li>
+                    <li><a href="#" style="color: #333; text-decoration: none;">Personal AI Manager</a></li>
+                    <li><a href="#" style="color: #333; text-decoration: none;">AI Business Writer</a></li>
+                </ul>
                 </div>
 
-                <!-- Kontak -->
-                <div class="footer-section">
-                    <h3>Kontak Kami</h3>
-                    <p>Email: habilatif@gmail.com.com</p>
-                    <p>WhatsApp: +6281939039361</p>
-                    <p>Alamat: Surabaya, Indonesia</p>
+                <!-- Company -->
+                <div style="flex: 1 1 150px; margin-bottom: 1rem;">
+                <h4 style="margin-bottom: 1rem;">Company</h4>
+                <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                    <li><a href="#" style="color: #333; text-decoration: none;">Blog</a></li>
+                    <li><a href="#" style="color: #333; text-decoration: none;">Careers</a></li>
+                    <li><a href="#" style="color: #333; text-decoration: none;">News</a></li>
+                </ul>
+                </div>
+
+                <!-- Resources -->
+                <div style="flex: 1 1 150px; margin-bottom: 1rem;">
+                <h4 style="margin-bottom: 1rem;">Resources</h4>
+                <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                    <li><a href="#" style="color: #333; text-decoration: none;">Documentation</a></li>
+                    <li><a href="#" style="color: #333; text-decoration: none;">Papers</a></li>
+                    <li><a href="#" style="color: #333; text-decoration: none;">Press Conferences</a></li>
+                </ul>
+                </div>
+
+                <!-- Get the App -->
+                <div style="flex: 1 1 150px; margin-bottom: 1rem;">
+                <h4 style="margin-bottom: 1rem;">Get the app</h4>
+                <button style="display: flex; align-items: center; border: 1px solid #ccc; background: white; padding: 0.5rem 1rem; border-radius: 999px; margin-bottom: 0.5rem; cursor: pointer; hover: background-color: #d2dcff;">
+                    Windows
+                </button>
+                <button style="display: flex; align-items: center; border: 1px solid #ccc; background: white; padding: 0.5rem 1rem; border-radius: 999px; cursor: pointer;">
+                    &nbsp;macOS
+                </button>
                 </div>
             </div>
 
-            <div class="footer-bottom">
-                <p>&copy; 2025 EventZone. All rights reserved.</p>
+            <!-- Bottom Bar -->
+            <div style="background-color: #d2dcff; color: black; padding: 1rem 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 0.9rem;">
+                <p style="margin: 0;">© 2023 Maxwell Inc. All rights reserved.</p>
+                <div style="display: flex; gap: 1.5rem;">
+                <a href="#" style="color: black; text-decoration: none;">Terms of Service</a>
+                <a href="#" style="color: black; text-decoration: none;">Privacy Policy</a>
+                <a href="#" style="color: black; text-decoration: none;">Cookies</a>
+                </div>
             </div>
         </footer>
+
+
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>
             AOS.init();
