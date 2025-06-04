@@ -49,6 +49,19 @@
                                 @enderror
                             </div>
 
+                            <!-- email -->
+                            <div class="form-control">
+                                <label class="label" for="email">
+                                    <span class="label-text">Email</span>
+                                </label>
+                                <input type="email" id="email" name="email" placeholder="Enter email"
+                                    class="input input-bordered @error('email') input-error @enderror"
+                                    value="{{ old('email', $user->email) }}" required />
+                                @error('email')
+                                    <span class="text-error text-sm">{{ $message }}</span>
+                                @enderror
+                            </div>
+
 
                             <div class="form-control">
                                 <label class="label" for="password">
@@ -94,14 +107,14 @@
                             </div>
 
 
-                        </form>
-                    </div>
-                    <div class="form-control mt-8">
-                        <div class="flex justify-end gap-4">
-                            <a href="{{ route('admin.pengguna.index') }}" class="btn btn-ghost">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Update User</button>
-                        </div>
-                    </div>
+                            <div class="form-control mt-8">
+                                <div class="flex justify-end gap-4">
+                                    <a href="{{ route('admin.pengguna.index') }}" class="btn btn-ghost">Cancel</a>
+                                    <button type="submit" class="btn btn-primary">Update User</button>
+                                </div>
+                            </div>
+                    </form>
+                </div>
             </div>
         </div>
 

@@ -56,10 +56,11 @@
             <h2>Register</h2>
             <form action="{{ route('register') }}" method="POST">
                 @csrf
-                <input type="text" name="username" id="username" placeholder="Nama Lengkap" required />
+                <input type="text" name="username" id="username" placeholder="username" required />
                 <input type="number" name="no_hp" id="no_hp" placeholder="no hp" required />
                 <input type="text" name="alamat" id="alamat" placeholder="alamat" required />
                 <input type="password" name="password" id="password" placeholder="Password" required />
+                <input type="email" name="email" id="email" placeholder="Email" required />
                 <button type="submit">Register</button>
             </form>
             <p>Sudah punya akun? <a href="#" onclick="switchToLogin()">Login di sini</a></p>

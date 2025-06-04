@@ -37,7 +37,7 @@ class PenggunaController extends Controller
     {
         $request->validate([
             'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|email|unique:user,email',
             'password' => 'required|string|min:8|confirmed',
             // 'full_name' => 'required|string|max:255',
             'no_hp' => 'required|string|max:20',
@@ -99,14 +99,18 @@ class PenggunaController extends Controller
     // Update Method
     public function update(Request $request, $id)
     {
+      
+
         $user = User::findOrFail($id);
 
         $request->validate([
-            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+            'username' => 'required|string|max:255|unique:user,username,' . $id,
+            'email' => 'required|string|email|max:255|unique:user,email,' . $id,
+            
             'password' => 'nullable|string|min:8|confirmed',
             'no_hp' => 'required|string|max:20',
             'alamat' => 'required|string',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id, 
+            
         ]);
 
         $userData = [
@@ -124,6 +128,7 @@ class PenggunaController extends Controller
             'no_hp' => $request->no_hp,
             'alamat' => $request->alamat,
         ]);
+
 
         return redirect()->route('admin.pengguna.index')->with('success', 'User updated successfully!');
     }
