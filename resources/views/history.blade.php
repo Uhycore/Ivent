@@ -11,34 +11,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            background-color: #d2dcff;
+            background-color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding-top: 80px;
         }
     </style>
 </head>
-
 <body>
     <!-- Navbar -->
-    <nav class="fixed top-0 left-0 right-0 z-30 text-white shadow-md px-6 py-4 flex items-center justify-between" style="background-color: #5d7ef3;">
-        <!-- Tombol Back -->
-        <button onclick="window.location.href='../index.php'" class="flex items-center hover:text-gray-300 transition">
-            <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
-            </svg>
-            Back
-        </button>
-        <!-- Judul -->
-        <h1 class="text-lg font-semibold">Daftar Pendaftaran</h1>
-        <!-- Spacer -->
-        <div class="w-12"></div>
+    <nav class="fixed top-0 left-0 right-0 z-30 bg-gradient-to-r from-[#b7bfff] to-[#c9cfff] shadow-md px-6 py-4 flex items-center justify-between animate-fade-down">
+        <div class="flex items-center space-x-2">
+            <h1 class="text-xl font-bold text-white tracking-wide">IVENT | <span class="text-black">Keranjang Event</span></h1>
+        </div>
+
+        <div class="hidden md:block">
+            <button onclick="window.location.href='../index.php'" class="bg-white text-[#879ff7] border border-indigo-300 rounded-full px-4 py-2 font-medium hover:bg-indigo-100 transition duration-300">
+            Explore Events
+            </button>
+        </div>
     </nav>
 
-    <div class="container mx-auto px-4 pb-20">
+
+
+    <div class="w-full flex justify-center mt-6">
+        <input type="text" placeholder="Cari event..." class="w-[90%] md:w-[60%] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+    </div>
+    
+    <div class=<div class="w-full sm:w-[95%] md:w-[90%] lg:w-[80%] xl:w-[75%] mx-auto bg-white rounded-2xl shadow-md p-6 my-6 border border-gray-200">
         <?php foreach ($pendaftaranList as $pendaftaran): ?>
         <!-- Card Tiket -->
-        <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-5 my-6 space-y-4">
+        <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-5 my-6 space-y-4 hover:shadow-xl transition-all ring-1 ring-purple-100">
             <div class="flex justify-between items-center text-sm font-semibold text-gray-700">
                 <span class="text-sm text-gray-500 mt-1">
                     <i class="fa fa-calendar mr-1"></i><?= htmlspecialchars($pendaftaran['tanggal_daftar']) ?>
@@ -49,7 +51,6 @@
             </div>
             
             <div class="flex gap-4">
-                <!-- You can replace this with actual event image if available -->
                 <img src="https://via.placeholder.com/100" alt="Poster Event" class="w-24 h-24 object-cover rounded-md" />
                 <div class="flex-1">
                     <div class="text-base font-medium text-gray-800">
@@ -106,7 +107,7 @@
                 <form action="{{ route('checkout') }}" method="POST" class="inline">
                     @csrf
                     <input type="hidden" name="pendaftaran_id" value="<?= htmlspecialchars($pendaftaran['id']) ?>">
-                    <button type="submit" style="background-color: #251f77;" class="px-4 py-2 text-white text-sm rounded-md hover:opacity-90 transition">
+                    <button type="submit" style="background-color: #829cfc;" class="px-4 py-2 text-white text-sm rounded-md hover:opacity-90 transition">
                         <i class="fas fa-money-bill-wave mr-1"></i> Bayar
                     </button>
                 </form>
@@ -128,16 +129,30 @@
         </div>
     </div>
 
-    <footer class="mt-10 bg-[#5d7ef3] text-white text-center py-4">
+    <footer class="mt-10 bg-[#c9cfff] text-grey-500 text-center py-4  bottom-0 left-0 right-0">
         <div class="text-sm">
             &copy; 2025 Event Registration. All rights reserved.
         </div>
         <div class="mt-1 text-xs">
-            Developed with 💙 by YourTeamName
+            Developed with Ivennt Teams
         </div>
     </footer>
 
     <script>
+        @keyframes fade-down {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            }
+
+            .animate-fade-down {
+            animation: fade-down 0.5s ease-out;
+            }
         function toggleAnggota(id) {
             const list = document.getElementById(id);
             list.classList.toggle("hidden");
