@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('role_id')->constrained('role');  // Foreign key role_id yang merujuk ke tabel roles
             $table->string('username')->unique();  // Username dengan unique constraint
             $table->string('password');  // Password
+            $table->string('email')->unique();  // Email dengan unique constraint
             $table->timestamps();  // Created_at dan updated_at
         });
     }

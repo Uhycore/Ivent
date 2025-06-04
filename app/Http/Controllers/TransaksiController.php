@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Event;
-use App\Models\Pengguna;
 use App\Models\Kelompok;
-use App\Models\Perorangan;
+use App\Models\Pengguna;
 use App\Models\Transaksi;
+use App\Models\Perorangan;
 use App\Models\Pendaftaran;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Mail\PembayaranBerhasilMail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 
 class TransaksiController extends Controller
@@ -119,6 +121,12 @@ class TransaksiController extends Controller
 
                 $event->sisa_kuota -= 1;
                 $event->save();
+
+                $user = User::findOrFail($transaksi->user_id);
+                $event = Event::findOrFail($transaksi->event_id);
+
+                Mail::to($user->email)->send(new PembayaranBerhasilMail($transaksi, $user, $event));
+
 
 
                 $pendaftaranController = new PendaftaranController();

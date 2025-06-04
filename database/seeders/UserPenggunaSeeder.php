@@ -15,7 +15,8 @@ class UserPenggunaSeeder extends Seeder
         $userId = DB::table('user')->insertGetId([
             'role_id' => 2,
             'username' => 'pengguna',
-            'password' => Hash::make('12345678'), // hashed password
+            'password' => Hash::make('12345678'),
+            'email' => 'arilmubin0@gmail.com', 
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);

@@ -16,9 +16,10 @@ class UserAdminSeeder extends Seeder
 
         // 1. Tambah user (admin)
         $userId = DB::table('user')->insertGetId([
-            'role_id'    => 1, 
+            'role_id'    => 1,
             'username'   => 'admin',
             'password'   => Hash::make('12345678'),
+            'email'      => 'admin@gmail.com',
             'created_at' => $now,
             'updated_at' => $now,
         ]);

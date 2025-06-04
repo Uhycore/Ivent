@@ -73,6 +73,7 @@
                         <tr>
                             <th class="text-left px-6 py-3 border-b">No</th>
                             <th class="text-left px-6 py-3 border-b">Username</th>
+                            <th class="text-left px-6 py-3 border-b">Email</th>
                             <th class="text-left px-6 py-3 border-b">No HP</th>
                             <th class="text-left px-6 py-3 border-b">Alamat</th>
                             <th class="text-center px-6 py-3 border-b">Aksi</th>
@@ -83,6 +84,7 @@
                             <tr class="hover:bg-gray-50 text-gray-700">
                                 <td class="px-6 py-4 border-b">{{ $loop->iteration }}</td>
                                 <td class="px-6 py-4 border-b">{{ $penggunas->user->username }}</td>
+                                <td class="px-6 py-4 border-b">{{ $penggunas->user->email }}</td>
                                 <td class="px-6 py-4 border-b">{{ $penggunas->no_hp }}</td>
                                 <td class="px-6 py-4 border-b">{{ $penggunas->alamat }}</td>
                                 <td class="px-6 py-4 border-b text-center">

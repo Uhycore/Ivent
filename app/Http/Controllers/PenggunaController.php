@@ -37,7 +37,7 @@ class PenggunaController extends Controller
     {
         $request->validate([
             'username' => 'required|string|max:255',
-            // 'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             // 'full_name' => 'required|string|max:255',
             'no_hp' => 'required|string|max:20',
@@ -45,14 +45,14 @@ class PenggunaController extends Controller
             'role' => '',
             // 'status' => 'required|string|in:active,inactive,pending',
             // 'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]); 
+        ]);
 
-        
+
 
         // Create user first
         $user = User::create([
             'username' => $request->username,
-            // 'email' => $request->email,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
             'role_id' => $request->role,
             // 'status' => $request->status,
@@ -88,52 +88,54 @@ class PenggunaController extends Controller
      * Show the form for editing the specified resource.
      */
     // Edit Method
-public function edit($id)
-{
-    $user = User::with('pengguna')->findOrFail($id);
-    
-    return view('admin.pengguna.edit_pengguna', compact('user'));
-}
+    public function edit($id)
+    {
+        $user = User::with('pengguna')->findOrFail($id);
 
-// Update Method
-public function update(Request $request, $id)
-{
-    $user = User::findOrFail($id);
-    
-    $request->validate([
-        'username' => 'required|string|max:255|unique:user,username,'.$user->id,
-        'password' => 'nullable|string|min:8|confirmed',
-        'no_hp' => 'required|string|max:20',
-        'alamat' => 'required|string',
-        // 'status' => 'required|string|in:active,inactive,pending',
-    ]);
-
-    $userData = [
-        'username' => $request->username,
-        // 'status' => $request->status,
-    ];
-
-    if ($request->filled('password')) {
-        $userData['password'] = Hash::make($request->password);
+        return view('admin.pengguna.edit_pengguna', compact('user'));
     }
 
-    $user->update($userData);
+    // Update Method
+    // Update Method
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
 
-    $user->pengguna->update([
-        'no_hp' => $request->no_hp,
-        'alamat' => $request->alamat,
-    ]);
+        $request->validate([
+            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'no_hp' => 'required|string|max:20',
+            'alamat' => 'required|string',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id, 
+        ]);
 
-    return redirect()->route('admin.pengguna.index')->with('success', 'User updated successfully!');
-}
+        $userData = [
+            'username' => $request->username,
+            'email' => $request->email,
+        ];
 
-// Destroy Method
-public function destroy($id)
-{
-    $user = User::findOrFail($id);
-    $user->pengguna()->delete();
-    $user->delete();
+        if ($request->filled('password')) {
+            $userData['password'] = Hash::make($request->password);
+        }
 
-    return redirect()->route('admin.pengguna.index')->with('success', 'User deleted successfully!');
-}
+        $user->update($userData);
+
+        $user->pengguna->update([
+            'no_hp' => $request->no_hp,
+            'alamat' => $request->alamat,
+        ]);
+
+        return redirect()->route('admin.pengguna.index')->with('success', 'User updated successfully!');
+    }
+
+
+    // Destroy Method
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->pengguna()->delete();
+        $user->delete();
+
+        return redirect()->route('admin.pengguna.index')->with('success', 'User deleted successfully!');
+    }
 }
