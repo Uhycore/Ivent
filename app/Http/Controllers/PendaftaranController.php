@@ -22,7 +22,7 @@ class PendaftaranController extends Controller
     {
         $event = Event::findOrFail($eventId);
         $user = Auth::user();
-        
+
         return view('pendaftaran.create_pendaftaran', compact('event', 'user'));
     }
 
