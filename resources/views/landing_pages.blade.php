@@ -47,13 +47,28 @@
                 <button type="submit">Login</button>
             </form>
             <p>Belum punya akun? <a href="#" onclick="switchToRegister()">Daftar di sini</a></p>
-            <form action="{{ route('password.email') }}" method="POST">
+            <p><a href="#" onclick="openForgotPasswordPopup()">Lupa Password?</a></p>
+            {{-- <form action="{{ route('password.email') }}" method="POST">
                 @csrf
                 <input type="email" name="email" required placeholder="Masukkan Email">
                 <button type="submit">Kirim Link Reset</button>
-            </form>
+            </form> --}}
         </div>
     </div>
+    <!-- Popup Forgot Password -->
+    <div class="popup" id="forgotPasswordPopup">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closeLogin()">&times;</span>
+            <h2>Lupa Password</h2>
+            <form action="{{ route('password.email') }}" method="POST">
+                @csrf
+                <input type="email" name="email" placeholder="Masukkan Email" required />
+                <button type="submit">Kirim Link Reset</button>
+            </form>
+            <p>Sudah ingat password? <a href="#" onclick="switchToLogin()">Login di sini</a></p>
+        </div>
+    </div>
+
     <!-- Popup Register -->
     <div class="popup" id="registerPopup">
         <div class="popup-content">
@@ -178,8 +193,10 @@
         <div class="about-right">
             <h1 class="about-1" data-aos="fade-right" data-aos-duration="1000">Tentang Ivent</h1>
             <h2 class="about-2" data-aos="fade-right" data-aos-duration="1000">Cari event melalui Website</h2>
-            <h4 class="about-3" data-aos="fade-right" data-aos-duration="1000">Ivent adalah platform event digital
-                yang memudahkan kamu untuk menemukan, mendaftar, dan mengikuti berbagai acara menarik seperti seminar,
+            <h4 class="about-3" data-aos="fade-right" data-aos-duration="1000">Ivent adalah platform event
+                digital
+                yang memudahkan kamu untuk menemukan, mendaftar, dan mengikuti berbagai acara menarik seperti
+                seminar,
                 konser, festival, dan olahraga—semua dalam satu tempat, cepat dan praktis.</h4>
             <div class="burger-about">
                 <div class="ba-1" data-aos="fade-up" data-aos-duration="2000">
@@ -191,7 +208,8 @@
                     <div class="content">
                         <div class="ba-2">Event Berkualitas & Terverifikasi</div>
                         <div class="ba-3">
-                            Ivent hanya menampilkan event yang telah dikurasi dengan baik, sehingga pengguna mendapatkan
+                            Ivent hanya menampilkan event yang telah dikurasi dengan baik, sehingga pengguna
+                            mendapatkan
                             pengalaman terbaik di setiap acara.
                         </div>
                     </div>
@@ -205,7 +223,8 @@
                     <div class="content">
                         <div class="ba-2"> Pendaftaran Cepat & Transparan</div>
                         <div class="ba-3">
-                            Proses daftar event di Ivent mudah, tanpa ribet. Kamu bisa melihat detail event, lokasi, dan
+                            Proses daftar event di Ivent mudah, tanpa ribet. Kamu bisa melihat detail event, lokasi,
+                            dan
                             fasilitas dengan jelas sebelum mendaftar.
                         </div>
                     </div>
@@ -219,7 +238,8 @@
                     <div class="content">
                         <div class="ba-2">Dukung Komunitas & Kreativitas Lokal</div>
                         <div class="ba-3">
-                            Dengan mengikuti event melalui Ivent, kamu turut mendukung komunitas, UMKM, dan para kreator
+                            Dengan mengikuti event melalui Ivent, kamu turut mendukung komunitas, UMKM, dan para
+                            kreator
                             lokal yang menghadirkan acara penuh inspirasi.
                         </div>
                     </div>
@@ -314,7 +334,8 @@
         <div class="card-testi">
             <div class="testimoni-card" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom"
                 data-aos-delay="100" data-aos-duration="1000">
-                <p class="testimoni-text">“Website ini sangat membantu saya menemukan event menarik di kota saya!”</p>
+                <p class="testimoni-text">“Website ini sangat membantu saya menemukan event menarik di kota saya!”
+                </p>
                 <div class="testimoni-user">– Sinta, Mahasiswa</div>
                 <div class="testimoni-rating">⭐⭐⭐⭐⭐</div>
             </div>
@@ -338,7 +359,8 @@
             <!-- Card 4 -->
             <div class="testimoni-card" data-aos="fade-up" data-aos-anchor-placement="bottom-bottom"
                 data-aos-delay="400" data-aos-duration="1000">
-                <p class="testimoni-text">“Web-nya responsif dan update. Event lokal jadi lebih mudah dijangkau.”</p>
+                <p class="testimoni-text">“Web-nya responsif dan update. Event lokal jadi lebih mudah dijangkau.”
+                </p>
                 <div class="testimoni-user">– Ari, Mahasiswa</div>
                 <div class="testimoni-rating">⭐⭐⭐⭐</div>
             </div>
@@ -351,7 +373,8 @@
                 <!-- Deskripsi & Logo -->
                 <div style="flex: 1 1 200px; margin-bottom: 2rem;">
                     <div style="margin-bottom: 1rem;">
-                        <div style="width: 30px; height: 30px; background-color: #d2dcff; border-radius: 50%;"></div>
+                        <div style="width: 30px; height: 30px; background-color: #d2dcff; border-radius: 50%;">
+                        </div>
                     </div>
                     <h3 style="font-weight: 600; max-width: 250px;">
                         Penyedia website event terbaik di indonesia.
@@ -364,8 +387,10 @@
                     <h4 style="margin-bottom: 1rem;">Platform</h4>
                     <ul style="list-style: none; padding: 0; line-height: 1.8;">
                         <li><a href="#" style="color: #333; text-decoration: none;">Plans & Pricing</a></li>
-                        <li><a href="#" style="color: #333; text-decoration: none;">Personal AI Manager</a></li>
-                        <li><a href="#" style="color: #333; text-decoration: none;">AI Business Writer</a></li>
+                        <li><a href="#" style="color: #333; text-decoration: none;">Personal AI Manager</a>
+                        </li>
+                        <li><a href="#" style="color: #333; text-decoration: none;">AI Business Writer</a>
+                        </li>
                     </ul>
                 </div>
 
@@ -385,7 +410,8 @@
                     <ul style="list-style: none; padding: 0; line-height: 1.8;">
                         <li><a href="#" style="color: #333; text-decoration: none;">Documentation</a></li>
                         <li><a href="#" style="color: #333; text-decoration: none;">Papers</a></li>
-                        <li><a href="#" style="color: #333; text-decoration: none;">Press Conferences</a></li>
+                        <li><a href="#" style="color: #333; text-decoration: none;">Press Conferences</a>
+                        </li>
                     </ul>
                 </div>
 
@@ -490,6 +516,14 @@
             function switchToRegister() {
                 closeLogin();
                 openRegister();
+            }
+
+            function openForgotPasswordPopup() {
+                document.getElementById('forgotPasswordPopup').style.display = 'flex';
+            }
+
+            function closeForgotPasswordPopup() {
+                document.getElementById('forgotPasswordPopup').style.display = 'none';
             }
 
 
