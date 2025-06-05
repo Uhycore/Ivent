@@ -47,6 +47,11 @@
                 <button type="submit">Login</button>
             </form>
             <p>Belum punya akun? <a href="#" onclick="switchToRegister()">Daftar di sini</a></p>
+            <form action="{{ route('password.email') }}" method="POST">
+                @csrf
+                <input type="email" name="email" required placeholder="Masukkan Email">
+                <button type="submit">Kirim Link Reset</button>
+            </form>
         </div>
     </div>
     <!-- Popup Register -->
@@ -345,64 +350,67 @@
             <div style="display: flex; flex-wrap: wrap; justify-content: space-between; padding: 3rem 2rem;">
                 <!-- Deskripsi & Logo -->
                 <div style="flex: 1 1 200px; margin-bottom: 2rem;">
-                <div style="margin-bottom: 1rem;">
-                    <div style="width: 30px; height: 30px; background-color: #d2dcff; border-radius: 50%;"></div>
-                </div>
-                <h3 style="font-weight: 600; max-width: 250px;">
-                    Penyedia website event terbaik di indonesia.
-                </h3>
-                <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">Luqmanul, 2023.</p>
+                    <div style="margin-bottom: 1rem;">
+                        <div style="width: 30px; height: 30px; background-color: #d2dcff; border-radius: 50%;"></div>
+                    </div>
+                    <h3 style="font-weight: 600; max-width: 250px;">
+                        Penyedia website event terbaik di indonesia.
+                    </h3>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">Luqmanul, 2023.</p>
                 </div>
 
                 <!-- Platform -->
                 <div style="flex: 1 1 150px; margin-bottom: 1rem;">
-                <h4 style="margin-bottom: 1rem;">Platform</h4>
-                <ul style="list-style: none; padding: 0; line-height: 1.8;">
-                    <li><a href="#" style="color: #333; text-decoration: none;">Plans & Pricing</a></li>
-                    <li><a href="#" style="color: #333; text-decoration: none;">Personal AI Manager</a></li>
-                    <li><a href="#" style="color: #333; text-decoration: none;">AI Business Writer</a></li>
-                </ul>
+                    <h4 style="margin-bottom: 1rem;">Platform</h4>
+                    <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                        <li><a href="#" style="color: #333; text-decoration: none;">Plans & Pricing</a></li>
+                        <li><a href="#" style="color: #333; text-decoration: none;">Personal AI Manager</a></li>
+                        <li><a href="#" style="color: #333; text-decoration: none;">AI Business Writer</a></li>
+                    </ul>
                 </div>
 
                 <!-- Company -->
                 <div style="flex: 1 1 150px; margin-bottom: 1rem;">
-                <h4 style="margin-bottom: 1rem;">Company</h4>
-                <ul style="list-style: none; padding: 0; line-height: 1.8;">
-                    <li><a href="#" style="color: #333; text-decoration: none;">Blog</a></li>
-                    <li><a href="#" style="color: #333; text-decoration: none;">Careers</a></li>
-                    <li><a href="#" style="color: #333; text-decoration: none;">News</a></li>
-                </ul>
+                    <h4 style="margin-bottom: 1rem;">Company</h4>
+                    <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                        <li><a href="#" style="color: #333; text-decoration: none;">Blog</a></li>
+                        <li><a href="#" style="color: #333; text-decoration: none;">Careers</a></li>
+                        <li><a href="#" style="color: #333; text-decoration: none;">News</a></li>
+                    </ul>
                 </div>
 
                 <!-- Resources -->
                 <div style="flex: 1 1 150px; margin-bottom: 1rem;">
-                <h4 style="margin-bottom: 1rem;">Resources</h4>
-                <ul style="list-style: none; padding: 0; line-height: 1.8;">
-                    <li><a href="#" style="color: #333; text-decoration: none;">Documentation</a></li>
-                    <li><a href="#" style="color: #333; text-decoration: none;">Papers</a></li>
-                    <li><a href="#" style="color: #333; text-decoration: none;">Press Conferences</a></li>
-                </ul>
+                    <h4 style="margin-bottom: 1rem;">Resources</h4>
+                    <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                        <li><a href="#" style="color: #333; text-decoration: none;">Documentation</a></li>
+                        <li><a href="#" style="color: #333; text-decoration: none;">Papers</a></li>
+                        <li><a href="#" style="color: #333; text-decoration: none;">Press Conferences</a></li>
+                    </ul>
                 </div>
 
                 <!-- Get the App -->
                 <div style="flex: 1 1 150px; margin-bottom: 1rem;">
-                <h4 style="margin-bottom: 1rem;">Get the app</h4>
-                <button style="display: flex; align-items: center; border: 1px solid #ccc; background: white; padding: 0.5rem 1rem; border-radius: 999px; margin-bottom: 0.5rem; cursor: pointer; hover: background-color: #d2dcff;">
-                    Windows
-                </button>
-                <button style="display: flex; align-items: center; border: 1px solid #ccc; background: white; padding: 0.5rem 1rem; border-radius: 999px; cursor: pointer;">
-                    &nbsp;macOS
-                </button>
+                    <h4 style="margin-bottom: 1rem;">Get the app</h4>
+                    <button
+                        style="display: flex; align-items: center; border: 1px solid #ccc; background: white; padding: 0.5rem 1rem; border-radius: 999px; margin-bottom: 0.5rem; cursor: pointer; hover: background-color: #d2dcff;">
+                        Windows
+                    </button>
+                    <button
+                        style="display: flex; align-items: center; border: 1px solid #ccc; background: white; padding: 0.5rem 1rem; border-radius: 999px; cursor: pointer;">
+                        &nbsp;macOS
+                    </button>
                 </div>
             </div>
 
             <!-- Bottom Bar -->
-            <div style="background-color: #d2dcff; color: black; padding: 1rem 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 0.9rem;">
+            <div
+                style="background-color: #d2dcff; color: black; padding: 1rem 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 0.9rem;">
                 <p style="margin: 0;">© 2023 Maxwell Inc. All rights reserved.</p>
                 <div style="display: flex; gap: 1.5rem;">
-                <a href="#" style="color: black; text-decoration: none;">Terms of Service</a>
-                <a href="#" style="color: black; text-decoration: none;">Privacy Policy</a>
-                <a href="#" style="color: black; text-decoration: none;">Cookies</a>
+                    <a href="#" style="color: black; text-decoration: none;">Terms of Service</a>
+                    <a href="#" style="color: black; text-decoration: none;">Privacy Policy</a>
+                    <a href="#" style="color: black; text-decoration: none;">Cookies</a>
                 </div>
             </div>
         </footer>
@@ -494,7 +502,7 @@
 
             AOS.init();
         </script>
-        
+
 </body>
 
 </html>

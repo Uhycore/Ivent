@@ -13,6 +13,8 @@ use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\PenggunaDashboardController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 // Route::get('/', function () {
 //     return view('landing_pages');
 // });
@@ -33,6 +35,18 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+
+
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+
 
 // Route::view('/chat', 'chat');
 Route::middleware(['auth', 'role:pengguna'])->group(function () {
