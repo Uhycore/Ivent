@@ -9,6 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -237,7 +239,52 @@
                 maintainAspectRatio: false
             }
         });
+
+            // login
+            
+
+
+
     </script>
+
+    @if(session('success'))
+    <script>
+        // Cek apakah notifikasi sudah pernah ditampilkan
+        if (!localStorage.getItem('notified')) {
+            Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: ' berhasil!',
+            text: "{{ session('success') }}",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+
+            localStorage.setItem('notified', 'true');
+        }
+    </script>
+@endif
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const msg = localStorage.getItem('login_success_message');
+    if (msg) {
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Login berhasil!',
+            text: msg,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+
+        localStorage.removeItem('login_success_message');
+    }
+});
+</script>
 
 
 </body>

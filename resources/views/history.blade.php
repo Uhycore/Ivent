@@ -34,13 +34,21 @@
 
 
     <div class="w-full flex justify-center mt-6">
-        <input type="text" placeholder="Cari event..." class="w-[90%] md:w-[60%] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-    </div>
+    <input id="searchEvent" type="text" placeholder="Cari event..." 
+           class="w-[90%] md:w-[60%] px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
+                  focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+</div>
+
+
+
+
     
-    <div class=<div class="w-full sm:w-[95%] md:w-[90%] lg:w-[80%] xl:w-[75%] mx-auto bg-white rounded-2xl shadow-md p-6 my-6 border border-gray-200">
+    <div id="pendaftaranList" class="w-full sm:w-[95%] md:w-[90%] lg:w-[80%] xl:w-[75%] mx-auto bg-white rounded-2xl shadow-md p-6 my-6 border border-gray-200">
         <?php foreach ($pendaftaranList as $pendaftaran): ?>
         <!-- Card Tiket -->
-        <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-5 my-6 space-y-4 hover:shadow-xl transition-all ring-1 ring-purple-100">
+        <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-5 my-6 space-y-4 hover:shadow-xl transition-all ring-1 ring-purple-100"
+     data-nama="<?= strtolower($pendaftaran['event']['nama_event']) ?>">
+
             <div class="flex justify-between items-center text-sm font-semibold text-gray-700">
                 <span class="text-sm text-gray-500 mt-1">
                     <i class="fa fa-calendar mr-1"></i><?= htmlspecialchars($pendaftaran['tanggal_daftar']) ?>
@@ -51,7 +59,7 @@
             </div>
             
             <div class="flex gap-4">
-                <img src="https://via.placeholder.com/100" alt="Poster Event" class="w-24 h-24 object-cover rounded-md" />
+                <img src="{{ asset('storage/' . $pendaftaran['event']['gambar']) }}" alt="Gambar Event" class="w-24 h-24 object-cover rounded-md" />
                 <div class="flex-1">
                     <div class="text-base font-medium text-gray-800">
                         <?= htmlspecialchars($pendaftaran['event']['nama_event']) ?>
@@ -100,8 +108,8 @@
             <?php endif; ?>
 
             <div class="flex justify-end mt-3 gap-4">
-                <button class="px-4 py-2 border border-gray-300 text-sm rounded-md hover:bg-gray-100 transition" onclick="window.print()">
-                    <i class="fas fa-print mr-1"></i> Print
+                <button class="px-4 py-2 border border-gray-300 text-sm rounded-md hover:bg-gray-100 transition" href="{{ route('invoice', ['id' => $pendaftaran['id']]) }}" target="_blank">
+                    <i class="fas fa-print mr-1"></i> invoice
                 </button>
                 <?php if ($pendaftaran['status'] !== 'diterima'): ?>
                 <form action="{{ route('checkout') }}" method="POST" class="inline">
@@ -158,6 +166,29 @@
             list.classList.toggle("hidden");
         }
     </script>
+
+  
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchEvent');
+        const cards = document.querySelectorAll('#pendaftaranList [data-nama]');
+
+
+        searchInput.addEventListener('input', function () {
+            const query = this.value.toLowerCase().trim();
+
+            cards.forEach(card => {
+                const namaEvent = card.dataset.nama;
+                if (namaEvent.includes(query)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 
 </html>

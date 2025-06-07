@@ -6,6 +6,9 @@
     <title>Manajemen Pengguna</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    <script src="{{ asset('js/notification.js') }}"></script>
+
     <style>
         .transition-width {
             transition: width 0.3s;
@@ -31,23 +34,8 @@
                 </button>
             </div>
 
-            <!-- Filter and Search -->
-            <div class="flex flex-wrap gap-4 mb-4 items-center">
-                <!-- Dropdown -->
-                <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    type="button">
-                    Filter by
-                </button>
-                <div id="dropdownHover"
-                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-sm shadow-sm w-44">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-900 bg-white" aria-labelledby="dropdownHoverButton">
-                        <li><a href="#" class="block px-4 py-2 dark:hover:text-black">Admin</a></li>
-                        <li><a href="#" class="block px-4 py-2 dark:hover:text-black">Customer</a></li>
-                    </ul>
-                </div>
-
                 <!-- Search -->
+            <div class="flex flex-wrap gap-4 mb-4 items-center">
                 <form class="flex-1">
                     <label for="search" class="sr-only">Search</label>
                     <div class="relative">
@@ -79,7 +67,7 @@
                             <th class="text-center px-6 py-3 border-b">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="userTable" class="text-sm">
                         @foreach ($pengguna as $penggunas)
                             <tr class="hover:bg-gray-50 text-gray-700">
                                 <td class="px-6 py-4 border-b">{{ $loop->iteration }}</td>
@@ -112,6 +100,44 @@
             </div>
         </main>
     </div>
+    @if(session('success'))
+<script>
+    localStorage.setItem('success_message', "{{ session('success') }}");
+</script>
+@endif
+
+@if(session('error'))
+<script>
+    localStorage.setItem('error_message', "{{ session('error') }}");
+</script>
+@endif
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('search');
+        const userTable = document.getElementById('userTable');
+        const rows = userTable.getElementsByTagName('tr');
+
+        searchInput.addEventListener('input', function () {
+            const keyword = this.value.toLowerCase();
+
+            Array.from(rows).forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                let textContent = '';
+                
+                // Gabungkan semua isi teks dari kolom username, email, no hp, alamat
+                for (let i = 1; i <= 4; i++) {
+                    textContent += cells[i].textContent.toLowerCase() + ' ';
+                }
+
+                // Tampilkan baris jika cocok dengan keyword
+                row.style.display = textContent.includes(keyword) ? '' : 'none';
+            });
+        });
+    });
+</script>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 </body>

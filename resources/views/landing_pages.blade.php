@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <title>Ivent</title>
 </head>
@@ -39,13 +41,21 @@
     <div class="popup" id="loginPopup">
         <div class="popup-content">
             <span class="close-btn" onclick="closeLogin()">&times;</span>
-            <h2>Login</h2>
-            <form action="{{ route('login') }}" method="POST">
-                @csrf
-                <input type="text" id="username" name="username" placeholder="Email atau Username" required />
-                <input type="password" id="password" name="password" placeholder="Password" required />
-                <button type="submit">Login</button>
-            </form>
+        <h2>Login</h2>
+        @if ($errors->has('login'))
+            <div class="alert alert-danger text-red-600 text-sm mb-4">
+                {{ $errors->first('login') }}
+            </div>
+        @endif
+        <form id="loginForm" action="{{ route('login') }}" method="POST">
+    @csrf
+    <input type="text" id="username" name="username" placeholder="Email atau Username" required>
+    <input type="password" id="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+</form>
+
+<div id="loginError" class="text-red-600 mt-2"></div>
+
             <p>Belum punya akun? <a href="#" onclick="switchToRegister()">Daftar di sini</a></p>
             <p><a href="#" onclick="openForgotPasswordPopup()">Lupa Password?</a></p>
             {{-- <form action="{{ route('password.email') }}" method="POST">
@@ -74,7 +84,7 @@
         <div class="popup-content">
             <span class="close-btn" onclick="closeRegister()">&times;</span>
             <h2>Register</h2>
-            <form action="{{ route('register') }}" method="POST">
+            <form id="registerForm" action="{{ route('register') }}" method="POST">
                 @csrf
                 <input type="text" name="username" id="username" placeholder="username" required />
                 <input type="number" name="no_hp" id="no_hp" placeholder="no hp" required />
@@ -83,21 +93,11 @@
                 <input type="email" name="email" id="email" placeholder="Email" required />
                 <button type="submit">Register</button>
             </form>
+            <div id="registerError" class="text-red-600 text-sm mt-2"></div>
+
             <p>Sudah punya akun? <a href="#" onclick="switchToLogin()">Login di sini</a></p>
         </div>
-        <!-- <div class="popup" id="DaftarPopup">
-    <div class="popup-content">
-        <span class="close-btn" onclick="closedaftar()">&times;</span>
-        <h2>Register</h2>
-        <form>
-        <input type="text" placeholder="Nama Lengkap" required />
-        <input type="email" placeholder="Email" required />
-        <input type="text" placeholder="Username" required />
-        <input type="password" placeholder="Password" required />
-        <button type="submit">Register</button>
-        </form>
-        
-    </div> -->
+
     </div>
     <div class="circle"></div>
     <div class="circle navbar-circle-top" data-aos="fade-down-right" data-aos-duration="2000"></div>
@@ -112,9 +112,15 @@
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#event">Event</a></li>
-            <a href="{{ route('history') }}">
-                <li> My ticket</li>
-            </a>
+            @auth
+                <a href="{{ route('history') }}">
+                <li>My ticket</li>
+                </a>
+            @else
+                <span class="disabled-link">
+                <li style="color: gray; cursor: not-allowed;">My ticket</li>
+                </span>
+            @endauth
         </ul>
         <div class="logout" data-aos="fade-left" data-aos-duration="2000">
             <div class="auth-buttons">
@@ -446,8 +452,90 @@
         <script>
             AOS.init();
         </script>
+     
+
 
         <script>
+// register
+    document.getElementById('registerForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const form = this;
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                "Accept": "application/json"
+            }
+        });
+        
+
+        const result = await response.json();
+
+        if (response.ok) {
+            Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Registrasi berhasil!',
+            text: "Silakan login untuk melanjutkan.",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+
+            closeRegister();
+            openLogin(); // Pastikan fungsi ini membuka popup login
+        } else {
+            const errorMsg = result.message || "Registrasi gagal. Silakan cek kembali.";
+            document.getElementById('registerError').textContent = errorMsg;
+        }
+    } catch (err) {
+        console.error("Kesalahan:", err);
+        document.getElementById('registerError').textContent = "Terjadi kesalahan jaringan.";
+    }
+});
+
+                // login
+            document.getElementById('loginForm').addEventListener('submit', async function (e) {
+                e.preventDefault(); // mencegah reload halaman
+
+                const form = this;
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            "Accept": "application/json"
+                        }
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        if (result.message) {
+        localStorage.setItem('login_success_message', result.message);
+    }
+
+    // Lanjut redirect
+    window.location.href = result.redirect || "/";
+                        
+                    } else {
+                        document.getElementById('loginError').textContent = result.message || "Login gagal.";
+                    }
+                } catch (err) {
+                    console.error("Terjadi kesalahan:", err);
+                    document.getElementById('loginError').textContent = "Terjadi kesalahan sistem.";
+                }
+            });
+
+            
+            
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
                 if (window.scrollY > 50) {
@@ -535,7 +623,60 @@
             window.onload = autoScroll;
 
             AOS.init();
+            
         </script>
+        
+        <!-- SweetAlert2 -->
+@if(session('success'))
+    <script>
+        // Cek apakah notifikasi sudah pernah ditampilkan
+        if (!localStorage.getItem('notified')) {
+            Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: ' berhasil!',
+            text: "{{ session('success') }}",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+
+            localStorage.setItem('notified', 'true');
+        }
+    </script>
+@endif
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const msg = localStorage.getItem('login_success_message');
+    if (msg) {
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: 'Login berhasil!',
+            text: msg,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+
+        localStorage.removeItem('login_success_message');
+    }
+});
+</script>
+
+
+
+<script>
+    window.addEventListener("pageshow", function (event) {
+        const navigationType = performance.getEntriesByType("navigation")[0]?.type;
+        if (navigationType !== 'back_forward') {
+            localStorage.removeItem('notified');
+        }
+    });
+</script>
+        
 
 </body>
 
