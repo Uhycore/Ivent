@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use App\Models\Event;
 
 class HistoryController extends Controller
 {
@@ -27,6 +28,9 @@ class HistoryController extends Controller
 
         return view('history', compact('pendaftaranList'));
     }
+
+
+
 
     // app/Http/Controllers/HistoryController.php
 

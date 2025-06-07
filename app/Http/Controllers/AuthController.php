@@ -29,15 +29,32 @@ class AuthController extends Controller
 
             // Cek role dan redirect
             if (Auth::user()->role_id == 1) {
-                return redirect()->route('admin.dashboard');
+                // return redirect()->route('admin.dashboard')->with('success', 'Selamat datang di dashboard admin!');
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Selamat datang di dashboard admin!',
+                    'redirect' => route('admin.dashboard')
+                ]);
             } else {
 
 
-                return redirect()->route('user.landing_pages');
+                // return redirect()->route('user.landing_pages')->with('success', 'Selamat datang di Ivent!');
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Selamat datang di Ivent!',
+                    'redirect' => route('user.landing_pages')
+                ]);
             }
         }
 
-        return redirect()->back()->with('error', 'Username atau password salah.');
+//         if (Auth::attempt($credentials)) {
+//     $request->session()->regenerate();
+//     return response()->json(['redirect' => route(Auth::user()->role_id == 1 ? 'admin.dashboard'  : 'user.landing_pages' )]);
+// }
+
+        // return back()->withErrors(['login' => 'Username atau password salah.'])->withInput();
+        return response()->json(['message' => 'Username atau password salah.'], 422); // Status kode untuk validasi gagal
+
     }
 
     // Tampilkan form register
@@ -88,7 +105,8 @@ class AuthController extends Controller
 
 
 
-        return redirect()->route('guest.landing_pages')->with('success', 'Registrasi berhasil! Silakan login.');
+        // return redirect()->route('guest.landing_pages')->with('success', 'Registrasi berhasil! Silakan login.');
+         return response()->json(['message' => 'Registrasi berhasil',]);
     }
 
     // Logout user

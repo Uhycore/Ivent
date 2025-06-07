@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>List Transaksi</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    <script src="{{ asset('js/notification.js') }}"></script>
 </head>
 
 <body class="flex h-screen bg-gray-100">
@@ -25,8 +28,8 @@
             </div>
 
             <!-- Tabel Transaksi -->
-            <form action="{{ route('admin.transaksi.bulkDelete') }}" method="POST"
-                onsubmit="return confirm('Yakin ingin menghapus transaksi terpilih?')">
+            <form id="bulkDeleteForm" action="{{ route('admin.transaksi.bulkDelete') }}" method="POST">
+
                 @csrf
                 @method('DELETE')
 
@@ -103,8 +106,31 @@
         </main>
     </div>
 
+
     <!-- Checkbox Select All Script -->
     <script>
+        document.getElementById('bulkDeleteForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Cegah submit default
+
+    Swal.fire({
+        title: 'Apakah kamu yakin?',
+        text: "Data yang dihapus tidak dapat dikembalikan!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Ya, hapus!',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Simpan pesan sukses sebelum submit
+            localStorage.setItem('success_message', 'Transaksi berhasil dihapus.');
+            // Submit form secara manual
+            e.target.submit();
+        }
+    });
+});
+
         document.getElementById('select-all').addEventListener('change', function () {
             const checkboxes = document.querySelectorAll('input[name="selected[]"]');
             for (const checkbox of checkboxes) {
@@ -112,6 +138,20 @@
             }
         });
     </script>
+
+           @if(session('success'))
+<script>
+    localStorage.setItem('success_message', "{{ session('success') }}");
+</script>
+@endif
+
+@if(session('error'))
+<script>
+    localStorage.setItem('error_message', "{{ session('error') }}");
+</script>
+@endif
+
+ 
 </body>
 
 </html>

@@ -54,6 +54,9 @@ Route::middleware(['auth', 'role:pengguna'])->group(function () {
         Route::get('/', [PenggunaDashboardController::class, 'index'])->name('user.landing_pages');
     });
     Route::get('/history', [HistoryController::class, 'index'])->name('history');
+    
+    
+
  
 
     Route::post('/checkout', [TransaksiController::class, 'checkout'])->name('checkout');

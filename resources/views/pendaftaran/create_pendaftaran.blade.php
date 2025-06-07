@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Daftar Event - {{ $event->nama_event }}</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
     
 </head>
 
@@ -131,6 +132,33 @@
         document.getElementById('tipe_pendaftaran').addEventListener('change', toggleForm);
         document.addEventListener('DOMContentLoaded', toggleForm);
     </script>
+
+            <!-- SweetAlert2 -->
+@if(session('success'))
+    <script>
+        // Cek apakah notifikasi sudah pernah ditampilkan
+        if (!localStorage.getItem('notified')) {
+            Swal.fire({
+                title: "Berhasil!",
+                text: "{{ session('success') }}",
+                icon: "success",
+                timer: 3000,
+                showConfirmButton: false
+            });
+
+            localStorage.setItem('notified', 'true');
+        }
+    </script>
+@endif
+
+<script>
+    window.addEventListener("pageshow", function (event) {
+        const navigationType = performance.getEntriesByType("navigation")[0]?.type;
+        if (navigationType !== 'back_forward') {
+            localStorage.removeItem('notified');
+        }
+    });
+</script>
 
 
 
