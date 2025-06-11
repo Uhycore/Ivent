@@ -105,7 +105,7 @@ html{
   left: 0;
   right: 0;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  z-index: 999;
+  z-index: 10;
 }
 .navbar.scrolled {
   transition: all 0.3s ease-in-out;

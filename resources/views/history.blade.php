@@ -137,7 +137,7 @@
         </div>
     </div>
 
-    <footer class="mt-10 bg-[#c9cfff] text-grey-500 text-center py-4  bottom-0 left-0 right-0">
+    <footer class="mt-10 bg-[#c9cfff] text-grey-500 text-center py-4  bottom-0 left-0 right-0 fixed">
         <div class="text-sm">
             &copy; 2025 Event Registration. All rights reserved.
         </div>

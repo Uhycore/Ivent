@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility_off" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <title>Ivent</title>
 </head>
 <?php
@@ -35,8 +37,6 @@
             window.location.href = "/chat";
         });
     </script>
-
-
     <!-- Popup Login -->
     <div class="popup" id="loginPopup">
         <div class="popup-content">
@@ -48,27 +48,30 @@
             </div>
         @endif
         <form id="loginForm" action="{{ route('login') }}" method="POST">
-    @csrf
-    <input type="text" id="username" name="username" placeholder="Email atau Username" required>
-    <input type="password" id="password" name="password" placeholder="Password" required>
-    <button type="submit">Login</button>
-</form>
-
-<div id="loginError" class="text-red-600 mt-2"></div>
-
-            <p>Belum punya akun? <a href="#" onclick="switchToRegister()">Daftar di sini</a></p>
-            <p><a href="#" onclick="openForgotPasswordPopup()">Lupa Password?</a></p>
-            {{-- <form action="{{ route('password.email') }}" method="POST">
-                @csrf
-                <input type="email" name="email" required placeholder="Masukkan Email">
-                <button type="submit">Kirim Link Reset</button>
-            </form> --}}
+        @csrf
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <div id="loginError" class="text-red-600 text-sm ml-0" style="margin-left:0 "></div>
+            <div style="position: relative;">
+                <input style="padding-right: 40px;" type="password" id="password" name="password" placeholder="Password" required >
+                    <span onclick="togglePassword()" style="position: absolute; right: 10px; top: 45px; transform: translateY(-50%); cursor: pointer;">
+                        <span class="material-symbols-rounded">
+                        visibility
+                        </span>
+                    </span>
+                </div>
+                
+                <div class="flex justify-end items-right mb-2 text-sm">
+                <a href="#" onclick="openForgotPasswordPopup()" class="no-underline">Forgot Password?</a>
+                </div>
+                <button type="submit">Login</button>
+                <p>Belum punya akun? <a href="#" onclick="switchToRegister()">Daftar di sini</a></p>
+            </form>
         </div>
     </div>
     <!-- Popup Forgot Password -->
     <div class="popup" id="forgotPasswordPopup">
         <div class="popup-content">
-            <span class="close-btn" onclick="closeLogin()">&times;</span>
+            <span class="close-btn" onclick="closeForgot()">&times;</span>
             <h2>Lupa Password</h2>
             <form action="{{ route('password.email') }}" method="POST">
                 @csrf
@@ -78,7 +81,6 @@
             <p>Sudah ingat password? <a href="#" onclick="switchToLogin()">Login di sini</a></p>
         </div>
     </div>
-
     <!-- Popup Register -->
     <div class="popup" id="registerPopup">
         <div class="popup-content">
@@ -446,31 +448,43 @@
                 </div>
             </div>
         </footer>
-
-
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>
             AOS.init();
         </script>
-     
-
-
-        <script>
-// register
-    document.getElementById('registerForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const form = this;
-    const formData = new FormData(form);
-
-    try {
-        const response = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                "Accept": "application/json"
+         <style>
+            .material-symbols-rounded {
+            font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
             }
-        });
+        </style>
+        <script>
+        function togglePassword() {
+            var passwordInput = document.getElementById("password");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+            } else {
+                passwordInput.type = "password";
+            }
+        }
+        // register
+        document.getElementById('registerForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const form = this;
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    "Accept": "application/json"
+                }
+            });
         
 
         const result = await response.json();
@@ -478,7 +492,7 @@
         if (response.ok) {
             Swal.fire({
             toast: true,
-            position: 'top-end',
+            position: 'top-start',
             icon: 'success',
             title: 'Registrasi berhasil!',
             text: "Silakan login untuk melanjutkan.",
@@ -493,18 +507,18 @@
             const errorMsg = result.message || "Registrasi gagal. Silakan cek kembali.";
             document.getElementById('registerError').textContent = errorMsg;
         }
-    } catch (err) {
-        console.error("Kesalahan:", err);
-        document.getElementById('registerError').textContent = "Terjadi kesalahan jaringan.";
-    }
-});
+        }catch (err) {
+            console.error("Kesalahan:", err);
+            document.getElementById('registerError').textContent = "Terjadi kesalahan jaringan.";
+            }
+        });
 
-                // login
-            document.getElementById('loginForm').addEventListener('submit', async function (e) {
-                e.preventDefault(); // mencegah reload halaman
+        // login
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault(); // mencegah reload halaman
 
-                const form = this;
-                const formData = new FormData(form);
+            const form = this;
+            const formData = new FormData(form);
 
                 try {
                     const response = await fetch(form.action, {
@@ -524,7 +538,6 @@
 
     // Lanjut redirect
     window.location.href = result.redirect || "/";
-                        
                     } else {
                         document.getElementById('loginError').textContent = result.message || "Login gagal.";
                     }
@@ -534,7 +547,6 @@
                 }
             });
 
-            
             
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
@@ -584,7 +596,9 @@
             function closeLogin() {
                 document.getElementById('loginPopup').style.display = 'none';
             }
-
+            function closeForgot() {
+                document.getElementById('forgotPasswordPopup').style.display = 'none';
+            }
             function openRegister() {
                 document.getElementById('registerPopup').style.display = 'flex';
             }
@@ -633,7 +647,7 @@
         if (!localStorage.getItem('notified')) {
             Swal.fire({
             toast: true,
-            position: 'top-end',
+            position: 'top-start',
             icon: 'success',
             title: ' berhasil!',
             text: "{{ session('success') }}",
@@ -652,7 +666,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (msg) {
         Swal.fire({
             toast: true,
-            position: 'top-end',
+            position: 'top-start',
             icon: 'success',
             title: 'Login berhasil!',
             text: msg,

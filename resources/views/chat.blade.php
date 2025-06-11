@@ -21,17 +21,17 @@
     <!-- index.php sebagai background -->
     <iframe src="index.php" class="fixed top-0 left-0 w-full h-full z-0" frameborder="0"
         allowtransparency="true"></iframe>
-
     <!-- Live2D Widget -->
     <div id="live2d-widget" class="fixed right-0 bottom-0 w-80 h-96 z-40"></div>
-
     <!-- Chatbot Card Transparan -->
     <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="w-full max-w-xl h-[90vh] bg-white/60 backdrop-blur-md rounded-2xl shadow-xl flex flex-col overflow-hidden">
-
             <!-- Header -->
-            <div class="bg-[#d2dcff] text-gray-500 text-lg font-semibold p-4 text-center">
-                I-Bot
+            <div class="relative">
+                <div class="bg-[#d2dcff] text-gray-500 text-lg font-semibold p-4 text-center">
+                    I-Bot
+                </div>
+                <button id="closeChat" onclick="window.location.href='index.php'" class="absolute top-2 right-2 text-gray-500 text-xl font-bold mt-3 mr-3">x</button>
             </div>
 
             <!-- Chat Area -->
