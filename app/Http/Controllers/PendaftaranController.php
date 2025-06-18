@@ -102,7 +102,6 @@ class PendaftaranController extends Controller
 
         Mail::to($user->email)->send(new PendaftaranBerhasilMail($user, $pendaftaran));
 
-
         return redirect()->route('user.landing_pages')
             ->with('success', 'Pendaftaran berhasil dilakukan.');
     }

@@ -1,15 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Pendaftaran Berhasil</title>
+    <title>Permintaan Pembayaran</title>
 </head>
-<body>
-    <h2>Halo {{ $user->name }},</h2>
-    <p>Terima kasih telah mendaftar pada event <strong>{{ $pendaftaran->event->nama_event }}</strong>.</p>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+    <div style="max-width: 600px; margin: auto; background: #fff; padding: 25px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
+        <h2 style="color: #2c3e50;">Permintaan Pembayaran</h2>
 
-    <p>Status pendaftaran Anda saat ini: <strong>{{ $pendaftaran->status }}</strong></p>
+        <?php
+        echo "<pre>";
+        print_r($user->toArray());
+        echo "</pre>";
+        echo "<pre>";
+        print_r($pendaftaran->toArray());
+        echo "</pre>";
+        ?>
 
-    <p>Salam,<br>Panitia</p>
+        <p>Terima kasih atas perhatian dan kerjasamanya.</p>
+
+        <p>Salam,<br><strong>Panitia</strong></p>
+    </div>
 </body>
 </html>
