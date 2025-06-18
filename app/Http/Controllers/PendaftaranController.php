@@ -119,6 +119,10 @@ class PendaftaranController extends Controller
         $pendaftaran->status = 'diterima';
         $pendaftaran->save();
 
-        return redirect()->route('admin.pendaftar')->with('success', 'Pendaftaran berhasil disetujui.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Pendaftaran berhasil disetujui.',
+            'data' => $pendaftaran
+        ]);
     }
 }
