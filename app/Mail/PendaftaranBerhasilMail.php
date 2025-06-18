@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Event;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -13,11 +14,13 @@ class PendaftaranBerhasilMail extends Mailable
 
     public $user;
     public $pendaftaran;
+    public $event;
 
     public function __construct($user, $pendaftaran)
     {
         $this->user = $user;
         $this->pendaftaran = $pendaftaran;
+        $this->event = Event::findOrFail($pendaftaran->event_id);
     }
 
     public function build()
