@@ -2,22 +2,32 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {
+   
+
     public function showResetForm(Request $request, $token)
     {
+        try {
+            $decryptedEmail = Crypt::decryptString($request->email);
+        } catch (\Exception $e) {
+            abort(403, 'Email tidak valid atau rusak.');
+        }
+
         return view('auth.reset-password', [
             'token' => $token,
-            'email' => $request->email
+            'email' => $decryptedEmail
         ]);
     }
+
 
     public function reset(Request $request)
     {
