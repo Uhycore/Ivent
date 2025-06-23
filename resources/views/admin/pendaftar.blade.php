@@ -75,10 +75,7 @@
                                     </div>
 
                                 </div>
-
                                 <div class="divider my-2"></div>
-
-
                                 <!-- Individual Registration -->
                                 @if ($pendaftaran->tipe_pendaftaran === 'perorangan')
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
