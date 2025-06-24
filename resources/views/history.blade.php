@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="id" data-theme="light">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Daftar Pendaftaran</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <style>
         body {
             background-color: #ffffff;
@@ -19,35 +18,55 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="fixed top-0 left-0 right-0 z-30 bg-gradient-to-r from-[#b7bfff] to-[#c9cfff] shadow-md px-6 py-4 flex items-center justify-between animate-fade-down">
-        <div class="flex items-center space-x-2">
-            <h1 class="text-xl font-bold text-white tracking-wide">IVENT | <span class="text-black">Keranjang Event</span></h1>
+    <section class="navbar fixed ml-0 top-0 left-0 right-0 z-[100] px-[50px] py-[6px] flex justify-between items-center bg-[#ebedff] shadow-md rounded-[30px] transition-all duration-300 ease-in-out">
+        <div class="logo" data-aos="fade-right" data-aos-duration="2000">
+            <p>Ivent</p>
         </div>
-
-        <div class="hidden md:block">
-            <button onclick="window.location.href='../index.php'" class="bg-white text-[#879ff7] border border-indigo-300 rounded-full px-4 py-2 font-medium hover:bg-indigo-100 transition duration-300">
-            Explore Events
-            </button>
+        <ul data-aos="fade-down" data-aos-duration="2000">
+            <li><a href="../landing_pages">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#event">Event</a></li>
+            @auth
+                <a href="{{ route('history') }}">
+                <li>My ticket</li>
+                </a>
+            @else
+                <span class="disabled-link">
+                <li style="color: gray; cursor: not-allowed;">My ticket</li>
+                </span>
+            @endauth
+        </ul>
+        <div class="logout" data-aos="fade-left" data-aos-duration="2000">
+            <div class="auth-buttons">
+                @if (Auth::check())
+                    <!-- Jika user sudah login -->
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <span class="text-gray-700 font-medium">Halo, {{ Auth::user()->username }}</span>
+                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded ml-4">
+                            Logout
+                        </button>
+                    </form>
+                @else
+                    <!-- Jika belum login -->
+                    <button onclick="openLogin()" type="button"
+                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                        Login
+                    </button>
+                @endif
+            </div>
         </div>
-    </nav>
-
-
-
-    <div class="w-full flex justify-center mt-6">
-    <input id="searchEvent" type="text" placeholder="Cari event..." 
-           class="w-[90%] md:w-[60%] px-4 py-2 border border-gray-300 rounded-lg shadow-sm 
-                  focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-</div>
-
-
-
-
-    
+    </section>
+    {{-- Card Pesanan --}}
+    <div class="w-full flex justify-center mt-[50px]">
+        <input id="searchEvent" type="text" placeholder="Cari event..." 
+           class="w-[90%] md:w-[60%] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+    </div>
     <div id="pendaftaranList" class="w-full sm:w-[95%] md:w-[90%] lg:w-[80%] xl:w-[75%] mx-auto bg-white rounded-2xl shadow-md p-6 my-6 border border-gray-200">
         <?php foreach ($pendaftaranList as $pendaftaran): ?>
         <!-- Card Tiket -->
         <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-5 my-6 space-y-4 hover:shadow-xl transition-all ring-1 ring-purple-100"
-     data-nama="<?= strtolower($pendaftaran['event']['nama_event']) ?>">
+            data-nama="<?= strtolower($pendaftaran['event']['nama_event']) ?>">
 
             <div class="flex justify-between items-center text-sm font-semibold text-gray-700">
                 <span class="text-sm text-gray-500 mt-1">
@@ -108,9 +127,7 @@
             <?php endif; ?>
 
             <div class="flex justify-end mt-3 gap-4">
-                <button class="px-4 py-2 border border-gray-300 text-sm rounded-md hover:bg-gray-100 transition" href="{{ route('invoice', ['id' => $pendaftaran['id']]) }}" target="_blank">
-                    <i class="fas fa-print mr-1"></i> invoice
-                </button>
+                
                 <?php if ($pendaftaran['status'] !== 'diterima'): ?>
                 <form action="{{ route('checkout') }}" method="POST" class="inline">
                     @csrf
@@ -136,8 +153,8 @@
             </div>
         </div>
     </div>
-
-    <footer class="mt-10 bg-[#c9cfff] text-grey-500 text-center py-4  bottom-0 left-0 right-0 fixed">
+    {{-- Footer --}}
+    <footer class="mt-10 bg-[#c9cfff] text-grey-500 text-center py-4  bottom-0 left-0 right-0">
         <div class="text-sm">
             &copy; 2025 Event Registration. All rights reserved.
         </div>
@@ -146,28 +163,6 @@
         </div>
     </footer>
 
-    <script>
-        @keyframes fade-down {
-            0% {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            }
-
-            .animate-fade-down {
-            animation: fade-down 0.5s ease-out;
-            }
-        function toggleAnggota(id) {
-            const list = document.getElementById(id);
-            list.classList.toggle("hidden");
-        }
-    </script>
-
-  
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const searchInput = document.getElementById('searchEvent');

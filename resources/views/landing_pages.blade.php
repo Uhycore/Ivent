@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility_off" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility" />
@@ -21,10 +22,7 @@
 // print_r($events->toArray());
 // echo "</pre>";
 ?>
-
-
 <body>
-
     <!-- <a id="chatButton" href="{{ route('chat') }}" class="fixed bottom-6 right-6 bg-blue-900 text-white w-16 h-16 text-2xl flex items-center justify-center rounded-full shadow-lg hover:bg-gray-700 z-50">
   <i class="fa-solid fa-headset"></i>
 </a> -->
@@ -146,23 +144,49 @@
             </div>
         </div>
     </section>
-    <section class="hero" id="home">
-        <div class="hero-left" data-aos="fade-right" data-aos-duration="2000">
-            <h1 class="judul">Temukan dan Daftar Event Terbaik dengan Mudah</h1><br>
-            <h4 class="subjudul">Cari event favoritmu, daftar online, dan <br>ikuti acaranya tanpa ribet</h4>
-            <button class="btn">
-                <a href="#event">Jelahi Event</a>
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                    viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 12H5m14 0-4 4m4-4-4-4" />
-                </svg>
-            </button>
-        </div>
-        <div class="hero-right" data-aos="fade-left" data-aos-duration="2000">
-            <img src="{{ asset('images/hero1.png') }}" alt="hero image">
-        </div>
+    <section class="flex flex-col items-center justify-center min-h-screen bg-gray-100 gap-y-8 z-10 "  data-aos="fade-up" data-aos-duration="2000">
+        <!-- Carousel Wrapper -->
+            <div class="relative overflow-hidden z-[50] rounded-2xl shadow-xl w-[900px] h-[500px] mb-5 mt-6">
+
+                <!-- Slides -->
+                <div id="carousel" class="flex transition-transform duration-700 ease-in-out w-[2400px] h-full ">
+                <a href="#event"  class="w-[900px] h-full flex-shrink-0">
+                    <img src="/images/event1.jpg" class="w-full h-full object-cover bg-blue-500 rounded-2xl" alt="Event 1">
+                </a>
+                <a href="#event"  class="w-[900px] h-full flex-shrink-0">
+                    <img src="/images/event2.webp" class="w-full bg-amber-300 h-full object-cover rounded-2xl" alt="Event 2">
+                </a>
+                <a href="#event" class="w-[900px] h-full flex-shrink-0">
+                    <img src="/images/event5.jpeg" class="w-full h-full object-cover bg-black rounded-2xl" alt="Event 3">
+                </a>
+                </div>
+
+                <!-- Tombol panah kiri -->
+                <button onclick="prevSlide()" class="
+                        absolute top-1/2 left-4 -translate-y-1/2
+                        flex justify-center items-center 
+                        bg-white/50 text-black hover:bg-white/70 
+                        p-3 rounded-full shadow-lg z-20 transition">
+                <span class="material-symbols-outlined text-2xl">chevron_left</span>
+                </button>
+
+                <!-- Tombol panah kanan -->
+                <button onclick="nextSlide()" class="
+                        absolute top-1/2 right-4 -translate-y-1/2 
+                        flex justify-center items-center 
+                        bg-white/50 text-black hover:bg-white/70 
+                        p-3 rounded-full shadow-lg z-20 transition">
+                <span class="material-symbols-outlined text-2xl">chevron_right</span>
+                </button>
+
+            </div>
+    
+            <!-- Dot Indicators -->
+            <div id="dots" class="flex pt-5 space-x-2">
+                <button onclick="goToSlide(0)" class="w-2 h-2 rounded-full bg-gray-400"></button>
+                <button onclick="goToSlide(1)" class="w-2 h-2 rounded-full bg-gray-400"></button>
+                <button onclick="goToSlide(2)" class="w-2 h-2 rounded-full bg-gray-400"></button>
+            </div>
     </section>
     <section class="fitur">
         <H1>Kategori Event</H1>
@@ -462,6 +486,40 @@
             }
         </style>
         <script>
+        // carousel auto scroll
+        const carousel = document.getElementById("carousel");
+        const dots = document.querySelectorAll("#dots button");
+        const totalSlides = carousel.children.length;
+        let index = 0;
+
+        function showSlide(i) {
+        index = (i + totalSlides) % totalSlides;
+        carousel.style.transform = `translateX(-${index * 900}px)`;
+        updateDots();
+        }
+
+        function nextSlide() {
+        showSlide(index + 1);
+        }
+
+        function prevSlide() {
+        showSlide(index - 1);
+        }
+
+        function goToSlide(i) {
+        showSlide(i);
+        }
+
+        function updateDots() {
+        dots.forEach((dot, i) => {
+            dot.classList.toggle("bg-gray-900", i === index);
+            dot.classList.toggle("bg-gray-400", i !== index);
+        });
+        }
+
+        setInterval(nextSlide, 5000); // Auto-slide setiap 5 detik
+        updateDots(); // Set awal dot aktif
+    // password toggle
         function togglePassword() {
             var passwordInput = document.getElementById("password");
             if (passwordInput.type === "password") {

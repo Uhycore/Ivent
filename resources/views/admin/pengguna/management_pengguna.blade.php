@@ -86,10 +86,10 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                    class="text-red-500 hover:text-red-700"
-                                    onclick="return confirm('Yakin ingin menghapus event ini?')">
-                                    <span class="material-symbols-rounded text-sm">delete</span>
-                                </button>
+                                                class="text-red-500 hover:text-red-700"
+                                                onclick="return confirm('Yakin ingin menghapus event ini?')">
+                                                <span class="material-symbols-rounded text-sm">delete</span>
+                                            </button>
                                         </form>
                                     </div>
                                 </td>
