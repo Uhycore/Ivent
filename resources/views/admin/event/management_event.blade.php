@@ -138,7 +138,9 @@
         </tbody>
     </table>
 </div>
-
+<div class="mt-4">
+    {{ $event->links('pagination::tailwind') }}
+</div>
         </main>
     </div>
 
