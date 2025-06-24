@@ -10,6 +10,8 @@ use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use App\Models\AnggotaKelompok;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PendaftaranBerhasilMail;
 
 class PendaftaranController extends Controller
 {
@@ -46,7 +48,7 @@ class PendaftaranController extends Controller
         ]);
 
         $event = Event::findOrFail($request->event_id);
-        
+
 
         if (
             ($event->tipe_event === 'perorangan' && $request->tipe_pendaftaran !== 'perorangan') ||
@@ -96,6 +98,9 @@ class PendaftaranController extends Controller
                 ]);
             }
         }
+        $user = Auth::user();
+
+        Mail::to($user->email)->send(new PendaftaranBerhasilMail($user, $pendaftaran));
 
         return redirect()->route('user.landing_pages')
             ->with('success', 'Pendaftaran berhasil dilakukan.');
@@ -114,6 +119,10 @@ class PendaftaranController extends Controller
         $pendaftaran->status = 'diterima';
         $pendaftaran->save();
 
-        return redirect()->route('admin.pendaftar')->with('success', 'Pendaftaran berhasil disetujui.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Pendaftaran berhasil disetujui.',
+            'data' => $pendaftaran
+        ]);
     }
 }
