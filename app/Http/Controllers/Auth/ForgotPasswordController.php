@@ -21,8 +21,19 @@ class ForgotPasswordController extends Controller
             $request->only('email')
         );
 
-        return $status === Password::RESET_LINK_SENT
-            ? back()->with(['status' => __($status)])
-            : back()->withErrors(['email' => __($status)]);
+        // return $status === Password::RESET_LINK_SENT
+        //     ? back()->with(['status' => __($status)])
+        //     : back()->withErrors(['email' => __($status)]);
+        if ($status === Password::RESET_LINK_SENT) {
+        return back()->with([
+            'status' => 'Link reset password berhasil dikirim ke email Anda.'
+        ]);
+    } else {
+        // Ganti pesan default Laravel dengan pesan buatan sendiri
+        return back()->withErrors([
+            'email' => 'Email tidak ditemukan dalam sistem kami. Silakan periksa kembali.'
+        ]);
+    }
+
     }
 }

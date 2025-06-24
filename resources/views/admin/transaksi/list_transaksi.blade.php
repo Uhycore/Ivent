@@ -34,7 +34,7 @@
                     <button type="submit" class="text-white flex bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                         Hapus Terpilih
                     </button>
-                    <div class="flex items-center gap-3">
+                    <!-- <div class="flex items-center gap-3">
                         <label for="tanggalFilter" class="text-sm font-medium text-gray-700 whitespace-nowrap">
                             <span class="inline-flex items-center gap-1">
                             Filter Tanggal
@@ -45,7 +45,31 @@
                             id="tanggalFilter"
                             name="tanggal"
                             class="text-sm border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition shadow-sm hover:shadow-md"/>
+                    </div> -->
+                    <div class="flex items-center gap-3">
+                        <label for="statusFilter" class="text-sm font-medium text-gray-700 whitespace-nowrap">
+                            Status
+                        </label>
+                        <select id="statusFilter" class="text-sm border border-gray-300 rounded-md px-3 py-2">
+                            <option value="">Semua</option>
+                            <option value="paid">Paid</option>
+                            <option value="unpaid">Unpaid</option>
+                        </select>
                     </div>
+                    <div class="flex items-center gap-3">
+    <label for="tanggalFilter" class="text-sm font-medium text-gray-700 whitespace-nowrap">
+        Tanggal
+    </label>
+    <input
+        type="date"
+        id="tanggalFilter"
+        class="text-sm border border-gray-300 rounded-md px-3 py-2"
+    />
+</div>
+
+
+
+
                     
                     <div class="flex-1">
                         <label for="searchInput" class="sr-only">Search</label>
@@ -85,7 +109,11 @@
 
                         <tbody>
                             @foreach ($transaksiList as $trx)
-                                <tr class="hover:bg-gray-50 text-gray-700">
+                                <tr class="hover:bg-gray-50 text-gray-700"
+                                    data-status="{{ strtolower($trx['status']) }}"
+                                    data-tanggal="{{ date('Y-m-d', strtotime($trx['created_at'])) }}"
+                                    data-event="{{ strtolower($trx['event']['nama_event']) }}">
+
                                     <td class="px-3 py-2 border-b">
                                         <input type="checkbox" name="selected[]" value="{{ $trx['id'] }}"
                                             class="form-checkbox h-4 w-4 text-blue-600 rounded focus:ring-blue-500">
@@ -140,6 +168,9 @@
         </main>
     </div>
 
+   
+
+
 
     <!-- Checkbox Select All Script -->
     <script>
@@ -184,6 +215,43 @@
     localStorage.setItem('error_message', "{{ session('error') }}");
 </script>
 @endif
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.getElementById('searchInput'); // pencarian umum
+    const tanggalFilter = document.getElementById('tanggalFilter'); // filter tanggal
+    const statusFilter = document.getElementById('statusFilter');   // filter status
+    const eventFilter = document.getElementById('eventFilter');     // filter nama event
+    const rows = document.querySelectorAll('tbody tr');
+
+    function filterRows() {
+        const searchTerm = searchInput?.value.toLowerCase() || '';
+        const tanggal = tanggalFilter?.value || '';
+        const status = statusFilter?.value.toLowerCase() || '';
+        const eventText = eventFilter?.value.toLowerCase() || '';
+
+        rows.forEach(row => {
+            const eventName = row.getAttribute('data-event') || '';
+            const rowStatus = row.getAttribute('data-status') || '';
+            const rowTanggal = row.getAttribute('data-tanggal') || '';
+
+            const cocokSearch = eventName.includes(searchTerm);
+            const cocokTanggal = !tanggal || rowTanggal === tanggal;
+            const cocokStatus = !status || rowStatus === status;
+            const cocokEvent = !eventText || eventName.includes(eventText);
+
+            row.style.display = (cocokSearch && cocokTanggal && cocokStatus && cocokEvent) ? '' : 'none';
+        });
+    }
+
+    if (searchInput) searchInput.addEventListener('input', filterRows);
+    if (tanggalFilter) tanggalFilter.addEventListener('change', filterRows);
+    if (statusFilter) statusFilter.addEventListener('change', filterRows);
+    if (eventFilter) eventFilter.addEventListener('input', filterRows);
+});
+</script>
+
+
 
  
 </body>
