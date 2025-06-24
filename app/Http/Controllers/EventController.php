@@ -36,11 +36,11 @@ class EventController extends Controller
             'deskripsi' => 'required|string',
             'tipe_event' => 'required|string|in:semua,perorangan,kelompok',
             'kuota' => 'required|integer|min:1',
-
             'max_anggota_kelompok' => 'required_if:tipe_event,kelompok|required_if:tipe_event,semua|nullable|integer|min:1',
-            'gambar' => '',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // ✅ ini penting
             'harga_pendaftaran' => 'required|numeric|min:0',
         ]);
+
 
 
         Event::create([
@@ -49,7 +49,7 @@ class EventController extends Controller
             'deskripsi' => $request->deskripsi,
             'tipe_event' => $request->tipe_event,
             'kuota' => $request->kuota,
-            'sisa_kuota' => $request->kuota, 
+            'sisa_kuota' => $request->kuota,
             'max_anggota_kelompok' => $request->max_anggota_kelompok,
             'gambar' => $request->file('gambar') ? $request->file('gambar')->store('event_images', 'public') : null,
             'harga_pendaftaran' => $request->harga_pendaftaran,
@@ -118,14 +118,14 @@ class EventController extends Controller
     public function destroy(string $id)
     {
         $event = Event::findOrFail($id);
-// dd($event->gambar);
+        // dd($event->gambar);
 
-          // Hapus file gambar jika ada
-    if ($event->gambar) {
-        // Path gambar di storage/app/public/event_images/filename.jpg
-         Storage::disk('public')->delete($event->gambar);
-    }
-        $event->delete() ;
+        // Hapus file gambar jika ada
+        if ($event->gambar) {
+            // Path gambar di storage/app/public/event_images/filename.jpg
+            Storage::disk('public')->delete($event->gambar);
+        }
+        $event->delete();
 
 
 

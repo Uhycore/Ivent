@@ -9,11 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility_off" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility_off" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Ivent</title>
 </head>
 <?php
@@ -22,6 +24,7 @@
 // print_r($events->toArray());
 // echo "</pre>";
 ?>
+
 <body>
     <!-- <a id="chatButton" href="{{ route('chat') }}" class="fixed bottom-6 right-6 bg-blue-900 text-white w-16 h-16 text-2xl flex items-center justify-center rounded-full shadow-lg hover:bg-gray-700 z-50">
   <i class="fa-solid fa-headset"></i>
@@ -39,27 +42,29 @@
     <div class="popup" id="loginPopup">
         <div class="popup-content">
             <span class="close-btn" onclick="closeLogin()">&times;</span>
-        <h2>Login</h2>
-        @if ($errors->has('login'))
-            <div class="alert alert-danger text-red-600 text-sm mb-4">
-                {{ $errors->first('login') }}
-            </div>
-        @endif
-        <form id="loginForm" action="{{ route('login') }}" method="POST">
-        @csrf
-            <input type="text" id="username" name="username" placeholder="Username" required>
-            <div id="loginError" class="text-red-600 text-sm ml-0" style="margin-left:0 "></div>
-            <div style="position: relative;">
-                <input style="padding-right: 40px;" type="password" id="password" name="password" placeholder="Password" required >
-                    <span onclick="togglePassword()" style="position: absolute; right: 10px; top: 45px; transform: translateY(-50%); cursor: pointer;">
+            <h2>Login</h2>
+            @if ($errors->has('login'))
+                <div class="alert alert-danger text-red-600 text-sm mb-4">
+                    {{ $errors->first('login') }}
+                </div>
+            @endif
+            <form id="loginForm" action="{{ route('login') }}" method="POST">
+                @csrf
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <div id="loginError" class="text-red-600 text-sm ml-0" style="margin-left:0 "></div>
+                <div style="position: relative;">
+                    <input style="padding-right: 40px;" type="password" id="password" name="password"
+                        placeholder="Password" required>
+                    <span onclick="togglePassword()"
+                        style="position: absolute; right: 10px; top: 45px; transform: translateY(-50%); cursor: pointer;">
                         <span class="material-symbols-rounded">
-                        visibility
+                            visibility
                         </span>
                     </span>
                 </div>
-                
+
                 <div class="flex justify-end items-right mb-2 text-sm">
-                <a href="#" onclick="openForgotPasswordPopup()" class="no-underline">Forgot Password?</a>
+                    <a href="#" onclick="openForgotPasswordPopup()" class="no-underline">Forgot Password?</a>
                 </div>
                 <button type="submit">Login</button>
                 <p>Belum punya akun? <a href="#" onclick="switchToRegister()">Daftar di sini</a></p>
@@ -114,11 +119,11 @@
             <li><a href="#event">Event</a></li>
             @auth
                 <a href="{{ route('history') }}">
-                <li>My ticket</li>
+                    <li>My ticket</li>
                 </a>
             @else
                 <span class="disabled-link">
-                <li style="color: gray; cursor: not-allowed;">My ticket</li>
+                    <li style="color: gray; cursor: not-allowed;">My ticket</li>
                 </span>
             @endauth
         </ul>
@@ -144,49 +149,57 @@
             </div>
         </div>
     </section>
-    <section class="flex flex-col items-center justify-center min-h-screen bg-gray-100 gap-y-8 z-10 "  data-aos="fade-up" data-aos-duration="2000">
+    <section class="flex flex-col items-center justify-center min-h-screen bg-gray-100 gap-y-8 z-10 "
+        data-aos="fade-up" data-aos-duration="2000">
         <!-- Carousel Wrapper -->
-            <div class="relative overflow-hidden z-[50] rounded-2xl shadow-xl w-[900px] h-[500px] mb-5 mt-6">
+        <div class="relative overflow-hidden z-[50] rounded-2xl shadow-xl w-[900px] h-[500px] mb-5 mt-6">
 
-                <!-- Slides -->
-                <div id="carousel" class="flex transition-transform duration-700 ease-in-out w-[2400px] h-full ">
-                <a href="#event"  class="w-[900px] h-full flex-shrink-0">
-                    <img src="/images/event1.jpg" class="w-full h-full object-cover bg-blue-500 rounded-2xl" alt="Event 1">
+            <!-- Slides -->
+            <div id="carousel" class="flex transition-transform duration-700 ease-in-out w-[2400px] h-full ">
+                 @foreach ($events as $event)
+                <a href="#event" class="w-[900px] h-full flex-shrink-0">
+                    <img src="{{ asset('storage/' . $event->gambar) }}" class="w-full h-full object-cover bg-blue-500 rounded-2xl"
+                        alt="Event 1">
                 </a>
-                <a href="#event"  class="w-[900px] h-full flex-shrink-0">
-                    <img src="/images/event2.webp" class="w-full bg-amber-300 h-full object-cover rounded-2xl" alt="Event 2">
+                @endforeach
+                {{-- <a href="#event" class="w-[900px] h-full flex-shrink-0">
+                    <img src="/images/event2.webp" class="w-full bg-amber-300 h-full object-cover rounded-2xl"
+                        alt="Event 2">
                 </a>
                 <a href="#event" class="w-[900px] h-full flex-shrink-0">
-                    <img src="/images/event5.jpeg" class="w-full h-full object-cover bg-black rounded-2xl" alt="Event 3">
-                </a>
-                </div>
+                    <img src="/images/event5.jpeg" class="w-full h-full object-cover bg-black rounded-2xl"
+                        alt="Event 3">
+                </a> --}}
+            </div>
 
-                <!-- Tombol panah kiri -->
-                <button onclick="prevSlide()" class="
+            <!-- Tombol panah kiri -->
+            <button onclick="prevSlide()"
+                class="
                         absolute top-1/2 left-4 -translate-y-1/2
                         flex justify-center items-center 
                         bg-white/50 text-black hover:bg-white/70 
                         p-3 rounded-full shadow-lg z-20 transition">
                 <span class="material-symbols-outlined text-2xl">chevron_left</span>
-                </button>
+            </button>
 
-                <!-- Tombol panah kanan -->
-                <button onclick="nextSlide()" class="
+            <!-- Tombol panah kanan -->
+            <button onclick="nextSlide()"
+                class="
                         absolute top-1/2 right-4 -translate-y-1/2 
                         flex justify-center items-center 
                         bg-white/50 text-black hover:bg-white/70 
                         p-3 rounded-full shadow-lg z-20 transition">
                 <span class="material-symbols-outlined text-2xl">chevron_right</span>
-                </button>
+            </button>
 
-            </div>
-    
-            <!-- Dot Indicators -->
-            <div id="dots" class="flex pt-5 space-x-2">
-                <button onclick="goToSlide(0)" class="w-2 h-2 rounded-full bg-gray-400"></button>
-                <button onclick="goToSlide(1)" class="w-2 h-2 rounded-full bg-gray-400"></button>
-                <button onclick="goToSlide(2)" class="w-2 h-2 rounded-full bg-gray-400"></button>
-            </div>
+        </div>
+
+        <!-- Dot Indicators -->
+        <div id="dots" class="flex pt-5 space-x-2">
+            <button onclick="goToSlide(0)" class="w-2 h-2 rounded-full bg-gray-400"></button>
+            <button onclick="goToSlide(1)" class="w-2 h-2 rounded-full bg-gray-400"></button>
+            <button onclick="goToSlide(2)" class="w-2 h-2 rounded-full bg-gray-400"></button>
+        </div>
     </section>
     <section class="fitur">
         <H1>Kategori Event</H1>
@@ -476,107 +489,107 @@
         <script>
             AOS.init();
         </script>
-         <style>
+        <style>
             .material-symbols-rounded {
-            font-variation-settings:
-            'FILL' 1,
-            'wght' 400,
-            'GRAD' 0,
-            'opsz' 24
+                font-variation-settings:
+                    'FILL' 1,
+                    'wght' 400,
+                    'GRAD' 0,
+                    'opsz' 24
             }
         </style>
         <script>
-        // carousel auto scroll
-        const carousel = document.getElementById("carousel");
-        const dots = document.querySelectorAll("#dots button");
-        const totalSlides = carousel.children.length;
-        let index = 0;
+            // carousel auto scroll
+            const carousel = document.getElementById("carousel");
+            const dots = document.querySelectorAll("#dots button");
+            const totalSlides = carousel.children.length;
+            let index = 0;
 
-        function showSlide(i) {
-        index = (i + totalSlides) % totalSlides;
-        carousel.style.transform = `translateX(-${index * 900}px)`;
-        updateDots();
-        }
-
-        function nextSlide() {
-        showSlide(index + 1);
-        }
-
-        function prevSlide() {
-        showSlide(index - 1);
-        }
-
-        function goToSlide(i) {
-        showSlide(i);
-        }
-
-        function updateDots() {
-        dots.forEach((dot, i) => {
-            dot.classList.toggle("bg-gray-900", i === index);
-            dot.classList.toggle("bg-gray-400", i !== index);
-        });
-        }
-
-        setInterval(nextSlide, 5000); // Auto-slide setiap 5 detik
-        updateDots(); // Set awal dot aktif
-    // password toggle
-        function togglePassword() {
-            var passwordInput = document.getElementById("password");
-            if (passwordInput.type === "password") {
-                passwordInput.type = "text";
-            } else {
-                passwordInput.type = "password";
+            function showSlide(i) {
+                index = (i + totalSlides) % totalSlides;
+                carousel.style.transform = `translateX(-${index * 900}px)`;
+                updateDots();
             }
-        }
-        // register
-        document.getElementById('registerForm').addEventListener('submit', async function (e) {
-        e.preventDefault();
 
-        const form = this;
-        const formData = new FormData(form);
+            function nextSlide() {
+                showSlide(index + 1);
+            }
 
-        try {
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    "Accept": "application/json"
+            function prevSlide() {
+                showSlide(index - 1);
+            }
+
+            function goToSlide(i) {
+                showSlide(i);
+            }
+
+            function updateDots() {
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle("bg-gray-900", i === index);
+                    dot.classList.toggle("bg-gray-400", i !== index);
+                });
+            }
+
+            setInterval(nextSlide, 5000); // Auto-slide setiap 5 detik
+            updateDots(); // Set awal dot aktif
+            // password toggle
+            function togglePassword() {
+                var passwordInput = document.getElementById("password");
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                } else {
+                    passwordInput.type = "password";
+                }
+            }
+            // register
+            document.getElementById('registerForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const form = this;
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            "Accept": "application/json"
+                        }
+                    });
+
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-start',
+                            icon: 'success',
+                            title: 'Registrasi berhasil!',
+                            text: "Silakan login untuk melanjutkan.",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true
+                        });
+
+                        closeRegister();
+                        openLogin(); // Pastikan fungsi ini membuka popup login
+                    } else {
+                        const errorMsg = result.message || "Registrasi gagal. Silakan cek kembali.";
+                        document.getElementById('registerError').textContent = errorMsg;
+                    }
+                } catch (err) {
+                    console.error("Kesalahan:", err);
+                    document.getElementById('registerError').textContent = "Terjadi kesalahan jaringan.";
                 }
             });
-        
 
-        const result = await response.json();
+            // login
+            document.getElementById('loginForm').addEventListener('submit', async function(e) {
+                e.preventDefault(); // mencegah reload halaman
 
-        if (response.ok) {
-            Swal.fire({
-            toast: true,
-            position: 'top-start',
-            icon: 'success',
-            title: 'Registrasi berhasil!',
-            text: "Silakan login untuk melanjutkan.",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true
-        });
-
-            closeRegister();
-            openLogin(); // Pastikan fungsi ini membuka popup login
-        } else {
-            const errorMsg = result.message || "Registrasi gagal. Silakan cek kembali.";
-            document.getElementById('registerError').textContent = errorMsg;
-        }
-        }catch (err) {
-            console.error("Kesalahan:", err);
-            document.getElementById('registerError').textContent = "Terjadi kesalahan jaringan.";
-            }
-        });
-
-        // login
-        document.getElementById('loginForm').addEventListener('submit', async function (e) {
-            e.preventDefault(); // mencegah reload halaman
-
-            const form = this;
-            const formData = new FormData(form);
+                const form = this;
+                const formData = new FormData(form);
 
                 try {
                     const response = await fetch(form.action, {
@@ -591,11 +604,11 @@
 
                     if (response.ok) {
                         if (result.message) {
-        localStorage.setItem('login_success_message', result.message);
-    }
+                            localStorage.setItem('login_success_message', result.message);
+                        }
 
-    // Lanjut redirect
-    window.location.href = result.redirect || "/";
+                        // Lanjut redirect
+                        window.location.href = result.redirect || "/";
                     } else {
                         document.getElementById('loginError').textContent = result.message || "Login gagal.";
                     }
@@ -605,7 +618,7 @@
                 }
             });
 
-            
+
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
                 if (window.scrollY > 50) {
@@ -654,9 +667,11 @@
             function closeLogin() {
                 document.getElementById('loginPopup').style.display = 'none';
             }
+
             function closeForgot() {
                 document.getElementById('forgotPasswordPopup').style.display = 'none';
             }
+
             function openRegister() {
                 document.getElementById('registerPopup').style.display = 'flex';
             }
@@ -695,60 +710,59 @@
             window.onload = autoScroll;
 
             AOS.init();
-            
         </script>
-        
+
         <!-- SweetAlert2 -->
-@if(session('success'))
-    <script>
-        // Cek apakah notifikasi sudah pernah ditampilkan
-        if (!localStorage.getItem('notified')) {
-            Swal.fire({
-            toast: true,
-            position: 'top-start',
-            icon: 'success',
-            title: ' berhasil!',
-            text: "{{ session('success') }}",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true
-        });
+        @if (session('success'))
+            <script>
+                // Cek apakah notifikasi sudah pernah ditampilkan
+                if (!localStorage.getItem('notified')) {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-start',
+                        icon: 'success',
+                        title: ' berhasil!',
+                        text: "{{ session('success') }}",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
 
-            localStorage.setItem('notified', 'true');
-        }
-    </script>
-@endif
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const msg = localStorage.getItem('login_success_message');
-    if (msg) {
-        Swal.fire({
-            toast: true,
-            position: 'top-start',
-            icon: 'success',
-            title: 'Login berhasil!',
-            text: msg,
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true
-        });
+                    localStorage.setItem('notified', 'true');
+                }
+            </script>
+        @endif
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const msg = localStorage.getItem('login_success_message');
+                if (msg) {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-start',
+                        icon: 'success',
+                        title: 'Login berhasil!',
+                        text: msg,
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true
+                    });
 
-        localStorage.removeItem('login_success_message');
-    }
-});
-</script>
+                    localStorage.removeItem('login_success_message');
+                }
+            });
+        </script>
 
 
 
-<script>
-    window.addEventListener("pageshow", function (event) {
-        const navigationType = performance.getEntriesByType("navigation")[0]?.type;
-        if (navigationType !== 'back_forward') {
-            localStorage.removeItem('notified');
-        }
-    });
-</script>
-        
+        <script>
+            window.addEventListener("pageshow", function(event) {
+                const navigationType = performance.getEntriesByType("navigation")[0]?.type;
+                if (navigationType !== 'back_forward') {
+                    localStorage.removeItem('notified');
+                }
+            });
+        </script>
+
 
 </body>
 

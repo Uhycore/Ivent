@@ -107,10 +107,12 @@
                         <input type="file" id="gambar" name="gambar"
                             class="w-full border border-gray-300 rounded px-4 py-2 @error('gambar') border-red-500 @enderror"
                             accept="image/*">
+
                         @error('gambar')
                             <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
                     </div>
+
                     <!-- Harga Pendaftaran -->
                     <div class="mt-4">
                         <label for="harga_pendaftaran" class="block text-gray-700 font-medium mb-1">Harga
