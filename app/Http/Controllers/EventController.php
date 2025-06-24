@@ -13,7 +13,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $event = Event::get();
+        $event = Event::paginate(10); // Menggunakan pagination untuk menampilkan 10 event per halaman
         return view('admin.event.management_event', compact('event'));
     }
 

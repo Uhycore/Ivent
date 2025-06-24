@@ -97,6 +97,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-4">
+    {{ $pengguna->links('pagination::tailwind') }}
+</div>
             </div>
         </main>
     </div>

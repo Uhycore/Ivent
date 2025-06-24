@@ -157,7 +157,7 @@ class TransaksiController extends Controller
 
     public function showListTransaksi()
     {
-        $transaksiList = Transaksi::with(['user', 'event', 'pendaftaran'])->get();
+        $transaksiList = Transaksi::with(['user', 'event', 'pendaftaran'])->paginate(10);
         return view('admin.transaksi.list_transaksi', compact('transaksiList'));
     }
 

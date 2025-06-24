@@ -163,6 +163,10 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="mt-4">
+                        {{ $transaksiList->links('pagination::tailwind') }}
+                    </div>
+
                 </div>
             </form>
         </main>
