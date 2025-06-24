@@ -62,9 +62,19 @@ class ResetPasswordController extends Controller
             }
         );
 
-        return $status == Password::PASSWORD_RESET
-            ? redirect()->route('guest.landing_pages')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
+        // return $status == Password::PASSWORD_RESET
+        //     ? redirect()->route('guest.landing_pages')->with('status', __($status))
+        //     : back()->withErrors(['email' => [__($status)]]);
+
+         if ($status == Password::PASSWORD_RESET) {
+        return redirect()
+            ->route('guest.landing_pages')
+            ->with('status', 'Password berhasil direset. Anda sekarang sudah login.');
+    } else {
+        return back()->withErrors([
+            'email' => 'Reset password gagal: ' . __($status),
+        ]);
+    }
     }
 
 

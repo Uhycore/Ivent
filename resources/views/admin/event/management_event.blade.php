@@ -31,11 +31,7 @@
 
               <!-- Filter and Search -->
             <div class="flex flex-wrap gap-4 mb-4 items-center">
-                <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    type="button">
-                    Filter by
-                </button>
+                
                 <!-- Dropdown menu -->
                 <div id="dropdownHover"
                     class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 p-2 space-y-2">
@@ -88,7 +84,7 @@
     <table class="table-auto w-full bg-white border border-gray-200 shadow-sm rounded text-xs">
         <thead class="bg-gray-100 text-gray-600 uppercase">
             <tr>
-                <th class="px-2 py-2 whitespace-nowrap">#</th>
+                <th class="px-2 py-2 whitespace-nowrap">NO</th>
                 <th class="px-2 py-2 whitespace-nowrap">Nama</th>
                 <th class="px-2 py-2 whitespace-nowrap">Tanggal</th>
                 <th class="px-2 py-2 whitespace-nowrap">Deskripsi</th>
