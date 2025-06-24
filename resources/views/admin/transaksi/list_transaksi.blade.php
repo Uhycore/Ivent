@@ -30,7 +30,10 @@
             <form id="bulkDeleteForm" action="{{ route('admin.transaksi.bulkDelete') }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <div class="mb-4 flex flex-wrap items-center gap-4 justify-between">
+                <div class="flex flex-wrap gap-4 mb-4 items-center">
+                    <button type="submit" class="text-white flex bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        Hapus Terpilih
+                    </button>
                     <div class="flex items-center gap-3">
                         <label for="tanggalFilter" class="text-sm font-medium text-gray-700 whitespace-nowrap">
                             <span class="inline-flex items-center gap-1">
@@ -42,11 +45,22 @@
                             id="tanggalFilter"
                             name="tanggal"
                             class="text-sm border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition shadow-sm hover:shadow-md"/>
+                    </div>
+                    
+                    <div class="flex-1">
+                        <label for="searchInput" class="sr-only">Search</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                            </div>
+                            <input type="text" id="searchInput" placeholder="Ketik di sini..."
+                                class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" />
                         </div>
-
-                    <button type="submit" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                        Hapus Terpilih
-                    </button>
+                </div>
                 </div>
                 <!-- Table Wrapper for Responsive -->
                 <div class="overflow-x-auto shadow rounded border border-gray-200">
