@@ -58,7 +58,7 @@ class ResetPasswordController extends Controller
                     'remember_token' => Str::random(60),
                 ])->save();
                 
-                // Auth::login($user);
+                Auth::login($user);
             }
         );
 
