@@ -69,7 +69,7 @@
                     </thead>
                     <tbody id="userTable" class="text-sm">
                         @foreach ($pengguna as $penggunas)
-                            <tr class="hover:bg-gray-50 text-gray-700">
+                            <tr class="hover:bg-gray-50 text-gray-700 row-item">
                                 <td class="px-6 py-4 border-b">{{ $loop->iteration }}</td>
                                 <td class="px-6 py-4 border-b">{{ $penggunas->user->username }}</td>
                                 <td class="px-6 py-4 border-b">{{ $penggunas->user->email }}</td>
@@ -97,9 +97,9 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="mt-4">
-    {{ $pengguna->links('pagination::tailwind') }}
-</div>
+                <div id="paginationWrapper" class="sticky bottom-0 bg-white py-3 border-t border-gray-200 shadow-inner z-10">
+                    <div id="pagination" class="flex justify-center gap-2"></div>
+               </div>
             </div>
         </main>
     </div>
@@ -137,6 +137,79 @@
                 row.style.display = textContent.includes(keyword) ? '' : 'none';
             });
         });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const rows = Array.from(document.querySelectorAll('#userTable .row-item'));
+        const pagination = document.getElementById('pagination');
+        const rowsPerPage = 10;
+        let currentPage = 1;
+
+        function displayRows() {
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+
+            rows.forEach((row, index) => {
+                row.style.display = index >= start && index < end ? '' : 'none';
+            });
+
+            renderPagination();
+        }
+
+        function renderPagination() {
+            pagination.innerHTML = '';
+            const pageCount = Math.ceil(rows.length / rowsPerPage);
+
+            // Tombol Sebelumnya
+            const prev = document.createElement('button');
+            prev.innerHTML = '&larr;';
+            prev.disabled = currentPage === 1;
+            prev.className = `px-2 py-1 border rounded ${prev.disabled ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'hover:bg-blue-100 text-gray-700'}`;
+            prev.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayRows();
+                    scrollToTable();
+                }
+            };
+            pagination.appendChild(prev);
+
+            // Tombol angka
+            for (let i = 1; i <= pageCount; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.className = `px-3 py-1 rounded border ${i === currentPage ? 'bg-black text-white' : 'bg-white text-gray-700 hover:bg-blue-100'}`;
+                btn.addEventListener('click', () => {
+                    currentPage = i;
+                    displayRows();
+                    scrollToTable();
+                });
+                pagination.appendChild(btn);
+            }
+
+            // Tombol Selanjutnya
+            const next = document.createElement('button');
+            next.innerHTML = '&rarr;';
+            next.disabled = currentPage === pageCount;
+            next.className = `px-2 py-1 border rounded ${next.disabled ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'hover:bg-blue-100 text-gray-700'}`;
+            next.onclick = () => {
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    displayRows();
+                    scrollToTable();
+                }
+            };
+            pagination.appendChild(next);
+        }
+
+        function scrollToTable() {
+            window.scrollTo({ top: 250, behavior: 'smooth' });
+        }
+
+        // Panggil pertama kali
+        displayRows();
     });
 </script>
 

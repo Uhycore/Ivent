@@ -167,11 +167,6 @@
                     {{-- aril --}}
                     <div class="flex justify-first" id="pagination-controls"></div>
 
-                    {{-- firman --}}
-                    {{-- <div class="mt-4">
-                        {{ $transaksiList->links('pagination::tailwind') }}
-                    </div> --}}
-
                 </div>
             </form>
         </main>
@@ -226,7 +221,7 @@
                     const btn = document.createElement('button');
                     btn.textContent = text;
                     btn.className =
-                        `mx-1 px-3 py-1 border rounded ${isActive ? 'bg-blue-600 text-white' : 'bg-white text-blue-600 hover:bg-blue-100'} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`;
+                        `mx-1 px-3 py-1 border rounded ${isActive ? 'bg-black text-white' : 'bg-white text-black hover:bg-blue-100'} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`;
                     btn.disabled = disabled;
                     if (!disabled) btn.addEventListener('click', onClick);
                     return btn;
@@ -304,10 +299,6 @@
             applyFilterAndPaginate();
         });
     </script>
-
-
-
-
 
 
 
