@@ -65,8 +65,9 @@
     <div id="pendaftaranList" class="w-full sm:w-[95%] md:w-[90%] lg:w-[80%] xl:w-[75%] mx-auto bg-white rounded-2xl shadow-md p-6 my-6 border border-gray-200">
         <?php foreach ($pendaftaranList as $pendaftaran): ?>
         <!-- Card Tiket -->
-        <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-5 my-6 space-y-4 hover:shadow-xl transition-all ring-1 ring-purple-100"
-            data-nama="<?= strtolower($pendaftaran['event']['nama_event']) ?>">
+        <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-5 my-6 space-y-4 hover:shadow-xl transition-all ring-1 ring-purple-100 card-item"
+                data-nama="<?= strtolower($pendaftaran['event']['nama_event']) ?>">
+
 
             <div class="flex justify-between items-center text-sm font-semibold text-gray-700">
                 <span class="text-sm text-gray-500 mt-1">
@@ -141,17 +142,12 @@
         </div>
         <?php endforeach; ?>
 
+
         <!-- Pagination -->
-        <div class="flex justify-center mt-6">
-            <div class="flex space-x-2">
-                <button class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
+                <div id="paginationWrapper" class="flex justify-center mt-6">
+                    <div id="pagination" class="flex space-x-2"></div>
+                </div>
+
     </div>
     {{-- Footer --}}
     <footer class="mt-10 bg-[#c9cfff] text-grey-500 text-center py-4  bottom-0 left-0 right-0">
@@ -183,6 +179,80 @@
         });
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const cards = Array.from(document.querySelectorAll('.card-item'));
+        const paginationContainer = document.getElementById('pagination');
+        const cardsPerPage = 5;
+        let currentPage = 1;
+
+        function showPage(page) {
+            const start = (page - 1) * cardsPerPage;
+            const end = start + cardsPerPage;
+
+            cards.forEach((card, index) => {
+                card.style.display = (index >= start && index < end) ? '' : 'none';
+            });
+
+            renderPagination();
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(cards.length / cardsPerPage);
+            paginationContainer.innerHTML = '';
+
+            // Tombol sebelumnya
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            prevBtn.className = 'px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    showPage(currentPage);
+                    scrollToCards();
+                }
+            };
+            paginationContainer.appendChild(prevBtn);
+
+            // Tombol halaman
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.className = `px-4 py-2 border rounded-md ${i === currentPage ? 'bg-[#829cfc] text-white' : 'hover:bg-gray-100 text-gray-700 border-gray-300'}`;
+                btn.onclick = () => {
+                    currentPage = i;
+                    showPage(currentPage);
+                    scrollToCards();
+                };
+                paginationContainer.appendChild(btn);
+            }
+
+            // Tombol selanjutnya
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            nextBtn.className = 'px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    showPage(currentPage);
+                    scrollToCards();
+                }
+            };
+            paginationContainer.appendChild(nextBtn);
+        }
+
+        function scrollToCards() {
+            const top = document.getElementById('pendaftaranList').offsetTop - 50;
+            window.scrollTo({ top, behavior: 'smooth' });
+        }
+
+        // Inisialisasi awal
+        showPage(currentPage);
+    });
+</script>
+
 
 </body>
 

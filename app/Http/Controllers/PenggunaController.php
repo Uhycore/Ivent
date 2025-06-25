@@ -15,7 +15,7 @@ class PenggunaController extends Controller
     public function index()
     {
         // Mengambil semua pengguna beserta relasi user-nya
-        $pengguna = Pengguna::with('user')->paginate(10); // Menggunakan pagination untuk menampilkan 10 pengguna per halaman
+        $pengguna = Pengguna::with('user')->get(); // Menggunakan pagination untuk menampilkan 10 pengguna per halaman
 
         return view('admin.pengguna.management_pengguna', compact('pengguna'));
     }
