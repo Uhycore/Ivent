@@ -31,11 +31,7 @@
 
               <!-- Filter and Search -->
             <div class="flex flex-wrap gap-4 mb-4 items-center">
-                <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    type="button">
-                    Filter by
-                </button>
+                
                 <!-- Dropdown menu -->
                 <div id="dropdownHover"
                     class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 p-2 space-y-2">
@@ -88,7 +84,7 @@
     <table class="table-auto w-full bg-white border border-gray-200 shadow-sm rounded text-xs">
         <thead class="bg-gray-100 text-gray-600 uppercase">
             <tr>
-                <th class="px-2 py-2 whitespace-nowrap">#</th>
+                <th class="px-2 py-2 whitespace-nowrap">NO</th>
                 <th class="px-2 py-2 whitespace-nowrap">Nama</th>
                 <th class="px-2 py-2 whitespace-nowrap">Tanggal</th>
                 <th class="px-2 py-2 whitespace-nowrap">Deskripsi</th>
@@ -103,7 +99,7 @@
         </thead>
         <tbody id="eventTableBody">
             @foreach ($event as $events)
-                <tr class="hover:bg-gray-50 text-gray-700">
+                <tr class="hover:bg-gray-50 text-gray-700 row-item">
                     <td class="px-2 py-2">{{ $loop->iteration }}</td>
                     <td class="px-2 py-2">{{ $events->nama_event }}</td>
                     <td class="px-2 py-2">{{ \Carbon\Carbon::parse($events->tanggal)->format('d-m-Y') }}</td>
@@ -141,8 +137,10 @@
             @endforeach
         </tbody>
     </table>
+    <div id="paginationWrapper" class="sticky bottom-0 bg-white py-3 border-t border-gray-200 shadow-inner z-10">
+                    <div id="pagination" class="flex justify-center gap-2"></div>
+    </div>
 </div>
-
         </main>
     </div>
 
@@ -248,6 +246,79 @@
             filterTanggal.addEventListener("change", filterTable);
         });
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const rows = Array.from(document.querySelectorAll('#eventTableBody .row-item'));
+        const pagination = document.getElementById('pagination');
+        const rowsPerPage = 10;
+        let currentPage = 1;
+
+        function displayRows() {
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+
+            rows.forEach((row, index) => {
+                row.style.display = index >= start && index < end ? '' : 'none';
+            });
+
+            renderPagination();
+        }
+
+        function renderPagination() {
+            pagination.innerHTML = '';
+            const pageCount = Math.ceil(rows.length / rowsPerPage);
+
+            // Tombol Sebelumnya
+            const prev = document.createElement('button');
+            prev.innerHTML = '&larr;';
+            prev.disabled = currentPage === 1;
+            prev.className = `px-2 py-1 border rounded ${prev.disabled ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'hover:bg-blue-100 text-gray-700'}`;
+            prev.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayRows();
+                    scrollToTable();
+                }
+            };
+            pagination.appendChild(prev);
+
+            // Tombol angka
+            for (let i = 1; i <= pageCount; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.className = `px-3 py-1 rounded border ${i === currentPage ? 'bg-black text-white' : 'bg-white text-gray-700 hover:bg-blue-100'}`;
+                btn.addEventListener('click', () => {
+                    currentPage = i;
+                    displayRows();
+                    scrollToTable();
+                });
+                pagination.appendChild(btn);
+            }
+
+            // Tombol Selanjutnya
+            const next = document.createElement('button');
+            next.innerHTML = '&rarr;';
+            next.disabled = currentPage === pageCount;
+            next.className = `px-2 py-1 border rounded ${next.disabled ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'hover:bg-blue-100 text-gray-700'}`;
+            next.onclick = () => {
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    displayRows();
+                    scrollToTable();
+                }
+            };
+            pagination.appendChild(next);
+        }
+
+        function scrollToTable() {
+            window.scrollTo({ top: 250, behavior: 'smooth' });
+        }
+
+        // Panggil pertama kali
+        displayRows();
+    });
+</script>
+
 
 </body>
 

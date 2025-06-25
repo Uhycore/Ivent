@@ -84,6 +84,15 @@
             <p>Sudah ingat password? <a href="#" onclick="switchToLogin()">Login di sini</a></p>
         </div>
     </div>
+
+    <script>
+    window.onload = function () {
+        setTimeout(() => {
+            localStorage.removeItem('notified');
+        }, 5000);
+    };
+</script>
+
     <!-- Popup Register -->
     <div class="popup" id="registerPopup">
         <div class="popup-content">
@@ -155,22 +164,29 @@
         <div class="relative overflow-hidden z-[50] rounded-2xl shadow-xl w-[900px] h-[500px] mb-5 mt-6">
 
             <!-- Slides -->
-            <div id="carousel" class="flex transition-transform duration-700 ease-in-out w-[2400px] h-full ">
-                 @foreach ($events as $event)
-                <a href="#event" class="w-[900px] h-full flex-shrink-0">
-                    <img src="{{ asset('storage/' . $event->gambar) }}" class="w-full h-full object-cover bg-blue-500 rounded-2xl"
-                        alt="Event 1">
+            <div id="carousel" class="flex transition-transform duration-700 ease-in-out w-[2400px] h-full">
+    @foreach ($events as $event)
+        <div class="w-[900px] h-full flex-shrink-0 relative group">
+            @auth
+                <a href="{{ route('pendaftaran.create', $event->id) }}">
+                    <img src="{{ asset('storage/' . $event->gambar) }}"
+                         class="w-full h-full object-cover bg-blue-500 rounded-2xl cursor-pointer"
+                         alt="{{ $event->nama_event }}">
                 </a>
-                @endforeach
-                {{-- <a href="#event" class="w-[900px] h-full flex-shrink-0">
-                    <img src="/images/event2.webp" class="w-full bg-amber-300 h-full object-cover rounded-2xl"
-                        alt="Event 2">
-                </a>
-                <a href="#event" class="w-[900px] h-full flex-shrink-0">
-                    <img src="/images/event5.jpeg" class="w-full h-full object-cover bg-black rounded-2xl"
-                        alt="Event 3">
-                </a> --}}
-            </div>
+            @else
+                <img src="{{ asset('storage/' . $event->gambar) }}"
+                     onclick="alert('Silakan login terlebih dahulu untuk mendaftar.')"
+                     class="w-full h-full object-cover bg-blue-500 rounded-2xl cursor-not-allowed opacity-80"
+                     alt="{{ $event->nama_event }}">
+            @endauth
+        </div>
+    @endforeach
+</div>
+
+     
+
+            <!-- <a href="#" onclick="opendaftar({{ $event->id }})">Daftar Sekarang</a> -->
+
 
             <!-- Tombol panah kiri -->
             <button onclick="prevSlide()"
@@ -711,6 +727,42 @@
 
             AOS.init();
         </script>
+
+        <!-- notifikasi forgot password -->
+        @if (session('status'))
+    <script>
+        if (!localStorage.getItem('notified')) {
+            Swal.fire({
+                toast: true,
+                position: 'top-start',
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('status') }}",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+
+            localStorage.setItem('notified', 'true');
+        }
+    </script>
+@endif
+@if ($errors->has('email'))
+    <script>
+        Swal.fire({
+            toast: true,
+            position: 'top-start',
+            icon: 'error',
+            title: 'Gagal!',
+            text: "email salah atau tidak terdaftar",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+    </script>
+@endif
+
+
 
         <!-- SweetAlert2 -->
         @if (session('success'))
