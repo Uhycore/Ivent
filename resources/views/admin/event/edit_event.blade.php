@@ -132,7 +132,7 @@
                         @enderror
                         @if ($event->gambar)
                             <div class="mt-2">
-                                <img src="{{ asset('storage/event_images/' . $event->gambar) }}" alt="Gambar Event"
+                                <img src="{{ asset('storage/' . $event->gambar) }}" alt="Gambar Event"
                                     class="w-32 h-32 object-cover rounded">
                             </div>
                         @endif
