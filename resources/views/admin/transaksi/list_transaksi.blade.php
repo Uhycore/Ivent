@@ -184,7 +184,7 @@
             const tanggalFilter = document.getElementById('tanggalFilter');
             const statusFilter = document.getElementById('statusFilter');
             const paginationContainer = document.getElementById('pagination-controls');
-            const rowsPerPage = 3;
+            const rowsPerPage = 10;
             let currentPage = 1;
 
             function getAllRows() {
