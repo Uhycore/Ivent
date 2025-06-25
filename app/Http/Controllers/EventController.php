@@ -37,7 +37,7 @@ class EventController extends Controller
             'tipe_event' => 'required|string|in:semua,perorangan,kelompok',
             'kuota' => 'required|integer|min:1',
             'max_anggota_kelompok' => 'required_if:tipe_event,kelompok|required_if:tipe_event,semua|nullable|integer|min:1',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // ✅ ini penting
+            'gambar' => 'nullable|image',
             'harga_pendaftaran' => 'required|numeric|min:0',
         ]);
 
@@ -91,7 +91,7 @@ class EventController extends Controller
             'kuota' => 'required|integer|min:1',
             'sisa_kuota' => 'required|integer|min:0',
             'max_anggota_kelompok' => 'required|integer|nullable',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'gambar' => 'nullable|image',
             'harga_pendaftaran' => 'required|numeric|min:0',
         ]);
 
